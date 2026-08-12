@@ -3,715 +3,855 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="description" content="Game Without Limits - Gaming equipment, accessories, phones and phone cases.">
 <title>Game Without Limits</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#020611;
-    color:#fff;
-    overflow-x:hidden;
-}
-
-/* =========================
-   GLOBAL NEON
-========================= */
-
-:root{
-    --blue:#00c8ff;
-    --blue2:#006eff;
-    --dark:#050b1c;
-    --card:#081126;
-    --muted:#91a8bd;
-}
-
-button,
-input{
-    font-family:inherit;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0,190,255,.18), transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(0,90,255,.18), transparent 30%),
+    #030611;
+  color: #fff;
+  min-height: 100vh;
 }
 
 /* =========================
    HEADER
 ========================= */
 
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(2,6,17,.92);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid rgba(0,200,255,.25);
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(3,6,17,.92);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid #073b70;
 }
 
-nav{
-    max-width:1200px;
-    margin:auto;
-    padding:16px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
+nav {
+  max-width: 1250px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.logo{
-    color:var(--blue);
-    font-size:20px;
-    font-weight:1000;
-    text-shadow:0 0 15px #008cff;
+.logo {
+  font-size: 21px;
+  font-weight: 1000;
+  color: #00d9ff;
+  text-shadow: 0 0 15px #008cff;
 }
 
-.logo span{
-    color:white;
+.logo span {
+  color: #fff;
 }
 
-nav ul{
-    display:flex;
-    gap:25px;
-    list-style:none;
+nav ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: .2s;
 }
 
-nav a:hover{
-    color:var(--blue);
+nav a:hover {
+  color: #00d9ff;
 }
 
-.cart-btn{
-    background:linear-gradient(135deg,var(--blue),var(--blue2));
-    color:white;
-    border:0;
-    padding:11px 17px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:900;
-    box-shadow:0 0 20px rgba(0,200,255,.4);
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  border: 1px solid #00bfff;
+  background: transparent;
+  color: white;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nav-btn:hover {
+  background: #00aaff;
+  box-shadow: 0 0 18px #008cff;
 }
 
 /* =========================
    HERO
 ========================= */
 
-.hero{
-    min-height:650px;
-    position:relative;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:80px 20px;
-    overflow:hidden;
-
-    background:
-    radial-gradient(circle at 50% 40%,rgba(0,160,255,.28),transparent 35%),
-    radial-gradient(circle at 20% 80%,rgba(0,255,255,.12),transparent 30%),
-    #020611;
+.hero {
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.stars{
-    position:absolute;
-    inset:0;
-
-    background-image:
-    radial-gradient(#fff 1px,transparent 1px),
-    radial-gradient(#00bfff 1px,transparent 1px);
-
-    background-size:90px 90px,140px 140px;
-    opacity:.3;
-    animation:starsMove 15s linear infinite;
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: .35;
+  background-image:
+    radial-gradient(#fff 1px, transparent 1px),
+    radial-gradient(#00c8ff 1px, transparent 1px);
+  background-size: 90px 90px, 150px 150px;
+  animation: starsMove 12s linear infinite;
 }
 
-@keyframes starsMove{
-    from{transform:translateY(0)}
-    to{transform:translateY(90px)}
+@keyframes starsMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(90px); }
 }
 
-.hero-content{
-    position:relative;
-    z-index:2;
-    max-width:900px;
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
 }
 
-.hero h1{
-    font-size:clamp(42px,9vw,90px);
-    line-height:.95;
-    font-weight:1000;
-
-    text-shadow:
-    0 0 10px #00bfff,
-    0 0 30px #006eff,
+.hero h1 {
+  font-size: clamp(42px, 9vw, 90px);
+  line-height: .95;
+  font-weight: 1000;
+  text-shadow:
+    0 0 10px #00d9ff,
+    0 0 30px #0077ff,
     5px 5px 0 #000;
-
-    animation:titleFloat 3s ease-in-out infinite;
+  animation: titlePulse 3s ease-in-out infinite;
 }
 
-.hero h1 span{
-    color:var(--blue);
+.hero h1 span {
+  color: #00d9ff;
 }
 
-@keyframes titleFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-8px)}
+@keyframes titlePulse {
+  0%,100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
-.hero p{
-    margin:28px auto;
-    max-width:700px;
-    color:#b9d9ed;
-    font-size:19px;
+.hero p {
+  color: #b8e8ff;
+  font-size: 19px;
+  margin: 28px 0;
 }
 
-.hero-btn{
-    display:inline-block;
-    border:0;
-    padding:16px 30px;
-    border-radius:10px;
-    background:linear-gradient(135deg,var(--blue),var(--blue2));
-    color:white;
-    font-weight:1000;
-    cursor:pointer;
-    box-shadow:0 0 30px rgba(0,200,255,.5);
+.btn {
+  display: inline-block;
+  padding: 15px 30px;
+  background: linear-gradient(135deg,#00d9ff,#006eff);
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 1000;
+  box-shadow: 0 0 30px rgba(0,190,255,.5);
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-4px) scale(1.03);
 }
 
 /* =========================
    SECTIONS
 ========================= */
 
-section{
-    max-width:1200px;
-    margin:auto;
-    padding:75px 20px;
+section {
+  max-width: 1250px;
+  margin: auto;
+  padding: 75px 20px;
 }
 
-.section-title{
-    text-align:center;
-    font-size:38px;
-    margin-bottom:40px;
+.section-title {
+  text-align: center;
+  font-size: 38px;
+  margin-bottom: 45px;
 }
 
-.section-title span{
-    color:var(--blue);
-    text-shadow:0 0 15px #008cff;
+.section-title span {
+  color: #00d9ff;
+  text-shadow: 0 0 15px #008cff;
 }
 
 /* =========================
-   PRODUCTS
+   CATEGORIES
 ========================= */
 
-.products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 18px;
 }
 
-.product{
-    background:linear-gradient(145deg,#09142d,#050a19);
-    border:1px solid #123d69;
-    border-radius:16px;
-    overflow:hidden;
-    transition:.25s;
+.category {
+  background: linear-gradient(145deg,#09152c,#050914);
+  border: 1px solid #07518a;
+  border-radius: 18px;
+  padding: 30px 15px;
+  text-align: center;
+  transition: .25s;
 }
 
-.product:hover{
-    transform:translateY(-7px);
-    border-color:var(--blue);
-    box-shadow:0 0 30px rgba(0,200,255,.25);
+.category:hover {
+  transform: translateY(-8px);
+  border-color: #00d9ff;
+  box-shadow: 0 0 30px rgba(0,190,255,.25);
 }
 
-.product-image{
-    height:180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:75px;
+.category .icon {
+  font-size: 50px;
+  margin-bottom: 12px;
+}
 
-    background:
+.category h3 {
+  color: #00d9ff;
+}
+
+.category p {
+  color: #8da9bd;
+  margin-top: 7px;
+}
+
+/* =========================
+   STORE
+========================= */
+
+#store {
+  display: none;
+}
+
+.store-locked {
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.store-locked .lock {
+  font-size: 70px;
+  animation: lockFloat 2s infinite ease-in-out;
+}
+
+@keyframes lockFloat {
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+}
+
+.product {
+  background: #070d1e;
+  border: 1px solid #124774;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: .25s;
+}
+
+.product:hover {
+  transform: translateY(-7px);
+  border-color: #00d9ff;
+  box-shadow: 0 0 30px rgba(0,180,255,.25);
+}
+
+.product-image {
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  background:
     radial-gradient(circle,rgba(0,200,255,.2),transparent 60%),
     #050a18;
 }
 
-.product-info{
-    padding:18px;
+.product-info {
+  padding: 18px;
 }
 
-.product-info h3{
-    margin-bottom:7px;
+.product-info p {
+  color: #8fa9bd;
+  font-size: 14px;
+  margin: 8px 0;
 }
 
-.product-info p{
-    color:var(--muted);
-    font-size:14px;
-    margin-bottom:12px;
+.price {
+  color: #00e1ff;
+  font-size: 23px;
+  font-weight: 1000;
+  margin: 12px 0;
 }
 
-.price{
-    color:#00dcff;
-    font-size:21px;
-    font-weight:1000;
-    margin-bottom:14px;
+.add-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  border: 1px solid #00c8ff;
+  background: transparent;
+  color: #00d9ff;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.add-btn{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--blue);
-    border-radius:8px;
-    background:transparent;
-    color:var(--blue);
-    font-weight:bold;
-    cursor:pointer;
+.add-btn:hover {
+  background: #00aaff;
+  color: white;
+  box-shadow: 0 0 20px #008cff;
 }
 
-.add-btn:hover{
-    background:var(--blue);
-    color:white;
+/* =========================
+   ABOUT / CONTACT
+========================= */
+
+.about {
+  text-align: center;
+  max-width: 850px;
+}
+
+.about p {
+  color: #a9c8dc;
+  font-size: 18px;
+}
+
+.contact-box {
+  max-width: 650px;
+  margin: auto;
+  padding: 30px;
+  background: #080e20;
+  border: 1px solid #124774;
+  border-radius: 18px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #164b78;
+  background: #040814;
+  color: white;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #00d9ff;
+  box-shadow: 0 0 15px rgba(0,200,255,.2);
+}
+
+textarea {
+  min-height: 120px;
+}
+
+.submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg,#00d9ff,#006eff);
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* =========================
+   LOGIN MODAL
+========================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0,0,10,.88);
+  backdrop-filter: blur(12px);
+}
+
+.modal.show {
+  display: flex;
+  animation: fadeIn .3s ease;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  background:
+    radial-gradient(circle at top right,rgba(0,210,255,.15),transparent 35%),
+    #070c1e;
+  border: 2px solid #00c8ff;
+  border-radius: 25px;
+  padding: 30px;
+  position: relative;
+  box-shadow:
+    0 0 40px rgba(0,174,255,.35),
+    0 25px 80px rgba(0,0,0,.7);
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: 0;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* =========================
+   SEMI 3D EMOJI
+========================= */
+
+.emoji-stage {
+  height: 130px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.emoji {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 65px;
+  background:
+    radial-gradient(circle at 35% 25%,#ffffff 0 5%,#ffe58a 8%,#ffc928 40%,#d58b00 100%);
+  box-shadow:
+    inset -12px -15px 20px rgba(0,0,0,.25),
+    inset 8px 8px 12px rgba(255,255,255,.45),
+    0 18px 35px rgba(0,0,0,.5),
+    0 0 30px rgba(0,210,255,.4);
+  animation: emoji3d 3s ease-in-out infinite;
+}
+
+@keyframes emoji3d {
+  0%,100% {
+    transform: translateY(0) rotateY(0deg) rotateZ(0deg);
+  }
+  25% {
+    transform: translateY(-7px) rotateY(-12deg) rotateZ(-3deg);
+  }
+  50% {
+    transform: translateY(0) rotateY(12deg) rotateZ(3deg);
+  }
+  75% {
+    transform: translateY(-7px) rotateY(-8deg);
+  }
+}
+
+.emoji.watch {
+  animation: emojiWatch .45s ease forwards;
+}
+
+@keyframes emojiWatch {
+  50% {
+    transform: translateX(-15px) scale(1.12) rotate(-6deg);
+  }
+}
+
+.login-title {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  text-shadow: 3px 3px #000,0 0 15px #00c8ff;
+  margin-bottom: 8px;
+}
+
+.beta {
+  text-align: center;
+  color: #00d9ff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   INPUT ANIMATION
+========================= */
+
+.input-wrap {
+  position: relative;
+  margin-bottom: 17px;
+}
+
+.input-wrap label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+.input-wrap input {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.input-wrap.typing input {
+  animation: inputBounce .25s ease;
+}
+
+@keyframes inputBounce {
+  50% {
+    transform: translateX(4px) scale(1.015);
+  }
+}
+
+.fly-text {
+  position: absolute;
+  right: 20px;
+  top: 50px;
+  color: #00eaff;
+  font-size: 22px;
+  font-weight: 1000;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.fly-text.active {
+  animation: flyAway .8s ease forwards;
+}
+
+@keyframes flyAway {
+  0% {
+    opacity: 0;
+    transform: translate(0,0) scale(.5);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-100px,-65px) rotate(20deg) scale(1.4);
+  }
+}
+
+.login-submit {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(135deg,#00d9ff,#006eff);
+  color: white;
+  font-size: 18px;
+  font-weight: 1000;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(0,190,255,.45);
+}
+
+.login-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0,190,255,.7);
+}
+
+.login-note {
+  color: #7f9aad;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* =========================
+   CART
+========================= */
+
+.cart-panel {
+  position: fixed;
+  right: -430px;
+  top: 0;
+  height: 100%;
+  width: min(430px,100%);
+  background: #050a19;
+  border-left: 2px solid #00c8ff;
+  z-index: 4500;
+  padding: 25px;
+  transition: .35s;
+  box-shadow: -10px 0 40px rgba(0,180,255,.2);
+  overflow-y: auto;
+}
+
+.cart-panel.open {
+  right: 0;
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.cart-head button {
+  background: none;
+  color: white;
+  border: 0;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.cart-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #124774;
+  border-radius: 12px;
+}
+
+.cart-total {
+  margin: 25px 0;
+  font-size: 23px;
+  font-weight: bold;
+  color: #00d9ff;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  border: 0;
+  border-radius: 11px;
+  background: linear-gradient(135deg,#00d9ff,#006eff);
+  color: white;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-box {
+  max-width: 550px;
+  width: 100%;
+  background: #070d20;
+  border: 2px solid #00c8ff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 0 40px rgba(0,170,255,.3);
+}
+
+.payment-options {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.payment-option {
+  padding: 15px;
+  border: 1px solid #16527e;
+  border-radius: 12px;
+  background: #050a17;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.payment-option.selected {
+  border-color: #00d9ff;
+  background: rgba(0,180,255,.12);
+  box-shadow: 0 0 15px rgba(0,190,255,.2);
+}
+
+.currency {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.currency button {
+  flex: 1;
+  padding: 11px;
+  background: #071126;
+  color: white;
+  border: 1px solid #14527f;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.currency button.active {
+  background: #008fd1;
+  border-color: #00d9ff;
 }
 
 /* =========================
    AI ASSISTANT
 ========================= */
 
-.ai{
-    position:fixed;
-    right:22px;
-    bottom:22px;
-    z-index:3000;
+.ai-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid #00e1ff;
+  background: linear-gradient(135deg,#00d9ff,#006eff);
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 4000;
+  box-shadow: 0 0 30px #008cff;
+  animation: aiPulse 2s infinite;
 }
 
-.ai-character{
-    width:88px;
-    height:88px;
-    border-radius:50%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:57px;
-
-    background:
-    radial-gradient(circle at 30% 25%,#273d74,#071126 70%);
-
-    border:2px solid var(--blue);
-
-    box-shadow:
-    0 0 15px #00c8ff,
-    0 0 40px rgba(0,200,255,.45),
-    inset 0 0 20px rgba(0,200,255,.2);
-
-    cursor:pointer;
-
-    animation:aiFloat 3s ease-in-out infinite;
-
-    transition:.25s;
+@keyframes aiPulse {
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 45px #00bfff;
+  }
 }
 
-@keyframes aiFloat{
-    0%,100%{
-        transform:translateY(0) rotate(-2deg);
-    }
-
-    50%{
-        transform:translateY(-9px) rotate(2deg);
-    }
+.ai-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 95px;
+  width: min(360px,calc(100% - 40px));
+  background: #050a18;
+  border: 1px solid #00c8ff;
+  border-radius: 18px;
+  padding: 20px;
+  z-index: 3999;
+  display: none;
+  box-shadow: 0 0 30px rgba(0,190,255,.35);
 }
 
-.ai-character.listening{
-    animation:aiListen .55s ease-in-out infinite alternate;
+.ai-panel.show {
+  display: block;
 }
 
-@keyframes aiListen{
-    from{
-        transform:scale(1);
-        box-shadow:0 0 20px #00c8ff;
-    }
-
-    to{
-        transform:scale(1.12);
-        box-shadow:
-        0 0 35px #00c8ff,
-        0 0 70px #006eff;
-    }
+.ai-message {
+  color: #bfeeff;
+  line-height: 1.5;
+  margin-bottom: 15px;
 }
 
-.ai-panel{
-    position:absolute;
-    right:0;
-    bottom:105px;
-
-    width:330px;
-
-    background:rgba(4,10,28,.97);
-    border:1px solid var(--blue);
-    border-radius:18px;
-
-    padding:20px;
-
-    box-shadow:
-    0 0 35px rgba(0,200,255,.3);
-
-    display:none;
+.ai-panel input {
+  margin-bottom: 8px;
 }
 
-.ai-panel.show{
-    display:block;
-    animation:panelIn .25s ease;
-}
-
-@keyframes panelIn{
-    from{
-        opacity:0;
-        transform:translateY(15px) scale(.95);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.ai-panel h3{
-    color:var(--blue);
-    margin-bottom:8px;
-}
-
-.ai-status{
-    color:#7d9bb4;
-    font-size:12px;
-    margin-bottom:12px;
-}
-
-.ai-message{
-    min-height:80px;
-    background:#071127;
-    border-radius:10px;
-    padding:12px;
-    color:#d9efff;
-    margin-bottom:12px;
-}
-
-.ai-controls{
-    display:flex;
-    gap:8px;
-}
-
-.ai-controls button{
-    flex:1;
-    padding:10px;
-    border:1px solid #075d8c;
-    border-radius:8px;
-    background:#081b35;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.ai-controls button:hover{
-    border-color:var(--blue);
-    color:var(--blue);
-}
-
-.ai-input{
-    width:100%;
-    margin-top:10px;
-    padding:11px;
-    background:#030817;
-    border:1px solid #17476d;
-    border-radius:8px;
-    color:white;
-    outline:none;
-}
-
-.ai-input:focus{
-    border-color:var(--blue);
-    box-shadow:0 0 10px rgba(0,200,255,.25);
+.ai-panel button {
+  padding: 10px 15px;
+  border-radius: 9px;
+  border: 0;
+  background: #00aaff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* =========================
-   CART MODAL
+   SUCCESS
 ========================= */
 
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:5000;
-
-    background:rgba(0,0,10,.85);
-    backdrop-filter:blur(8px);
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+.success-box {
+  text-align: center;
+  max-width: 450px;
+  background: #070d20;
+  border: 2px solid #00e1ff;
+  border-radius: 22px;
+  padding: 40px;
+  box-shadow: 0 0 50px rgba(0,190,255,.4);
 }
 
-.modal.show{
-    display:flex;
+.success-icon {
+  font-size: 75px;
+  animation: successPop .7s ease infinite alternate;
 }
 
-.modal-box{
-    width:100%;
-    max-width:520px;
-
-    background:#071127;
-    border:1px solid var(--blue);
-    border-radius:18px;
-
-    padding:25px;
-
-    box-shadow:0 0 45px rgba(0,200,255,.35);
+@keyframes successPop {
+  to {
+    transform: scale(1.12) rotate(4deg);
+  }
 }
 
-.modal-box h2{
-    color:var(--blue);
-    margin-bottom:18px;
-}
-
-.close{
-    float:right;
-    background:none;
-    border:0;
-    color:white;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.cart-item{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #183451;
-}
-
-.total{
-    margin-top:20px;
-    font-size:22px;
-    font-weight:1000;
-    color:#00dcff;
-}
-
-.checkout-btn{
-    width:100%;
-    margin-top:18px;
-    padding:14px;
-    background:linear-gradient(135deg,var(--blue),var(--blue2));
-    border:0;
-    border-radius:9px;
-    color:white;
-    font-weight:1000;
-    cursor:pointer;
+.success-box h2 {
+  color: #00e1ff;
+  margin: 15px 0;
 }
 
 /* =========================
-   FORMS
+   FOOTER
 ========================= */
 
-.form-input{
-    width:100%;
-    margin:8px 0;
-    padding:14px;
-
-    background:#030817;
-    border:1px solid #17476d;
-    border-radius:9px;
-
-    color:white;
-    outline:none;
-}
-
-.form-input:focus{
-    border-color:var(--blue);
-    box-shadow:0 0 12px rgba(0,200,255,.2);
-}
-
-.form-button{
-    width:100%;
-    margin-top:10px;
-    padding:14px;
-
-    background:linear-gradient(135deg,var(--blue),var(--blue2));
-    border:0;
-    border-radius:9px;
-
-    color:white;
-    font-weight:1000;
-    cursor:pointer;
-}
-
-/* =========================
-   SIGN IN
-========================= */
-
-.signin-screen{
-    position:fixed;
-    inset:0;
-    z-index:10000;
-
-    background:
-    radial-gradient(circle at 50% 30%,rgba(0,150,255,.25),transparent 40%),
-    #020611;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.signin-card{
-    width:100%;
-    max-width:430px;
-
-    background:rgba(5,12,32,.95);
-    border:1px solid var(--blue);
-    border-radius:25px;
-
-    padding:35px;
-
-    text-align:center;
-
-    box-shadow:
-    0 0 50px rgba(0,200,255,.25);
-}
-
-.signin-emoji{
-    font-size:70px;
-
-    animation:
-    signinEmoji 2s ease-in-out infinite;
-}
-
-@keyframes signinEmoji{
-    0%,100%{
-        transform:translateY(0) rotate(0);
-    }
-
-    50%{
-        transform:translateY(-10px) rotate(5deg) scale(1.06);
-    }
-}
-
-.signin-card h1{
-    font-size:34px;
-    margin:12px 0;
-
-    color:white;
-
-    text-shadow:
-    3px 3px #000,
-    0 0 15px #008cff;
-}
-
-.signin-card h1 span{
-    color:var(--blue);
-}
-
-.signin-card p{
-    color:#8fa9bd;
-    margin-bottom:22px;
-}
-
-/* animated typing fields */
-
-.animated-input{
-    transition:.2s;
-}
-
-.animated-input:focus{
-    animation:typePulse .7s ease;
-}
-
-@keyframes typePulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.025) translateX(3px)}
-    100%{transform:scale(1)}
-}
-
-.flying-text{
-    position:fixed;
-    pointer-events:none;
-    color:white;
-    font-size:18px;
-    font-weight:1000;
-    text-shadow:2px 2px #000;
-    z-index:11000;
-    animation:fly .8s ease forwards;
-}
-
-@keyframes fly{
-    from{
-        opacity:0;
-        transform:translateY(10px) scale(.5);
-    }
-
-    30%{
-        opacity:1;
-    }
-
-    to{
-        opacity:0;
-        transform:translate(-80px,-80px) scale(1.4) rotate(15deg);
-    }
-}
-
-/* =========================
-   BETA BADGE
-========================= */
-
-.beta{
-    display:inline-block;
-    padding:5px 10px;
-    margin-bottom:15px;
-    border:1px solid var(--blue);
-    border-radius:30px;
-    color:var(--blue);
-    font-size:12px;
-    font-weight:bold;
-    box-shadow:0 0 12px rgba(0,200,255,.25);
+footer {
+  text-align: center;
+  padding: 35px 20px;
+  color: #71889b;
+  border-top: 1px solid #12345b;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width:850px){
+@media(max-width:900px) {
+  .categories,
+  .products {
+    grid-template-columns: repeat(2,1fr);
+  }
 
-    nav ul{
-        display:none;
-    }
-
-    .products{
-        grid-template-columns:repeat(2,1fr);
-    }
+  nav ul {
+    display: none;
+  }
 }
 
-@media(max-width:520px){
+@media(max-width:550px) {
+  .categories,
+  .products {
+    grid-template-columns: 1fr;
+  }
 
-    .products{
-        grid-template-columns:1fr;
-    }
+  .hero {
+    min-height: 560px;
+  }
 
-    .ai-panel{
-        width:290px;
-        right:-5px;
-    }
+  .hero h1 {
+    font-size: 48px;
+  }
 
-    .signin-card{
-        padding:25px 18px;
-    }
+  .nav-buttons .nav-btn:first-child {
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {opacity:0}
+  to {opacity:1}
 }
 </style>
 </head>
@@ -719,347 +859,365 @@ section{
 <body>
 
 <!-- =========================
-     SIGN IN SCREEN
+     HEADER
 ========================= -->
-
-<div id="signinScreen" class="signin-screen">
-
-    <div class="signin-card">
-
-        <div id="signinEmoji" class="signin-emoji">
-            👀
-        </div>
-
-        <div class="beta">
-            BETA VERSION
-        </div>
-
-        <h1>
-            GAME <span>WITHOUT LIMITS</span>
-        </h1>
-
-        <p>
-            Sign in to enter the store.
-        </p>
-
-        <form id="signinForm">
-
-            <input
-                id="username"
-                class="form-input animated-input"
-                type="text"
-                placeholder="Username"
-                required
-            >
-
-            <input
-                id="email"
-                class="form-input animated-input"
-                type="email"
-                placeholder="Email"
-                required
-            >
-
-            <input
-                id="password"
-                class="form-input animated-input"
-                type="password"
-                placeholder="Password"
-                required
-            >
-
-            <button class="form-button">
-                ENTER THE STORE ⚡
-            </button>
-
-        </form>
-
-        <small style="display:block;margin-top:18px;color:#647d91">
-            Beta testing • Official launch: August 20
-        </small>
-
-    </div>
-</div>
-
-
-<!-- =========================
-     WEBSITE
-========================= -->
-
-<div id="website" style="display:none">
 
 <header>
-
 <nav>
 
-    <div class="logo">
-        GAME <span>WITHOUT LIMITS</span>
-    </div>
+  <div class="logo">
+    GAME <span>WITHOUT LIMITS</span>
+  </div>
 
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#shop">Shop</a></li>
-        <li><a href="#about">About</a></li>
-    </ul>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#store">Store</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
 
-    <button class="cart-btn" onclick="openCart()">
-        🛒 Cart (<span id="cartCount">0</span>)
-    </button>
+  <div class="nav-buttons">
+    <button class="nav-btn" onclick="openLogin()">👤 Sign In</button>
+    <button class="nav-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+  </div>
 
 </nav>
-
 </header>
 
 
+<!-- =========================
+     HERO
+========================= -->
+
+<main>
+
 <section class="hero" id="home">
 
-    <div class="stars"></div>
+  <div class="stars"></div>
 
-    <div class="hero-content">
+  <div class="hero-content">
 
-        <div class="beta">
-            BETA • OFFICIAL LAUNCH AUGUST 20
-        </div>
+    <h1>
+      GAME <span>WITHOUT LIMITS</span>
+    </h1>
 
-        <h1>
-            GAME <span>WITHOUT LIMITS</span>
-        </h1>
-
-        <p>
-            Welcome to Game Without Limits.
-            Explore gaming equipment, accessories,
-            phones and cases.
-        </p>
-
-        <button
-            class="hero-btn"
-            onclick="document.getElementById('shop').scrollIntoView()">
-
-            EXPLORE THE STORE ⚡
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     SHOP
-========================= -->
-
-<section id="shop">
-
-    <h2 class="section-title">
-        FEATURED <span>PRODUCTS</span>
-    </h2>
-
-    <div class="products">
-
-        <div class="product">
-
-            <div class="product-image">
-                🎮
-            </div>
-
-            <div class="product-info">
-
-                <h3>Gaming Controller</h3>
-
-                <p>
-                    Gaming controller for your setup.
-                </p>
-
-                <div class="price">
-                    $49.99
-                </div>
-
-                <button
-                    class="add-btn"
-                    onclick="addToCart('Gaming Controller',49.99)">
-
-                    ADD TO CART
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="product">
-
-            <div class="product-image">
-                🎧
-            </div>
-
-            <div class="product-info">
-
-                <h3>Gaming Headset</h3>
-
-                <p>
-                    Immersive gaming headset.
-                </p>
-
-                <div class="price">
-                    $59.99
-                </div>
-
-                <button
-                    class="add-btn"
-                    onclick="addToCart('Gaming Headset',59.99)">
-
-                    ADD TO CART
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="product">
-
-            <div class="product-image">
-                📱
-            </div>
-
-            <div class="product-info">
-
-                <h3>Gaming Phone</h3>
-
-                <p>
-                    Mobile gaming device.
-                </p>
-
-                <div class="price">
-                    $299.99
-                </div>
-
-                <button
-                    class="add-btn"
-                    onclick="addToCart('Gaming Phone',299.99)">
-
-                    ADD TO CART
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="product">
-
-            <div class="product-image">
-                🛡️
-            </div>
-
-            <div class="product-info">
-
-                <h3>Gaming Phone Case</h3>
-
-                <p>
-                    Protective gaming-style case.
-                </p>
-
-                <div class="price">
-                    $19.99
-                </div>
-
-                <button
-                    class="add-btn"
-                    onclick="addToCart('Gaming Phone Case',19.99)">
-
-                    ADD TO CART
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section id="about">
-
-    <h2 class="section-title">
-        ABOUT <span>GAME WITHOUT LIMITS</span>
-    </h2>
-
-    <p style="
-        max-width:750px;
-        margin:auto;
-        text-align:center;
-        color:#9ab3c7;
-        font-size:18px;
-    ">
-
-        Game Without Limits is currently in beta.
-        The official website launch is planned for August 20.
-
+    <p>
+      Level up your setup. Discover gaming equipment,
+      accessories, phones and phone cases.
     </p>
 
+    <a href="#categories" class="btn">
+      EXPLORE STORE ⚡
+    </a>
+
+  </div>
+
 </section>
 
 
 <!-- =========================
-     AI ASSISTANT
+     CATEGORIES
 ========================= -->
 
-<div class="ai">
+<section id="categories">
 
-    <div id="aiPanel" class="ai-panel">
+  <h2 class="section-title">
+    SHOP BY <span>CATEGORY</span>
+  </h2>
 
-        <h3>🤖 GWL Assistant</h3>
+  <div class="categories">
 
-        <div id="aiStatus" class="ai-status">
-            Online • Ready to help
+    <div class="category">
+      <div class="icon">🎮</div>
+      <h3>Gaming Gear</h3>
+      <p>Level up your gaming setup.</p>
+    </div>
+
+    <div class="category">
+      <div class="icon">🎧</div>
+      <h3>Accessories</h3>
+      <p>Accessories for your setup.</p>
+    </div>
+
+    <div class="category">
+      <div class="icon">📱</div>
+      <h3>Phones</h3>
+      <p>Mobile technology.</p>
+    </div>
+
+    <div class="category">
+      <div class="icon">🛡️</div>
+      <h3>Phone Cases</h3>
+      <p>Protect your device.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     STORE
+========================= -->
+
+<section id="store">
+
+  <h2 class="section-title">
+    GAME WITHOUT <span>LIMITS STORE</span>
+  </h2>
+
+  <div class="products">
+
+    <div class="product">
+
+      <div class="product-image">🎮</div>
+
+      <div class="product-info">
+
+        <h3>Pro Gaming Controller</h3>
+
+        <p>Sample gaming controller.</p>
+
+        <div class="price">
+          ₦45,000
         </div>
 
-        <div id="aiMessage" class="ai-message">
-            Hi <span id="aiUsername">gamer</span>!
-            I'm your Game Without Limits assistant.
-            Ask me what is available in the store.
+        <button class="add-btn"
+          onclick="addToCart('Pro Gaming Controller',45000)">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="product">
+
+      <div class="product-image">🎧</div>
+
+      <div class="product-info">
+
+        <h3>Gaming Headset</h3>
+
+        <p>Sample wireless gaming headset.</p>
+
+        <div class="price">
+          ₦65,000
         </div>
+
+        <button class="add-btn"
+          onclick="addToCart('Gaming Headset',65000)">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="product">
+
+      <div class="product-image">📱</div>
+
+      <div class="product-info">
+
+        <h3>Gaming Smartphone</h3>
+
+        <p>Sample gaming smartphone.</p>
+
+        <div class="price">
+          ₦350,000
+        </div>
+
+        <button class="add-btn"
+          onclick="addToCart('Gaming Smartphone',350000)">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="product">
+
+      <div class="product-image">🛡️</div>
+
+      <div class="product-info">
+
+        <h3>Gaming Phone Case</h3>
+
+        <p>Sample protective phone case.</p>
+
+        <div class="price">
+          ₦15,000
+        </div>
+
+        <button class="add-btn"
+          onclick="addToCart('Gaming Phone Case',15000)">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section id="about" class="about">
+
+  <h2 class="section-title">
+    ABOUT <span>GAME WITHOUT LIMITS</span>
+  </h2>
+
+  <p>
+    Welcome to Game Without Limits — a gaming and technology
+    marketplace. This website is currently in beta and is
+    being prepared for its official launch on August 20.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section>
+
+  <h2 class="section-title">
+    CONTACT <span>US</span>
+  </h2>
+
+  <div class="contact-box">
+
+    <form onsubmit="sendMessage(event)">
+
+      <input
+        type="text"
+        placeholder="Your name"
+        required>
+
+      <input
+        type="email"
+        placeholder="Your email"
+        required>
+
+      <textarea
+        placeholder="Your message"
+        required></textarea>
+
+      <button class="submit">
+        SEND MESSAGE
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     LOGIN MODAL
+========================= -->
+
+<div class="modal" id="loginModal">
+
+  <div class="login-card">
+
+    <button class="close" onclick="closeLogin()">×</button>
+
+    <div class="emoji-stage">
+
+      <div class="emoji" id="emoji">
+        👀
+      </div>
+
+    </div>
+
+    <h2 class="login-title">
+      WELCOME GAMER
+    </h2>
+
+    <p class="beta">
+      🚀 BETA • OFFICIAL LAUNCH: AUGUST 20
+    </p>
+
+    <form onsubmit="signIn(event)">
+
+      <div class="input-wrap" id="usernameWrap">
+
+        <label>Username</label>
 
         <input
-            id="aiInput"
-            class="ai-input"
-            type="text"
-            placeholder="Ask about the store..."
-        >
+          id="username"
+          type="text"
+          placeholder="Enter your username"
+          required>
 
-        <div class="ai-controls">
+        <span class="fly-text" id="usernameFly">
+          ✨
+        </span>
 
-            <button onclick="askAI()">
-                SEND
-            </button>
-
-            <button onclick="startListening()">
-                🎙️ TALK
-            </button>
-
-            <button onclick="stopSpeaking()">
-                🔇 STOP
-            </button>
-
-        </div>
-
-    </div>
+      </div>
 
 
-    <div
-        id="aiCharacter"
-        class="ai-character"
-        onclick="toggleAI()">
+      <div class="input-wrap" id="emailWrap">
 
-        🤖
+        <label>Email</label>
 
-    </div>
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          required>
+
+        <span class="fly-text" id="emailFly">
+          💫
+        </span>
+
+      </div>
+
+
+      <div class="input-wrap" id="passwordWrap">
+
+        <label>Password</label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          required>
+
+        <span class="fly-text" id="passwordFly">
+          🔐
+        </span>
+
+      </div>
+
+
+      <button class="login-submit">
+        SIGN IN ⚡
+      </button>
+
+    </form>
+
+    <p class="login-note">
+      Your Store access will unlock after signing in.
+    </p>
+
+  </div>
 
 </div>
 
@@ -1068,826 +1226,853 @@ section{
      CART
 ========================= -->
 
-<div id="cartModal" class="modal">
+<div class="cart-panel" id="cartPanel">
 
-    <div class="modal-box">
+  <div class="cart-head">
 
-        <button class="close" onclick="closeCart()">×</button>
+    <h2>🛒 YOUR CART</h2>
 
-        <h2>🛒 YOUR CART</h2>
+    <button onclick="closeCart()">×</button>
 
-        <div id="cartItems"></div>
+  </div>
 
-        <div class="total">
-            Total: $<span id="cartTotal">0.00</span>
-        </div>
+  <div id="cartItems"></div>
 
-        <button
-            class="checkout-btn"
-            onclick="openCheckout()">
+  <div class="cart-total">
+    Total: ₦<span id="cartTotal">0</span>
+  </div>
 
-            OFFICIAL CHECKOUT →
-
-        </button>
-
-    </div>
+  <button class="checkout-btn" onclick="openCheckout()">
+    OFFICIAL CHECKOUT →
+  </button>
 
 </div>
 
 
 <!-- =========================
-     CHECKOUT
+     CHECKOUT MODAL
 ========================= -->
 
-<div id="checkoutModal" class="modal">
+<div class="modal" id="checkoutModal">
 
-    <div class="modal-box">
+  <div class="checkout-box">
 
-        <button class="close" onclick="closeCheckout()">×</button>
+    <button class="close" onclick="closeCheckout()">×</button>
 
-        <h2>CHECKOUT</h2>
+    <h2>SECURE CHECKOUT</h2>
 
-        <p style="color:#8da8bc;margin-bottom:15px">
-            Test checkout • No real payment will be taken.
-        </p>
+    <p style="color:#8fb6ca;margin-top:8px">
+      Choose your currency and payment method.
+    </p>
 
-        <input
-            id="checkoutName"
-            class="form-input"
-            placeholder="Full name"
-            required
-        >
 
-        <input
-            id="checkoutEmail"
-            class="form-input"
-            placeholder="Email"
-            type="email"
-            required
-        >
+    <div class="currency">
 
-        <input
-            id="checkoutAddress"
-            class="form-input"
-            placeholder="Delivery address"
-            required
-        >
+      <button
+        id="ngnBtn"
+        class="active"
+        onclick="setCurrency('NGN')">
+        🇳🇬 NGN ₦
+      </button>
 
-        <button
-            class="checkout-btn"
-            onclick="openPayment()">
-
-            CONTINUE TO PAYMENT →
-
-        </button>
+      <button
+        id="usdBtn"
+        onclick="setCurrency('USD')">
+        🇺🇸 USD $
+      </button>
 
     </div>
+
+
+    <h3>Payment Method</h3>
+
+    <div class="payment-options">
+
+      <button
+        class="payment-option selected"
+        onclick="selectPayment(this,'Card')">
+        💳 Card
+      </button>
+
+      <button
+        class="payment-option"
+        onclick="selectPayment(this,'Bank Transfer')">
+        🏦 Bank Transfer
+      </button>
+
+      <button
+        class="payment-option"
+        onclick="selectPayment(this,'PayPal')">
+        🅿️ PayPal
+      </button>
+
+    </div>
+
+
+    <div class="cart-total">
+      Amount:
+      <span id="checkoutAmount">₦0</span>
+    </div>
+
+    <button
+      class="checkout-btn"
+      onclick="processDemoPayment()">
+      CONTINUE TO PAYMENT
+    </button>
+
+    <p style="font-size:12px;color:#71889b;margin-top:15px;text-align:center">
+      DEMO MODE — no real money will be charged.
+      Connect your approved payment provider for live payments.
+    </p>
+
+  </div>
 
 </div>
 
 
 <!-- =========================
-     PAYMENT
+     SUCCESS MODAL
 ========================= -->
 
-<div id="paymentModal" class="modal">
+<div class="modal" id="successModal">
 
-    <div class="modal-box">
+  <div class="success-box">
 
-        <button class="close" onclick="closePayment()">×</button>
-
-        <h2>💳 TEST PAYMENT</h2>
-
-        <p style="color:#8da8bc;margin-bottom:15px">
-
-            TEST MODE — this payment is simulated.
-            No real money will move.
-
-        </p>
-
-        <button
-            class="checkout-btn"
-            onclick="completeTestPayment()">
-
-            CONFIRM TEST PAYMENT
-
-        </button>
-
+    <div class="success-icon">
+      🎉
     </div>
+
+    <h2>ORDER CONFIRMED!</h2>
+
+    <p id="successText">
+      Your demo order has been created successfully.
+    </p>
+
+    <br>
+
+    <button
+      class="checkout-btn"
+      onclick="closeSuccess()">
+      CONTINUE SHOPPING
+    </button>
+
+  </div>
 
 </div>
 
 
 <!-- =========================
-     CONFIRMATION
+     AI ASSISTANT
 ========================= -->
 
-<div id="confirmationModal" class="modal">
+<button
+  class="ai-button"
+  onclick="toggleAI()">
+  🤖
+</button>
 
-    <div class="modal-box" style="text-align:center">
+<div class="ai-panel" id="aiPanel">
 
-        <div style="font-size:65px">
-            🎉
-        </div>
+  <h3 style="color:#00d9ff;margin-bottom:10px">
+    🤖 Game Without Limits AI
+  </h3>
 
-        <h2>ORDER CONFIRMED!</h2>
+  <div class="ai-message" id="aiMessage">
+    Hi gamer! I'm your Game Without Limits assistant.
+    Ask me what is available in the Store.
+  </div>
 
-        <p id="confirmationText"
-           style="color:#a6bfd0;margin-top:10px">
-        </p>
+  <input
+    id="aiInput"
+    placeholder="Ask me something..."
+    onkeydown="if(event.key==='Enter')askAI()">
 
-        <button
-            class="checkout-btn"
-            onclick="closeConfirmation()">
+  <button onclick="askAI()">
+    ASK AI
+  </button>
 
-            BACK TO STORE
-
-        </button>
-
-    </div>
+  <button onclick="speakCurrentAI()">
+    🔊 Speak
+  </button>
 
 </div>
+
+
+<footer>
+
+  <p>
+    © 2026 Game Without Limits.
+  </p>
+
+  <p>
+    Level up. Play harder. Game without limits.
+  </p>
+
+</footer>
 
 
 <script>
 
-/* =====================================================
+/* =========================
    USER
-===================================================== */
+========================= */
 
-let currentUser = "";
+let currentUser = null;
+
+
+/* =========================
+   CART
+========================= */
 
 let cart = [];
 
+let currency = "NGN";
 
-/* =====================================================
-   SIGN IN
-===================================================== */
-
-document
-.getElementById("signinForm")
-.addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-    currentUser =
-        document.getElementById("username").value.trim();
-
-    if(!currentUser){
-        return;
-    }
-
-    document
-    .getElementById("signinScreen")
-    .style.display="none";
-
-    document
-    .getElementById("website")
-    .style.display="block";
-
-    document
-    .getElementById("aiUsername")
-    .textContent=currentUser;
-
-    speak(
-        "Welcome " +
-        currentUser +
-        "! I'm your Game Without Limits assistant. " +
-        "The website is currently in beta and is planned to officially launch on August twentieth."
-    );
-
-});
+let selectedPayment = "Card";
 
 
-/* =====================================================
-   EMOJI + TYPING ANIMATION
-===================================================== */
+function addToCart(name, price) {
 
-document
-.querySelectorAll(".animated-input")
-.forEach(input=>{
+  if (!currentUser) {
 
-    input.addEventListener("input",function(){
+    alert("🔐 Please sign in before accessing the Store.");
 
-        const rect=this.getBoundingClientRect();
+    openLogin();
 
-        const word=document.createElement("div");
+    return;
+  }
 
-        word.className="flying-text";
+  cart.push({
+    name: name,
+    price: price
+  });
 
-        word.textContent=
-            this.type==="password"
-            ? "✦"
-            : this.value.slice(-1);
+  updateCart();
 
-        word.style.left=rect.right-45+"px";
+  speak("Added " + name + " to your cart.");
 
-        word.style.top=rect.top+"px";
-
-        document.body.appendChild(word);
-
-        setTimeout(()=>{
-            word.remove();
-        },800);
-
-        document
-        .getElementById("signinEmoji")
-        .textContent=
-            this.type==="password"
-            ? "🙈"
-            : "👀";
-
-    });
-
-});
-
-
-/* =====================================================
-   CART
-===================================================== */
-
-function addToCart(name,price){
-
-    cart.push({
-        name:name,
-        price:price
-    });
-
-    updateCart();
-
-    aiSay(
-        name +
-        " has been added to your cart."
-    );
 }
 
 
-function updateCart(){
+function updateCart() {
 
-    document
-    .getElementById("cartCount")
-    .textContent=cart.length;
+  document.getElementById("cartCount").textContent =
+    cart.length;
 
-    const container=
-        document.getElementById("cartItems");
+  const container =
+    document.getElementById("cartItems");
 
-    container.innerHTML="";
+  container.innerHTML = "";
 
-    let total=0;
+  let total = 0;
 
-    cart.forEach((item,index)=>{
+  cart.forEach((item,index) => {
 
-        total+=item.price;
+    total += item.price;
 
-        const row=
-            document.createElement("div");
+    const div =
+      document.createElement("div");
 
-        row.className="cart-item";
+    div.className = "cart-item";
 
-        row.innerHTML=`
-            <span>${item.name}</span>
-            <strong>$${item.price.toFixed(2)}</strong>
-        `;
+    div.innerHTML = `
+      <strong>${item.name}</strong>
+      <br>
+      <span style="color:#00d9ff">
+        ₦${item.price.toLocaleString()}
+      </span>
+      <br>
+      <button
+        style="margin-top:8px;background:#071126;color:#ff6688;border:1px solid #ff6688;padding:6px 10px;border-radius:7px;cursor:pointer"
+        onclick="removeCartItem(${index})">
+        Remove
+      </button>
+    `;
 
-        container.appendChild(row);
+    container.appendChild(div);
 
-    });
+  });
 
-    document
-    .getElementById("cartTotal")
-    .textContent=total.toFixed(2);
+  document.getElementById("cartTotal").textContent =
+    total.toLocaleString();
+
+  updateCheckoutAmount();
+
 }
 
 
-function openCart(){
+function removeCartItem(index) {
 
-    document
-    .getElementById("cartModal")
+  cart.splice(index,1);
+
+  updateCart();
+
+}
+
+
+function openCart() {
+
+  if (!currentUser) {
+
+    alert("🔐 Sign in first to use the Store.");
+
+    openLogin();
+
+    return;
+  }
+
+  document
+    .getElementById("cartPanel")
+    .classList.add("open");
+
+}
+
+
+function closeCart() {
+
+  document
+    .getElementById("cartPanel")
+    .classList.remove("open");
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin() {
+
+  document
+    .getElementById("loginModal")
     .classList.add("show");
 
-    updateCart();
-
 }
 
 
-function closeCart(){
+function closeLogin() {
 
-    document
-    .getElementById("cartModal")
+  document
+    .getElementById("loginModal")
     .classList.remove("show");
 
 }
 
 
-/* =====================================================
+function signIn(event) {
+
+  event.preventDefault();
+
+  const username =
+    document.getElementById("username").value.trim();
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  if (!username || !email || !password) {
+
+    return;
+
+  }
+
+  currentUser = {
+    username: username,
+    email: email
+  };
+
+  document.getElementById("loginModal")
+    .classList.remove("show");
+
+  document.getElementById("store")
+    .style.display = "block";
+
+  document.getElementById("store")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+  speak(
+    "Welcome " +
+    username +
+    "! You are now signed in to Game Without Limits. " +
+    "The website is currently in beta and is planned for official launch on August 20. " +
+    "I'll help you explore the store."
+  );
+
+}
+
+
+/* =========================
+   INPUT ANIMATION
+========================= */
+
+function setupTyping(inputId,wrapId,flyId) {
+
+  const input =
+    document.getElementById(inputId);
+
+  const wrap =
+    document.getElementById(wrapId);
+
+  const fly =
+    document.getElementById(flyId);
+
+  input.addEventListener("input",function() {
+
+    wrap.classList.remove("typing");
+
+    void wrap.offsetWidth;
+
+    wrap.classList.add("typing");
+
+    document
+      .getElementById("emoji")
+      .classList.add("watch");
+
+    fly.classList.remove("active");
+
+    void fly.offsetWidth;
+
+    fly.classList.add("active");
+
+    setTimeout(() => {
+
+      document
+        .getElementById("emoji")
+        .classList.remove("watch");
+
+    },450);
+
+  });
+
+}
+
+
+setupTyping(
+  "username",
+  "usernameWrap",
+  "usernameFly"
+);
+
+setupTyping(
+  "email",
+  "emailWrap",
+  "emailFly"
+);
+
+setupTyping(
+  "password",
+  "passwordWrap",
+  "passwordFly"
+);
+
+
+/* =========================
    CHECKOUT
-===================================================== */
+========================= */
 
-function openCheckout(){
+function openCheckout() {
 
-    if(cart.length===0){
+  if (cart.length === 0) {
 
-        aiSay(
-            "Your cart is empty. Let me know what kind of gaming gear you're looking for."
-        );
+    alert("Your cart is empty.");
 
-        return;
-    }
+    return;
 
-    closeCart();
+  }
 
-    document
+  closeCart();
+
+  document
     .getElementById("checkoutModal")
     .classList.add("show");
+
+  updateCheckoutAmount();
+
 }
 
 
-function closeCheckout(){
+function closeCheckout() {
 
-    document
+  document
     .getElementById("checkoutModal")
     .classList.remove("show");
 
 }
 
 
-/* =====================================================
-   PAYMENT
-===================================================== */
+function selectPayment(button,method) {
 
-function openPayment(){
-
-    const name=
-        document.getElementById("checkoutName").value;
-
-    const email=
-        document.getElementById("checkoutEmail").value;
-
-    const address=
-        document.getElementById("checkoutAddress").value;
-
-    if(!name || !email || !address){
-
-        alert("Please complete the checkout details.");
-
-        return;
-    }
-
-    closeCheckout();
-
-    document
-    .getElementById("paymentModal")
-    .classList.add("show");
-}
-
-
-function closePayment(){
-
-    document
-    .getElementById("paymentModal")
-    .classList.remove("show");
-
-}
-
-
-/* =====================================================
-   TEST PAYMENT
-===================================================== */
-
-function completeTestPayment(){
-
-    closePayment();
-
-    const orderNumber=
-        "GWL-" +
-        Math.floor(
-            100000+
-            Math.random()*900000
-        );
-
-    document
-    .getElementById("confirmationText")
-    .textContent=
-        "Thanks " +
-        currentUser +
-        "! Your TEST order " +
-        orderNumber +
-        " has been created. No real payment was processed.";
-
-    document
-    .getElementById("confirmationModal")
-    .classList.add("show");
-
-    cart=[];
-
-    updateCart();
-
-    speak(
-        "Great " +
-        currentUser +
-        "! Your test order has been confirmed."
+  document
+    .querySelectorAll(".payment-option")
+    .forEach(btn =>
+      btn.classList.remove("selected")
     );
+
+  button.classList.add("selected");
+
+  selectedPayment = method;
+
+  speak(
+    method +
+    " selected as your payment method."
+  );
+
 }
 
 
-function closeConfirmation(){
+function setCurrency(type) {
 
-    document
-    .getElementById("confirmationModal")
+  currency = type;
+
+  document
+    .getElementById("ngnBtn")
+    .classList.toggle(
+      "active",
+      type === "NGN"
+    );
+
+  document
+    .getElementById("usdBtn")
+    .classList.toggle(
+      "active",
+      type === "USD"
+    );
+
+  updateCheckoutAmount();
+
+}
+
+
+function updateCheckoutAmount() {
+
+  let total = cart.reduce(
+    (sum,item) => sum + item.price,
+    0
+  );
+
+  if (currency === "NGN") {
+
+    document.getElementById(
+      "checkoutAmount"
+    ).textContent =
+      "₦" + total.toLocaleString();
+
+  } else {
+
+    /*
+      Demo conversion only.
+      Replace with live exchange-rate logic
+      when your real payment provider is connected.
+    */
+
+    const usd =
+      total / 1500;
+
+    document.getElementById(
+      "checkoutAmount"
+    ).textContent =
+      "$" + usd.toFixed(2);
+
+  }
+
+}
+
+
+/* =========================
+   DEMO PAYMENT
+========================= */
+
+function processDemoPayment() {
+
+  closeCheckout();
+
+  document
+    .getElementById("successModal")
+    .classList.add("show");
+
+  const name =
+    currentUser
+      ? currentUser.username
+      : "Gamer";
+
+  document.getElementById(
+    "successText"
+  ).textContent =
+    "Great job, " +
+    name +
+    "! Your demo order has been created using " +
+    selectedPayment +
+    ". No real money was charged.";
+
+  speak(
+    "Order confirmed, " +
+    name +
+    ". This was a demo payment, so no real money was charged."
+  );
+
+  cart = [];
+
+  updateCart();
+
+}
+
+
+function closeSuccess() {
+
+  document
+    .getElementById("successModal")
     .classList.remove("show");
 
 }
 
 
-/* =====================================================
+/* =========================
+   AI VOICE
+========================= */
+
+function speak(text) {
+
+  if (!("speechSynthesis" in window)) {
+
+    return;
+
+  }
+
+  window.speechSynthesis.cancel();
+
+  const voice =
+    new SpeechSynthesisUtterance(text);
+
+  voice.rate = .92;
+  voice.pitch = 1.03;
+  voice.volume = 1;
+
+  const voices =
+    window.speechSynthesis.getVoices();
+
+  const preferred =
+    voices.find(v =>
+      /Google|Microsoft|Samantha|Natural/i
+        .test(v.name)
+    );
+
+  if (preferred) {
+    voice.voice = preferred;
+  }
+
+  window.speechSynthesis.speak(voice);
+
+}
+
+
+function speakCurrentAI() {
+
+  const text =
+    document.getElementById(
+      "aiMessage"
+    ).textContent;
+
+  speak(text);
+
+}
+
+
+/* =========================
+   AUTOMATIC AI WELCOME
+========================= */
+
+function automaticWelcome() {
+
+  const message =
+    "Welcome to Game Without Limits! " +
+    "I'm your AI gaming assistant. " +
+    "This website is currently in beta and is planned for official launch on August 20. " +
+    "Sign in to unlock the Store and explore our gaming equipment, accessories, phones and phone cases.";
+
+  /*
+    Browsers can block automatic speech until
+    the visitor interacts with the page.
+    We therefore try automatically and also
+    provide the AI button as a fallback.
+  */
+
+  setTimeout(() => {
+
+    speak(message);
+
+  },1200);
+
+}
+
+
+window.addEventListener(
+  "load",
+  automaticWelcome
+);
+
+
+/* =========================
    AI PANEL
-===================================================== */
+========================= */
 
-function toggleAI(){
+function toggleAI() {
 
-    document
+  document
     .getElementById("aiPanel")
     .classList.toggle("show");
 
 }
 
 
-function aiSay(message){
+function askAI() {
 
+  const input =
     document
-    .getElementById("aiMessage")
-    .textContent=message;
+      .getElementById("aiInput")
+      .value
+      .toLowerCase()
+      .trim();
 
-    speak(message);
+  let response = "";
+
+  if (!input) {
+
+    response =
+      "Ask me about gaming controllers, headsets, phones, phone cases, your cart, or checkout.";
+
+  }
+
+  else if (
+    input.includes("controller")
+  ) {
+
+    response =
+      "We currently have a sample Pro Gaming Controller listed for ₦45,000.";
+
+  }
+
+  else if (
+    input.includes("headset")
+  ) {
+
+    response =
+      "We currently have a sample Gaming Headset listed for ₦65,000.";
+
+  }
+
+  else if (
+    input.includes("phone")
+  ) {
+
+    response =
+      "We currently have a sample Gaming Smartphone listed for ₦350,000.";
+
+  }
+
+  else if (
+    input.includes("case")
+  ) {
+
+    response =
+      "We currently have a sample Gaming Phone Case listed for ₦15,000.";
+
+  }
+
+  else if (
+    input.includes("store")
+  ) {
+
+    response =
+      currentUser
+        ? "The Store is unlocked for you. You can browse the products and add items to your cart."
+        : "The Store requires you to sign in first.";
+
+  }
+
+  else if (
+    input.includes("payment") ||
+    input.includes("pay")
+  ) {
+
+    response =
+      "The demo checkout supports Card, Bank Transfer and PayPal selection, with NGN and USD display.";
+
+  }
+
+  else if (
+    input.includes("hello") ||
+    input.includes("hi")
+  ) {
+
+    response =
+      "Hey gamer! Welcome to Game Without Limits.";
+
+  }
+
+  else {
+
+    response =
+      "I'm your Game Without Limits assistant. Ask me about products, the Store, checkout or payment options.";
+
+  }
+
+  if (currentUser) {
+
+    response =
+      currentUser.username +
+      ", " +
+      response;
+
+  }
+
+  document.getElementById(
+    "aiMessage"
+  ).textContent = response;
+
+  speak(response);
 
 }
 
 
-/* =====================================================
-   STORE KNOWLEDGE
-===================================================== */
+/* =========================
+   CONTACT
+========================= */
 
-const storeProducts=[
+function sendMessage(event) {
 
-    {
-        name:"Gaming Controller",
-        price:"$49.99",
-        keywords:[
-            "controller",
-            "gamepad",
-            "gaming controller"
-        ]
-    },
+  event.preventDefault();
 
-    {
-        name:"Gaming Headset",
-        price:"$59.99",
-        keywords:[
-            "headset",
-            "headphones",
-            "audio"
-        ]
-    },
-
-    {
-        name:"Gaming Phone",
-        price:"$299.99",
-        keywords:[
-            "phone",
-            "gaming phone",
-            "mobile"
-        ]
-    },
-
-    {
-        name:"Gaming Phone Case",
-        price:"$19.99",
-        keywords:[
-            "case",
-            "phone case",
-            "cover"
-        ]
-    }
-
-];
-
-
-/* =====================================================
-   INTERACTIVE AI
-===================================================== */
-
-function askAI(){
-
-    const input=
-        document
-        .getElementById("aiInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-    if(!input){
-        return;
-    }
-
-    let answer="";
-
-    if(
-        input.includes("hello") ||
-        input.includes("hi") ||
-        input.includes("hey")
-    ){
-
-        answer=
-            "Hey " +
-            currentUser +
-            "! I'm ready to help you explore Game Without Limits.";
-
-    }
-
-    else if(
-        input.includes("available") ||
-        input.includes("what do you have") ||
-        input.includes("products") ||
-        input.includes("store")
-    ){
-
-        answer=
-            "Right now the beta store has a Gaming Controller for $49.99, a Gaming Headset for $59.99, a Gaming Phone for $299.99, and a Gaming Phone Case for $19.99.";
-
-    }
-
-    else if(
-        input.includes("controller")
-    ){
-
-        answer=
-            "We currently have the Gaming Controller available for $49.99.";
-
-    }
-
-    else if(
-        input.includes("headset") ||
-        input.includes("headphone")
-    ){
-
-        answer=
-            "The Gaming Headset is currently listed at $59.99.";
-
-    }
-
-    else if(
-        input.includes("phone")
-    ){
-
-        answer=
-            "The Gaming Phone is listed at $299.99. We also have a Gaming Phone Case for $19.99.";
-
-    }
-
-    else if(
-        input.includes("case")
-    ){
-
-        answer=
-            "The Gaming Phone Case is currently listed at $19.99.";
-
-    }
-
-    else if(
-        input.includes("price") ||
-        input.includes("cost") ||
-        input.includes("how much")
-    ){
-
-        answer=
-            "Our current listed prices are $49.99 for the controller, $59.99 for the headset, $299.99 for the gaming phone, and $19.99 for the phone case.";
-
-    }
-
-    else if(
-        input.includes("cart")
-    ){
-
-        if(cart.length===0){
-
-            answer=
-                "Your cart is currently empty.";
-
-        }else{
-
-            answer=
-                "You currently have " +
-                cart.length +
-                " item" +
-                (cart.length>1?"s":"") +
-                " in your cart.";
-
-        }
-
-    }
-
-    else if(
-        input.includes("beta") ||
-        input.includes("launch")
-    ){
-
-        answer=
-            "You're currently using the beta version of Game Without Limits. The planned official launch date is August 20.";
-
-    }
-
-    else{
-
-        answer=
-            "I can help you explore the store. Try asking me what's available, how much a controller costs, what headsets we have, or what's in your cart.";
-
-    }
-
-    document
-    .getElementById("aiMessage")
-    .textContent=answer;
-
-    document
-    .getElementById("aiInput")
-    .value="";
-
-    speak(answer);
+  alert(
+    "Thanks! Your message form is ready for connection to your real contact system."
+  );
 
 }
 
 
-/* ENTER TO ASK */
+/* =========================
+   USER EXPERIENCE
+========================= */
 
-document
-.getElementById("aiInput")
-.addEventListener("keydown",function(event){
-
-    if(event.key==="Enter"){
-
-        event.preventDefault();
-
-        askAI();
-
-    }
-
-});
-
-
-/* =====================================================
-   REAL-TIME SPEECH
-===================================================== */
-
-let recognition=null;
-
-function startListening(){
-
-    const SpeechRecognition=
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-    if(!SpeechRecognition){
-
-        aiSay(
-            "Voice recognition isn't supported by this browser. Try Chrome or another browser with speech recognition enabled."
-        );
-
-        return;
-    }
-
-    recognition=new SpeechRecognition();
-
-    recognition.lang="en-US";
-
-    recognition.interimResults=false;
-
-    recognition.maxAlternatives=1;
-
-    recognition.onstart=function(){
-
-        document
-        .getElementById("aiCharacter")
-        .classList.add("listening");
-
-        document
-        .getElementById("aiStatus")
-        .textContent=
-            "Listening... talk to me.";
-
-        document
-        .getElementById("aiMessage")
-        .textContent=
-            "I'm listening 👂";
-
-    };
-
-    recognition.onresult=function(event){
-
-        const transcript=
-            event.results[0][0].transcript;
-
-        document
-        .getElementById("aiInput")
-        .value=transcript;
-
-        askAI();
-
-    };
-
-    recognition.onerror=function(){
-
-        document
-        .getElementById("aiStatus")
-        .textContent=
-            "Voice input unavailable.";
-
-        document
-        .getElementById("aiCharacter")
-        .classList.remove("listening");
-
-    };
-
-    recognition.onend=function(){
-
-        document
-        .getElementById("aiCharacter")
-        .classList.remove("listening");
-
-        document
-        .getElementById("aiStatus")
-        .textContent=
-            "Online • Ready to help";
-
-    };
-
-    recognition.start();
-
-}
-
-
-/* =====================================================
-   REALISTIC-ISH VOICE
-===================================================== */
-
-function speak(text){
-
-    if(!("speechSynthesis" in window)){
-        return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const utterance=
-        new SpeechSynthesisUtterance(text);
-
-    utterance.rate=.94;
-
-    utterance.pitch=.88;
-
-    utterance.volume=1;
-
-    const voices=
-        window.speechSynthesis.getVoices();
+document.addEventListener(
+  "click",
+  function() {
 
     /*
-       Prefer voices that are commonly
-       more natural sounding when available.
+      Browsers commonly require a user gesture
+      before allowing spoken audio.
+      Once the visitor clicks, make the AI welcome
+      available.
     */
 
-    const preferred=
-        voices.find(v=>
-            /Samantha|Google US English|Microsoft.*Online|Natural|Premium|Neural/i
-            .test(v.name)
-        );
-
-    if(preferred){
-        utterance.voice=preferred;
-    }
-
-    window.speechSynthesis.speak(utterance);
-
-}
-
-
-function stopSpeaking(){
-
-    if("speechSynthesis" in window){
-        speechSynthesis.cancel();
-    }
-
-}
-
-
-/* Some browsers load voices asynchronously */
-
-if("speechSynthesis" in window){
-
-    speechSynthesis.onvoiceschanged=function(){
-        speechSynthesis.getVoices();
-    };
-
-}
+  },
+  {once:true}
+);
 
 </script>
 
 </body>
-                   </html>
+    </html>
