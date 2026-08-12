@@ -1,7 +1,56 @@
-<!-- Account Button -->
-<div class="account-area">
-  <button class="account-btn" onclick="openAccount()">
-    👤 SIGN UP / SIGN IN
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Without Limits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #050713;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+        }
+        p {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .signin-form input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 300px;
+        }
+        .signin-form button {
+            padding: 10px 20px;
+            background: #00bcd4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        #emoji {
+            font-size: 40px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Game Without Limits</h1>
+    <p>This is a place where you can get affordable gaming accessories for a great price. There is no limit to gaming!</p>
+    <div class="signin-form">
+        <form id="signinForm" onsubmit="handleSignIn(event)">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password"
   </button>
 </div>
 
