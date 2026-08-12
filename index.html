@@ -4,44 +4,565 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Without Limits</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #050713;
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top, #20265f 0%, #090b1c 45%, #03040b 100%);
             color: white;
-            padding: 50px;
+        }
+
+        /* =========================
+           SIGN-IN SCREEN
+        ========================== */
+
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(2, 3, 12, 0.97);
+            overflow-y: auto;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 460px;
+            padding: 35px 28px;
+            border-radius: 28px;
+            text-align: center;
+            background: linear-gradient(145deg, #171a3b, #090b1c);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.65),
+                0 0 50px rgba(83,91,255,0.12);
+        }
+
+        /* Animated character */
+
+        .character {
+            width: 105px;
+            height: 105px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            background: linear-gradient(145deg, #292e70, #10132e);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            transition: transform 0.25s ease;
+        }
+
+        .character.typing {
+            animation: bounce 0.7s infinite alternate;
+        }
+
+        .character.happy {
+            transform: scale(1.08);
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-7px);
+            }
+        }
+
+        .login-card h1 {
+            margin: 5px 0 8px;
+            font-size: clamp(30px, 8vw, 46px);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+        .welcome {
+            margin: 0 auto 25px;
+            max-width: 370px;
+            color: #c5c8e8;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .signin-title {
+            margin: 10px 0 18px;
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        /* Inputs */
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #dfe2ff;
+            font-weight: 700;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid #353a69;
+            outline: none;
+            background: #070918;
+            color: white;
+            font-size: 16px;
+            transition: 0.2s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #6670ff;
+            box-shadow: 0 0 0 3px rgba(102,112,255,0.15);
+        }
+
+        /* Main sign-in button */
+
+        .signin-button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 17px;
+            border: 0;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #6570ff, #8b5cff);
+            color: white;
+            font-size: 19px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(101,112,255,0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .signin-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(101,112,255,0.4);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: #777caa;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: #303458;
+        }
+
+        /* Social buttons */
+
+        .social-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border-radius: 13px;
+            border: 1px solid #34385e;
+            background: #11142b;
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .social-button:hover {
+            background: #1b1f40;
+            transform: translateY(-1px);
+        }
+
+        .social-button.google {
+            border-color: #4285f4;
+        }
+
+        .social-button.facebook {
+            border-color: #1877f2;
+        }
+
+        .social-button.apple {
+            border-color: #777;
+        }
+
+        .small-note {
+            margin-top: 20px;
+            color: #777caa;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           STORE
+        ========================== */
+
+        #store {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .store-header {
+            padding: 25px;
+            text-align: center;
+            background: #0b0e21;
+            border-bottom: 1px solid #24284b;
+        }
+
+        .store-header h2 {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .store-header p {
+            color: #aaaed0;
+        }
+
+        .store-content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px;
             text-align: center;
         }
-        h1 {
-            font-size: 48px;
+
+        .store-content h3 {
+            font-size: 32px;
+            font-weight: 900;
         }
-        p {
-            font-size: 20px;
-            margin-top: 10px;
+
+        .store-content p {
+            color: #b9bdd8;
+            font-size: 17px;
         }
-        .signin-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 40px;
-        }
-        .signin-form input {
-            margin: 10px 0;
-            padding: 10px;
-            width: 300px;
-        }
-        .signin-form button {
-            padding: 10px 20px;
-            background: #00bcd4;
+
+        .logout-button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: 1px solid #ff5577;
+            border-radius: 12px;
+            background: transparent;
             color: white;
-            border: none;
             cursor: pointer;
-            font-size: 18px;
+            font-weight: 700;
         }
-        #emoji {
-            font-size: 40px;
-            margin-top: 20px;
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         SIGN-IN SCREEN
+    ========================== -->
+
+    <div id="loginScreen">
+
+        <div class="login-card">
+
+            <div id="character" class="character">🙂</div>
+
+            <h1>Welcome to Gaming Dalvin</h1>
+
+            <p class="welcome">
+                Welcome to Game Without Limits, where you can get
+                affordable gaming accessories for a great and affordable
+                price. There is no limit to gaming.
+            </p>
+
+            <div class="signin-title">
+                SIGN IN
+            </div>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input
+                        id="username"
+                        type="text"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button class="signin-button" type="submit">
+                    SIGN IN
+                </button>
+
+            </form>
+
+            <div class="divider">
+                OR
+            </div>
+
+            <!-- Connect these buttons to official OAuth providers
+                 when you add real authentication. -->
+
+            <button
+                class="social-button google"
+                type="button"
+                onclick="socialLogin('Google')">
+                🔵 Continue with Google
+            </button>
+
+            <button
+                class="social-button facebook"
+                type="button"
+                onclick="socialLogin('Facebook')">
+                🔵 Continue with Facebook
+            </button>
+
+            <button
+                class="social-button apple"
+                type="button"
+                onclick="socialLogin('Apple')">
+                 Continue with Apple
+            </button>
+
+            <p class="small-note">
+                Your real Google, Facebook, or Apple password should be
+                entered only on that provider's official sign-in page.
+            </p>
+
+        </div>
+    </div>
+
+
+    <!-- =========================
+         STORE / HOMEPAGE
+         Hidden until sign-in
+    ========================== -->
+
+    <main id="store">
+
+        <header class="store-header">
+            <h2>Game Without Limits 🎮</h2>
+            <p>Your gaming store homepage</p>
+        </header>
+
+        <section class="store-content">
+
+            <h3>Welcome to the Store</h3>
+
+            <p>
+                Explore the gaming accessories available through
+                Game Without Limits.
+            </p>
+
+            <!-- Add your real products here later. -->
+
+            <button
+                class="logout-button"
+                type="button"
+                onclick="logout()">
+                Sign Out
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        const loginScreen = document.getElementById("loginScreen");
+        const store = document.getElementById("store");
+        const character = document.getElementById("character");
+
+        const username = document.getElementById("username");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        /*
+         * Keep the store locked when the page first opens.
+         */
+
+        function showLogin() {
+            loginScreen.style.display = "flex";
+            store.style.display = "none";
         }
+
+        /*
+         * Show the store after the demo sign-in form
+         * passes its basic browser validation.
+         */
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                if (
+                    username.value.trim() !== "" &&
+                    email.validity.valid &&
+                    password.value.trim() !== ""
+                ) {
+
+                    character.textContent = "😄";
+                    character.classList.add("happy");
+
+                    setTimeout(function() {
+                        loginScreen.style.display = "none";
+                        store.style.display = "block";
+                    }, 700);
+
+                } else {
+
+                    character.textContent = "😐";
+                    character.classList.remove("happy");
+
+                }
+            });
+
+
+        /*
+         * Emoji reaction while typing.
+         */
+
+        function updateCharacter() {
+
+            const hasUsername =
+                username.value.trim().length >= 3;
+
+            const hasEmail =
+                email.validity.valid;
+
+            const hasPassword =
+                password.value.length > 0;
+
+            /*
+             * Password typing makes the character
+             * close its eyes.
+             */
+
+            if (document.activeElement === password) {
+
+                character.textContent = "😌";
+                character.classList.add("typing");
+
+                return;
+            }
+
+            character.classList.remove("typing");
+
+            /*
+             * A sensible-looking username and email
+             * make the character happy.
+             */
+
+            if (hasUsername && hasEmail) {
+
+                character.textContent = "😄";
+                character.classList.add("happy");
+
+            } else {
+
+                character.textContent = "🙂";
+                character.classList.remove("happy");
+            }
+        }
+
+
+        username.addEventListener("input", updateCharacter);
+        email.addEventListener("input", updateCharacter);
+        password.addEventListener("input", updateCharacter);
+
+        username.addEventListener("focus", updateCharacter);
+        email.addEventListener("focus", updateCharacter);
+        password.addEventListener("focus", updateCharacter);
+
+
+        /*
+         * Social-login buttons are placeholders.
+         * Replace these with official OAuth authentication
+         * when your authentication system is connected.
+         */
+
+        function socialLogin(provider) {
+
+            alert(
+                provider +
+                " sign-in needs to be connected to " +
+                provider +
+                "'s official authentication system."
+            );
+        }
+
+
+        /*
+         * Sign out.
+         */
+
+        function logout() {
+
+            store.style.display = "none";
+            loginScreen.style.display = "flex";
+
+            document.getElementById("loginForm").reset();
+
+            character.textContent = "🙂";
+            character.classList.remove("happy");
+            character.classList.remove("typing");
+        }
+
+
+        /*
+         * Always start locked.
+         */
+
+        showLogin();
+
+    </script>
+
+</body>
+</html>
     </style>
 </head>
 <body>
