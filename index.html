@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Game Without Limits - Gaming equipment, accessories, phones and cases.">
+  <title>Game Without Limits | Level Up Your Gear</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050713;
+      color: white;
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 7, 19, 0.94);
+      border-bottom: 1px solid #142b57;
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #00c8ff;
+      text-shadow: 0 0 12px #008cff;
+    }
+
+    .logo span {
+      color: white;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00c8ff;
+    }
+
+    .cart {
+      background: #00aaff;
+      color: white;
+      border: 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(0, 170, 255, .5);
+    }
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 20px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(0, 136, 255, .25), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, .12), transparent 30%),
+        #050713;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(#ffffff 1px, transparent 1px),
+        radial-gradient(#00bfff 1px, transparent 1px);
+      background-size: 90px 90px, 140px 140px;
+      opacity: .35;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 850px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 9vw, 90px);
+      line-height: 1;
+      margin-bottom: 25px;
+      color: white;
+      text-shadow:
+        0 0 10px #00bfff,
+        0 0 30px #006eff;
+    }
+
+    .hero h1 span {
+      color: #00c8ff;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #b9d9ed;
+      margin-bottom: 35px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00c8ff, #006eff);
+      color: white;
+      box-shadow: 0 0 25px rgba(0, 174, 255, .5);
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px rgba(0, 200, 255, .8);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 45px;
+    }
+
+    .section-title span {
+      color: #00c8ff;
+      text-shadow: 0 0 12px #008cff;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .category {
+      padding: 30px 15px;
+      text-align: center;
+      border: 1px solid #12376b;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #0a1025, #060914);
+      transition: .25s;
+    }
+
+    .category:hover {
+      transform: translateY(-7px);
+      border-color: #00c8ff;
+      box-shadow: 0 0 25px rgba(0, 180, 255, .25);
+    }
+
+    .category .icon {
+      font-size: 45px;
+      margin-bottom: 12px;
+    }
+
+    .category h3 {
+      color: #00c8ff;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .product {
+      background: #090e20;
+      border: 1px solid #153662;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .product:hover {
+      transform: translateY(-6px);
+      border-color: #00c8ff;
+      box-shadow: 0 0 25px rgba(0, 174, 255, .25);
+    }
+
+    .product-image {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 75px;
+      background:
+        radial-gradient(circle, rgba(0, 195, 255, .22), transparent 55%),
+        #070b18;
+    }
+
+    .product-info {
+      padding: 18px;
+    }
+
+    .product h3 {
+      margin-bottom: 8px;
+    }
+
+    .product p {
+      color: #8fa9bd;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      color: #00d9ff;
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    .add-btn {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #00aaff;
+      border-radius: 7px;
+      background: transparent;
+      color: #00c8ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .add-btn:hover {
+      background: #00aaff;
+      color: white;
+    }
+
+    .about {
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .about p {
+      color: #a9c1d4;
+      font-size: 18px;
+    }
+
+    .contact-box {
+      max-width: 650px;
+      margin: auto;
+      background: #090e20;
+      border: 1px solid #153662;
+      padding: 30px;
+      border-radius: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 14px;
+      border: 1px solid #1c4775;
+      border-radius: 7px;
+      background: #050914;
+      color: white;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #00c8ff;
+      box-shadow: 0 0 10px rgba(0, 200, 255, .2);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #00c8ff, #006eff);
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      border-top: 1px solid #142b57;
+      color: #71889b;
+    }
+
+    #cartMessage {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      background: #00aaff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 174, 255, .6);
+      display: none;
+      z-index: 2000;
+    }
+
+    @media (max-width: 850px) {
+      nav ul {
+        display: none;
+      }
+
+      .categories,
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .categories,
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 580px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <div class="logo">GAME <span>WITHOUT LIMITS</span></div>
+
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="cart" onclick="showCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" id="home">
+    <div class="stars"></div>
+
+    <div class="hero-content">
+      <h1>GAME <span>WITHOUT LIMITS</span></h1>
+
+      <p>
+        Level up your setup. Discover gaming equipment,
+        accessories, phones and cases built for your world.
+      </p>
+
+      <a href="#shop" class="btn">SHOP NOW ⚡</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">SHOP BY <span>CATEGORY</span></h2>
+
+    <div class="categories">
+      <div class="category">
+        <div class="icon">🎮</div>
+        <h3>Gaming Gear</h3>
+        <p>Gaming equipment and gear.</p>
+      </div>
+
+      <div class="category">
+        <div class="icon">🎧</div>
+        <h3>Accessories</h3>
+        <p>Accessories for your setup.</p>
+      </div>
+
+      <div class="category">
+        <div class="icon">📱</div>
+        <h3>Phones</h3>
+        <p>Mobile devices and technology.</p>
+      </div>
+
+      <div class="category">
+        <div class="icon">🛡️</div>
+        <h3>Phone Cases</h3>
+        <p>Protection with gaming style.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop">
+    <h2 class="section-title">FEATURED <span>PRODUCTS</span></h2>
+
+    <div class="products">
+
+      <div class="product">
+        <div class="product-image">🎮</div>
+        <div class="product-info">
+          <h3>Gaming Controller</h3>
+          <p>Gaming controller.</p>
+          <div class="price">$49.99</div>
+          <button class="add-btn" onclick="addToCart('Gaming Controller')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+      <div class="product">
+        <div class="product-image">🎧</div>
+        <div class="product-info">
+          <h3>Gaming Headset</h3>
+          <p>Immersive gaming headset.</p>
+          <div class="price">$59.99</div>
+          <button class="add-btn" onclick="addToCart('Gaming Headset')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+      <div class="product">
+        <div class="product-image">📱</div>
+        <div class="product-info">
+          <h3>Gaming Phone</h3>
+          <p>Mobile gaming device.</p>
+          <div class="price">$299.99</div>
+          <button class="add-btn" onclick="addToCart('Gaming Phone')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+      <div class="product">
+        <div class="product-image">🛡️</div>
+        <div class="product-info">
+          <h3>Gaming Phone Case</h3>
+          <p>Protective phone case.</p>
+          <div class="price">$19.99</div>
+          <button class="add-btn" onclick="addToCart('Gaming Phone Case')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2 class="section-title">ABOUT <span>US</span></h2>
+
+    <p>
+      Welcome to Game Without Limits — a gaming and technology store
+      focused on gaming equipment, accessories, phones and phone cases.
+      This section can later be customized with your real brand story,
+      mission and information.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">CONTACT <span>US</span></h2>
+
+    <div class="contact-box">
+      <form onsubmit="sendMessage(event)">
+        <input type="text" placeholder="Your name" required>
+        <input type="email" placeholder="Your email" required>
+        <textarea placeholder="Your message" required></textarea>
+        <button class="submit" type="submit">SEND MESSAGE</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<div id="cartMessage">🛒 Added to your cart!</div>
+
+<footer>
+  <p>© 2026 Game Without Limits. All rights reserved.</p>
+  <p>Level up. Play harder. Game without limits.</p>
+</footer>
+
+<script>
+  let cartCount = 0;
+
+  function addToCart(product) {
+    cartCount++;
+    document.getElementById("cartCount").textContent = cartCount;
+
+    const message = document.getElementById("cartMessage");
+    message.textContent = "🛒 " + product + " added to your cart!";
+    message.style.display = "block";
+
+    setTimeout(() => {
+      message.style.display = "none";
+    }, 2000);
+  }
+
+  function showCart() {
+    if (cartCount === 0) {
+      alert("Your cart is empty.");
+    } else {
+      alert("You have " + cartCount + " item(s) in your cart.");
+    }
+  }
+
+  function sendMessage(event) {
+    event.preventDefault();
+    alert("Thanks! Your message form is ready. We can connect it to your email or WhatsApp later.");
+  }
+</script>
+
+</body>
+</html>
