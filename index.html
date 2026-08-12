@@ -1,758 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Without Limits</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(circle at top, #20265f 0%, #090b1c 45%, #03040b 100%);
-            color: white;
-        }
-
-        /* =========================
-           SIGN-IN SCREEN
-        ========================== */
-
-        #loginScreen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(2, 3, 12, 0.97);
-            overflow-y: auto;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 460px;
-            padding: 35px 28px;
-            border-radius: 28px;
-            text-align: center;
-            background: linear-gradient(145deg, #171a3b, #090b1c);
-            border: 1px solid rgba(255,255,255,0.12);
-            box-shadow:
-                0 25px 80px rgba(0,0,0,0.65),
-                0 0 50px rgba(83,91,255,0.12);
-        }
-
-        /* Animated character */
-
-        .character {
-            width: 105px;
-            height: 105px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            background: linear-gradient(145deg, #292e70, #10132e);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-            transition: transform 0.25s ease;
-        }
-
-        .character.typing {
-            animation: bounce 0.7s infinite alternate;
-        }
-
-        .character.happy {
-            transform: scale(1.08);
-        }
-
-        @keyframes bounce {
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(-7px);
-            }
-        }
-
-        .login-card h1 {
-            margin: 5px 0 8px;
-            font-size: clamp(30px, 8vw, 46px);
-            font-weight: 900;
-            letter-spacing: -1.5px;
-        }
-
-        .welcome {
-            margin: 0 auto 25px;
-            max-width: 370px;
-            color: #c5c8e8;
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        .signin-title {
-            margin: 10px 0 18px;
-            font-size: 28px;
-            font-weight: 900;
-        }
-
-        /* Inputs */
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 14px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 7px;
-            color: #dfe2ff;
-            font-weight: 700;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: 1px solid #353a69;
-            outline: none;
-            background: #070918;
-            color: white;
-            font-size: 16px;
-            transition: 0.2s ease;
-        }
-
-        .input-group input:focus {
-            border-color: #6670ff;
-            box-shadow: 0 0 0 3px rgba(102,112,255,0.15);
-        }
-
-        /* Main sign-in button */
-
-        .signin-button {
-            width: 100%;
-            margin-top: 8px;
-            padding: 17px;
-            border: 0;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #6570ff, #8b5cff);
-            color: white;
-            font-size: 19px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(101,112,255,0.25);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .signin-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(101,112,255,0.4);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            color: #777caa;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            height: 1px;
-            flex: 1;
-            background: #303458;
-        }
-
-        /* Social buttons */
-
-        .social-button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border-radius: 13px;
-            border: 1px solid #34385e;
-            background: #11142b;
-            color: white;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .social-button:hover {
-            background: #1b1f40;
-            transform: translateY(-1px);
-        }
-
-        .social-button.google {
-            border-color: #4285f4;
-        }
-
-        .social-button.facebook {
-            border-color: #1877f2;
-        }
-
-        .social-button.apple {
-            border-color: #777;
-        }
-
-        .small-note {
-            margin-top: 20px;
-            color: #777caa;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        /* =========================
-           STORE
-        ========================== */
-
-        #store {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .store-header {
-            padding: 25px;
-            text-align: center;
-            background: #0b0e21;
-            border-bottom: 1px solid #24284b;
-        }
-
-        .store-header h2 {
-            margin: 0;
-            font-size: 34px;
-            font-weight: 900;
-        }
-
-        .store-header p {
-            color: #aaaed0;
-        }
-
-        .store-content {
-            max-width: 1100px;
-            margin: auto;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .store-content h3 {
-            font-size: 32px;
-            font-weight: 900;
-        }
-
-        .store-content p {
-            color: #b9bdd8;
-            font-size: 17px;
-        }
-
-        .logout-button {
-            margin-top: 25px;
-            padding: 12px 25px;
-            border: 1px solid #ff5577;
-            border-radius: 12px;
-            background: transparent;
-            color: white;
-            cursor: pointer;
-            font-weight: 700;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- =========================
-         SIGN-IN SCREEN
-    ========================== -->
-
-    <div id="loginScreen">
-
-        <div class="login-card">
-
-            <div id="character" class="character">🙂</div>
-
-            <h1>Welcome to Gaming Dalvin</h1>
-
-            <p class="welcome">
-                Welcome to Game Without Limits, where you can get
-                affordable gaming accessories for a great and affordable
-                price. There is no limit to gaming.
-            </p>
-
-            <div class="signin-title">
-                SIGN IN
-            </div>
-
-            <form id="loginForm">
-
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input
-                        id="username"
-                        type="text"
-                        placeholder="Enter your username"
-                        autocomplete="username"
-                        required
-                    >
-                </div>
-
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        autocomplete="email"
-                        required
-                    >
-                </div>
-
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
-                </div>
-
-                <button class="signin-button" type="submit">
-                    SIGN IN
-                </button>
-
-            </form>
-
-            <div class="divider">
-                OR
-            </div>
-
-            <!-- Connect these buttons to official OAuth providers
-                 when you add real authentication. -->
-
-            <button
-                class="social-button google"
-                type="button"
-                onclick="socialLogin('Google')">
-                🔵 Continue with Google
-            </button>
-
-            <button
-                class="social-button facebook"
-                type="button"
-                onclick="socialLogin('Facebook')">
-                🔵 Continue with Facebook
-            </button>
-
-            <button
-                class="social-button apple"
-                type="button"
-                onclick="socialLogin('Apple')">
-                 Continue with Apple
-            </button>
-
-            <p class="small-note">
-                Your real Google, Facebook, or Apple password should be
-                entered only on that provider's official sign-in page.
-            </p>
-
-        </div>
-    </div>
-
-
-    <!-- =========================
-         STORE / HOMEPAGE
-         Hidden until sign-in
-    ========================== -->
-
-    <main id="store">
-
-        <header class="store-header">
-            <h2>Game Without Limits 🎮</h2>
-            <p>Your gaming store homepage</p>
-        </header>
-
-        <section class="store-content">
-
-            <h3>Welcome to the Store</h3>
-
-            <p>
-                Explore the gaming accessories available through
-                Game Without Limits.
-            </p>
-
-            <!-- Add your real products here later. -->
-
-            <button
-                class="logout-button"
-                type="button"
-                onclick="logout()">
-                Sign Out
-            </button>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
-    <script>
-
-        const loginScreen = document.getElementById("loginScreen");
-        const store = document.getElementById("store");
-        const character = document.getElementById("character");
-
-        const username = document.getElementById("username");
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
-
-        /*
-         * Keep the store locked when the page first opens.
-         */
-
-        function showLogin() {
-            loginScreen.style.display = "flex";
-            store.style.display = "none";
-        }
-
-        /*
-         * Show the store after the demo sign-in form
-         * passes its basic browser validation.
-         */
-
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", function(event) {
-
-                event.preventDefault();
-
-                if (
-                    username.value.trim() !== "" &&
-                    email.validity.valid &&
-                    password.value.trim() !== ""
-                ) {
-
-                    character.textContent = "😄";
-                    character.classList.add("happy");
-
-                    setTimeout(function() {
-                        loginScreen.style.display = "none";
-                        store.style.display = "block";
-                    }, 700);
-
-                } else {
-
-                    character.textContent = "😐";
-                    character.classList.remove("happy");
-
-                }
-            });
-
-
-        /*
-         * Emoji reaction while typing.
-         */
-
-        function updateCharacter() {
-
-            const hasUsername =
-                username.value.trim().length >= 3;
-
-            const hasEmail =
-                email.validity.valid;
-
-            const hasPassword =
-                password.value.length > 0;
-
-            /*
-             * Password typing makes the character
-             * close its eyes.
-             */
-
-            if (document.activeElement === password) {
-
-                character.textContent = "😌";
-                character.classList.add("typing");
-
-                return;
-            }
-
-            character.classList.remove("typing");
-
-            /*
-             * A sensible-looking username and email
-             * make the character happy.
-             */
-
-            if (hasUsername && hasEmail) {
-
-                character.textContent = "😄";
-                character.classList.add("happy");
-
-            } else {
-
-                character.textContent = "🙂";
-                character.classList.remove("happy");
-            }
-        }
-
-
-        username.addEventListener("input", updateCharacter);
-        email.addEventListener("input", updateCharacter);
-        password.addEventListener("input", updateCharacter);
-
-        username.addEventListener("focus", updateCharacter);
-        email.addEventListener("focus", updateCharacter);
-        password.addEventListener("focus", updateCharacter);
-
-
-        /*
-         * Social-login buttons are placeholders.
-         * Replace these with official OAuth authentication
-         * when your authentication system is connected.
-         */
-
-        function socialLogin(provider) {
-
-            alert(
-                provider +
-                " sign-in needs to be connected to " +
-                provider +
-                "'s official authentication system."
-            );
-        }
-
-
-        /*
-         * Sign out.
-         */
-
-        function logout() {
-
-            store.style.display = "none";
-            loginScreen.style.display = "flex";
-
-            document.getElementById("loginForm").reset();
-
-            character.textContent = "🙂";
-            character.classList.remove("happy");
-            character.classList.remove("typing");
-        }
-
-
-        /*
-         * Always start locked.
-         */
-
-        showLogin();
-
-    </script>
-
-</body>
-</html>
-    </style>
-</head>
-<body>
-    <h1>Welcome to Game Without Limits</h1>
-    <p>This is a place where you can get affordable gaming accessories for a great price. There is no limit to gaming!</p>
-    <div class="signin-form">
-        <form id="signinForm" onsubmit="handleSignIn(event)">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password"
-  </button>
-</div>
-
-<!-- Account Popup -->
-<div id="accountModal" class="account-modal">
-  <div class="account-box">
-    <button class="close-account" onclick="closeAccount()">×</button>
-
-    <h2 id="accountTitle">CREATE ACCOUNT</h2>
-    <p id="accountSubtitle">Join Game Without Limits</p>
-
-    <form id="accountForm" onsubmit="handleAccount(event)">
-      <input id="nameField" type="text" placeholder="Your name" required>
-      <input type="email" placeholder="Email address" required>
-      <input type="password" placeholder="Password" required>
-
-      <button type="submit" class="neon-submit">
-        CREATE ACCOUNT ⚡
-      </button>
-    </form>
-
-    <p class="switch-account">
-      Already have an account?
-      <button type="button" onclick="switchToSignIn()">SIGN IN</button>
-    </p>
-  </div>
-</div>
-
-<style>
-.account-area {
-  text-align: center;
-  padding: 25px;
-}
-
-.account-btn,
-.neon-submit {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 15px 25px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 0 15px #00c6ff;
-  transition: 0.3s;
-}
-
-.account-btn:hover,
-.neon-submit:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px #00c6ff;
-}
-
-.account-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 15, 0.85);
-  backdrop-filter: blur(8px);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.account-modal.show {
-  display: flex;
-  animation: fadeIn 0.35s ease;
-}
-
-.account-box {
-  width: 90%;
-  max-width: 400px;
-  background: #070b1c;
-  border: 2px solid #00c6ff;
-  border-radius: 20px;
-  padding: 30px;
-  text-align: center;
-  color: white;
-  box-shadow: 0 0 40px #008cff;
-  animation: popup 0.4s ease;
-}
-
-.account-box h2 {
-  color: #00c6ff;
-  text-shadow: 0 0 15px #00c6ff;
-}
-
-.account-box input {
-  width: 100%;
-  box-sizing: border-box;
-  margin: 8px 0;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #168cff;
-  background: #0c1228;
-  color: white;
-  outline: none;
-}
-
-.neon-submit {
-  width: 100%;
-  margin-top: 12px;
-}
-
-.close-account {
-  float: right;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
-}
-
-.switch-account {
-  margin-top: 20px;
-}
-
-.switch-account button {
-  background: none;
-  border: none;
-  color: #00c6ff;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes popup {
-  from {
-    transform: scale(0.7) translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-</style>
-
-<script>
-function openAccount() {
-  document.getElementById("accountModal").classList.add("show");
-}
-
-function closeAccount() {
-  document.getElementById("accountModal").classList.remove("show");
-}
-
-function switchToSignIn() {
-  document.getElementById("accountTitle").textContent = "WELCOME BACK";
-  document.getElementById("accountSubtitle").textContent = "Sign in to Game Without Limits";
-  document.getElementById("nameField").style.display = "none";
-  document.querySelector(".neon-submit").textContent = "SIGN IN ⚡";
-  document.querySelector(".switch-account").innerHTML =
-    'Need an account? <button type="button" onclick="switchToSignUp()">SIGN UP</button>';
-}
-
-function switchToSignUp() {
-  document.getElementById("accountTitle").textContent = "CREATE ACCOUNT";
-  document.getElementById("accountSubtitle").textContent = "Join Game Without Limits";
-  document.getElementById("nameField").style.display = "block";
-  document.querySelector(".neon-submit").textContent = "CREATE ACCOUNT ⚡";
-  document.querySelector(".switch-account").innerHTML =
-    'Already have an account? <button type="button" onclick="switchToSignIn()">SIGN IN</button>';
-}
-
-function handleAccount(event) {
-  event.preventDefault();
-  alert("Account form submitted! Full account storage will be added next.");
-}
-</script><!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Game Without Limits - Gaming equipment, accessories, phones and cases.">
-  <title>Game Without Limits | Level Up Your Gear</title>
+
+  <meta
+    name="description"
+    content="Game Without Limits — gaming equipment, accessories, phones and cases."
+  >
+
+  <title>Game Without Limits</title>
 
   <style>
     * {
@@ -765,58 +22,48 @@ function handleAccount(event) {
       scroll-behavior: smooth;
     }
 
-    <body>
-
-  <!-- your website content -->
-
-  <!-- sign-in section -->
-  <div id="signinModal" class="signin-modal">
-    <div class="signin-box">
-      <h2>Welcome to Game Without Limits</h2>
-      <p class="subtitle">This is a place where you can buy affordable gaming accessories.</p>
-
-      <form onsubmit="handleSignIn(event)">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Sign In</button>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- THEN, at the very end of your page -->
-</body>
-    </form>
-  </div>
-</div>
-
-<style>
-.signin-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    body {
+      min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      background: #050713;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(0, 180, 255, .18), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(0, 80, 255, .20), transparent 35%),
+        #030712;
       color: white;
       line-height: 1.6;
     }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(5, 7, 19, 0.94);
-      border-bottom: 1px solid #142b57;
-      backdrop-filter: blur(12px);
+      background: rgba(3, 7, 18, .94);
+      border-bottom: 1px solid rgba(0, 200, 255, .25);
+      backdrop-filter: blur(15px);
     }
 
     nav {
       max-width: 1200px;
       margin: auto;
-      padding: 18px 20px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -824,11 +71,13 @@ function handleAccount(event) {
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 900;
+      font-size: 20px;
+      font-weight: 1000;
       letter-spacing: 1px;
       color: #00c8ff;
-      text-shadow: 0 0 12px #008cff;
+      text-shadow:
+        0 0 8px #00c8ff,
+        0 0 20px #006eff;
     }
 
     .logo span {
@@ -836,98 +85,159 @@ function handleAccount(event) {
     }
 
     nav ul {
-      list-style: none;
       display: flex;
+      list-style: none;
       gap: 25px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 800;
+      transition: .2s;
     }
 
     nav a:hover {
       color: #00c8ff;
+      text-shadow: 0 0 10px #00c8ff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      border: 1px solid #00aaff;
+      background: transparent;
+      color: #00c8ff;
+      padding: 9px 13px;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+
+    .nav-btn:hover {
+      background: #00aaff;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 180, 255, .5);
     }
 
     .cart {
-      background: #00aaff;
+      background: linear-gradient(135deg, #00c8ff, #006eff);
       color: white;
       border: 0;
       padding: 10px 15px;
       border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 18px rgba(0, 170, 255, .5);
+      font-weight: 900;
+      box-shadow: 0 0 18px rgba(0, 170, 255, .4);
     }
+
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
       min-height: 650px;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 80px 20px;
-      position: relative;
       overflow: hidden;
       background:
-        radial-gradient(circle at 50% 35%, rgba(0, 136, 255, .25), transparent 35%),
-        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, .12), transparent 30%),
-        #050713;
+        radial-gradient(circle at 50% 35%, rgba(0, 150, 255, .25), transparent 35%),
+        #030712;
     }
 
     .stars {
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(#ffffff 1px, transparent 1px),
+        radial-gradient(#fff 1px, transparent 1px),
         radial-gradient(#00bfff 1px, transparent 1px);
       background-size: 90px 90px, 140px 140px;
       opacity: .35;
+      animation: starsMove 12s linear infinite;
+    }
+
+    @keyframes starsMove {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(-80px, 50px);
+      }
     }
 
     .hero-content {
       position: relative;
+      z-index: 2;
       max-width: 850px;
     }
 
     .hero h1 {
       font-size: clamp(45px, 9vw, 90px);
-      line-height: 1;
+      line-height: .95;
+      font-weight: 1000;
       margin-bottom: 25px;
       color: white;
       text-shadow:
         0 0 10px #00bfff,
-        0 0 30px #006eff;
+        0 0 30px #006eff,
+        4px 4px 0 #000;
+      animation: heroFloat 3s ease-in-out infinite;
     }
 
     .hero h1 span {
+      display: block;
       color: #00c8ff;
     }
 
+    @keyframes heroFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
     .hero p {
+      max-width: 700px;
+      margin: auto auto 35px;
+      color: #c7e5f5;
       font-size: 20px;
-      color: #b9d9ed;
-      margin-bottom: 35px;
+      text-shadow: 2px 2px 5px #000;
     }
 
     .btn {
       display: inline-block;
-      padding: 15px 30px;
-      border-radius: 8px;
+      padding: 16px 32px;
+      border-radius: 10px;
       text-decoration: none;
-      font-weight: 900;
-      background: linear-gradient(135deg, #00c8ff, #006eff);
+      font-weight: 1000;
       color: white;
-      box-shadow: 0 0 25px rgba(0, 174, 255, .5);
-      transition: .2s;
+      background: linear-gradient(135deg, #00c8ff, #006eff);
+      box-shadow:
+        0 0 20px rgba(0, 200, 255, .5),
+        0 0 50px rgba(0, 100, 255, .2);
+      transition: .25s;
     }
 
     .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 40px rgba(0, 200, 255, .8);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow:
+        0 0 35px rgba(0, 200, 255, .8),
+        0 0 70px rgba(0, 100, 255, .4);
     }
+
+    /* =========================
+       SECTIONS
+    ========================= */
 
     section {
       max-width: 1200px;
@@ -938,13 +248,21 @@ function handleAccount(event) {
     .section-title {
       text-align: center;
       font-size: 38px;
+      font-weight: 1000;
       margin-bottom: 45px;
+      text-shadow: 3px 3px 0 #000;
     }
 
     .section-title span {
       color: #00c8ff;
-      text-shadow: 0 0 12px #008cff;
+      text-shadow:
+        0 0 10px #00c8ff,
+        0 0 25px #006eff;
     }
+
+    /* =========================
+       CATEGORIES
+    ========================= */
 
     .categories {
       display: grid;
@@ -957,14 +275,14 @@ function handleAccount(event) {
       text-align: center;
       border: 1px solid #12376b;
       border-radius: 15px;
-      background: linear-gradient(145deg, #0a1025, #060914);
+      background: linear-gradient(145deg, #0a1025, #050914);
       transition: .25s;
     }
 
     .category:hover {
       transform: translateY(-7px);
       border-color: #00c8ff;
-      box-shadow: 0 0 25px rgba(0, 180, 255, .25);
+      box-shadow: 0 0 25px rgba(0, 180, 255, .3);
     }
 
     .category .icon {
@@ -974,7 +292,16 @@ function handleAccount(event) {
 
     .category h3 {
       color: #00c8ff;
+      margin-bottom: 6px;
     }
+
+    .category p {
+      color: #8fa9bd;
+    }
+
+    /* =========================
+       PRODUCTS
+    ========================= */
 
     .products {
       display: grid;
@@ -993,7 +320,7 @@ function handleAccount(event) {
     .product:hover {
       transform: translateY(-6px);
       border-color: #00c8ff;
-      box-shadow: 0 0 25px rgba(0, 174, 255, .25);
+      box-shadow: 0 0 25px rgba(0, 174, 255, .3);
     }
 
     .product-image {
@@ -1036,23 +363,32 @@ function handleAccount(event) {
       background: transparent;
       color: #00c8ff;
       font-weight: bold;
-      cursor: pointer;
+      transition: .2s;
     }
 
     .add-btn:hover {
       background: #00aaff;
       color: white;
+      box-shadow: 0 0 18px rgba(0, 180, 255, .4);
     }
+
+    /* =========================
+       ABOUT
+    ========================= */
 
     .about {
       text-align: center;
-      max-width: 800px;
+      max-width: 850px;
     }
 
     .about p {
       color: #a9c1d4;
       font-size: 18px;
     }
+
+    /* =========================
+       CONTACT
+    ========================= */
 
     .contact-box {
       max-width: 650px;
@@ -1061,9 +397,11 @@ function handleAccount(event) {
       border: 1px solid #153662;
       padding: 30px;
       border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 150, 255, .08);
     }
 
-    input, textarea {
+    .contact-box input,
+    .contact-box textarea {
       width: 100%;
       margin-bottom: 15px;
       padding: 14px;
@@ -1074,7 +412,8 @@ function handleAccount(event) {
       outline: none;
     }
 
-    input:focus, textarea:focus {
+    .contact-box input:focus,
+    .contact-box textarea:focus {
       border-color: #00c8ff;
       box-shadow: 0 0 10px rgba(0, 200, 255, .2);
     }
@@ -1092,8 +431,67 @@ function handleAccount(event) {
       border: 0;
       border-radius: 7px;
       font-weight: bold;
-      cursor: pointer;
     }
+
+    /* =========================
+       STORE LOCK
+    ========================= */
+
+    #store {
+      position: relative;
+    }
+
+    .store-locked {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid #12376b;
+      border-radius: 20px;
+      background:
+        linear-gradient(rgba(3, 7, 18, .90), rgba(3, 7, 18, .96)),
+        radial-gradient(circle, #006eff, transparent);
+      box-shadow: inset 0 0 60px rgba(0, 130, 255, .1);
+    }
+
+    .lock-content {
+      max-width: 500px;
+      padding: 30px;
+    }
+
+    .lock-icon {
+      font-size: 65px;
+      margin-bottom: 15px;
+      animation: lockPulse 2s infinite;
+    }
+
+    @keyframes lockPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px #00c8ff);
+      }
+
+      50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 25px #00c8ff);
+      }
+    }
+
+    .lock-content h3 {
+      font-size: 28px;
+      color: #00c8ff;
+      margin-bottom: 10px;
+    }
+
+    .lock-content p {
+      color: #9ebbd0;
+      margin-bottom: 20px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
       text-align: center;
@@ -1101,6 +499,10 @@ function handleAccount(event) {
       border-top: 1px solid #142b57;
       color: #71889b;
     }
+
+    /* =========================
+       CART MESSAGE
+    ========================= */
 
     #cartMessage {
       position: fixed;
@@ -1111,8 +513,395 @@ function handleAccount(event) {
       border-radius: 10px;
       box-shadow: 0 0 25px rgba(0, 174, 255, .6);
       display: none;
-      z-index: 2000;
+      z-index: 3000;
+      font-weight: bold;
     }
+
+    /* =========================
+       AUTH MODAL
+    ========================= */
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0, 0, 10, .88);
+      backdrop-filter: blur(12px);
+    }
+
+    .auth-overlay.hidden {
+      display: none;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      max-height: 95vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 35px 28px;
+      border-radius: 25px;
+      background: rgba(7, 11, 28, .98);
+      border: 1px solid rgba(0, 200, 255, .45);
+      box-shadow:
+        0 0 30px rgba(0, 180, 255, .25),
+        0 30px 80px rgba(0, 0, 0, .7);
+    }
+
+    .auth-close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 28px;
+    }
+
+    /* =========================
+       ANIMATED EMOJI
+    ========================= */
+
+    .emoji-area {
+      position: relative;
+      height: 105px;
+      margin-bottom: 5px;
+    }
+
+    .emoji {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      width: 85px;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 58px;
+      background: linear-gradient(145deg, #142458, #070b1d);
+      box-shadow:
+        0 0 20px rgba(0, 180, 255, .18),
+        0 15px 35px rgba(0, 0, 0, .5);
+      animation: emojiFloat 2.5s ease-in-out infinite;
+      transition: .25s;
+    }
+
+    @keyframes emojiFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(0);
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(3deg);
+      }
+    }
+
+    .emoji.watching {
+      transform: translateX(-12px) scale(1.08) rotate(-5deg);
+      box-shadow:
+        0 0 25px rgba(0, 200, 255, .5),
+        0 0 50px rgba(0, 100, 255, .2);
+    }
+
+    .emoji.excited {
+      animation: emojiExcited .45s ease-in-out infinite alternate;
+    }
+
+    @keyframes emojiExcited {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.15) rotate(5deg);
+      }
+    }
+
+    /* =========================
+       AUTH TITLE
+    ========================= */
+
+    .auth-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 1000;
+      line-height: 1.05;
+      color: white;
+      text-shadow:
+        3px 3px 0 #000,
+        0 0 15px rgba(0, 200, 255, .5);
+      animation: titleTyping 3s ease-in-out infinite;
+    }
+
+    .auth-title span {
+      display: block;
+      color: #00c8ff;
+    }
+
+    @keyframes titleTyping {
+      0%, 100% {
+        letter-spacing: 0;
+      }
+
+      50% {
+        letter-spacing: 1.5px;
+      }
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      margin: 12px 0 25px;
+      color: #b9d9ed;
+    }
+
+    .auth-mode {
+      text-align: center;
+      margin-bottom: 18px;
+      color: #00c8ff;
+      font-size: 24px;
+      font-weight: 1000;
+    }
+
+    /* =========================
+       AUTH INPUTS
+    ========================= */
+
+    .auth-group {
+      margin-bottom: 17px;
+      position: relative;
+    }
+
+    .auth-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 900;
+      color: white;
+      text-shadow: 2px 2px 3px #000;
+    }
+
+    .auth-group input {
+      width: 100%;
+      padding: 16px;
+      border-radius: 13px;
+      border: 2px solid #1d3a66;
+      outline: none;
+      background: #050914;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .auth-group input::placeholder {
+      color: #66758c;
+    }
+
+    .auth-group input:focus {
+      border-color: #00c8ff;
+      transform: translateY(-2px) scale(1.01);
+      box-shadow:
+        0 0 0 4px rgba(0, 200, 255, .10),
+        0 0 25px rgba(0, 150, 255, .2);
+      animation: inputGlow .8s ease;
+    }
+
+    @keyframes inputGlow {
+      0% {
+        letter-spacing: 0;
+      }
+
+      50% {
+        letter-spacing: .8px;
+      }
+
+      100% {
+        letter-spacing: 0;
+      }
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 55px;
+    }
+
+    .password-eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 21px;
+    }
+
+    /* =========================
+       FLYING TEXT
+    ========================= */
+
+    .floating-word {
+      position: absolute;
+      right: 125px;
+      top: 20px;
+      color: white;
+      font-size: 16px;
+      font-weight: 1000;
+      opacity: 0;
+      pointer-events: none;
+      text-shadow:
+        2px 2px 0 #000,
+        0 0 10px #00c8ff;
+    }
+
+    .floating-word.show {
+      animation: flyWord .9s ease forwards;
+    }
+
+    @keyframes flyWord {
+      0% {
+        opacity: 0;
+        transform: translate(0, 20px) scale(.5) rotate(-10deg);
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-100px, -60px) scale(1.25) rotate(15deg);
+      }
+    }
+
+    /* =========================
+       AUTH BUTTON
+    ========================= */
+
+    .auth-submit {
+      width: 100%;
+      padding: 17px;
+      margin-top: 5px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #00c8ff, #006eff);
+      color: white;
+      font-size: 18px;
+      font-weight: 1000;
+      text-shadow: 2px 2px 3px #000;
+      box-shadow: 0 0 25px rgba(0, 180, 255, .4);
+      transition: .2s;
+    }
+
+    .auth-submit:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 0 40px rgba(0, 200, 255, .7);
+    }
+
+    .auth-submit:active {
+      transform: scale(.97);
+    }
+
+    .auth-submit:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    /* =========================
+       GOOGLE BUTTON
+    ========================= */
+
+    .google-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 13px;
+      border: 1px solid #4285f4;
+      background: #10182b;
+      color: white;
+      font-weight: 900;
+      transition: .2s;
+    }
+
+    .google-btn:hover {
+      background: #17233f;
+      box-shadow: 0 0 20px rgba(66, 133, 244, .3);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      color: #66758c;
+      font-weight: bold;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #243654;
+    }
+
+    .switch-mode {
+      margin-top: 20px;
+      text-align: center;
+      color: #8fa9bd;
+    }
+
+    .switch-mode button {
+      border: 0;
+      background: transparent;
+      color: #00c8ff;
+      font-weight: 1000;
+    }
+
+    .auth-message {
+      min-height: 22px;
+      margin-top: 12px;
+      text-align: center;
+      color: #ff6b8a;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* =========================
+       USER STATUS
+    ========================= */
+
+    #userStatus {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #userStatus.logged-in {
+      display: flex;
+    }
+
+    #userEmail {
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #8fe7ff;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 850px) {
       nav ul {
@@ -1138,48 +927,119 @@ function handleAccount(event) {
       .hero p {
         font-size: 17px;
       }
+
+      .auth-card {
+        padding: 28px 20px;
+      }
+
+      .auth-title {
+        font-size: 29px;
+      }
+
+      .emoji {
+        right: 10px;
+      }
+
+      .floating-word {
+        right: 105px;
+      }
+
+      #userEmail {
+        display: none;
+      }
     }
   </style>
 </head>
 
-<body>
+<body class="locked">
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
   <nav>
-    <div class="logo">GAME <span>WITHOUT LIMITS</span></div>
+
+    <div class="logo">
+      GAME <span>WITHOUT LIMITS</span>
+    </div>
 
     <ul>
       <li><a href="#home">Home</a></li>
-      <li><a href="#shop">Shop</a></li>
+      <li><a href="#store">Store</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
-    <button class="cart" onclick="showCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+    <div class="nav-actions">
+
+      <div id="userStatus">
+        <span id="userEmail"></span>
+        <button class="nav-btn" onclick="signOutUser()">
+          SIGN OUT
+        </button>
+      </div>
+
+      <button
+        id="headerSignIn"
+        class="nav-btn"
+        onclick="openAuth('signin')">
+        SIGN IN
+      </button>
+
+      <button class="cart" onclick="showCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
+      </button>
+
+    </div>
+
   </nav>
 </header>
+
+<!-- =========================
+     HERO
+========================= -->
 
 <main>
 
   <section class="hero" id="home">
+
     <div class="stars"></div>
 
     <div class="hero-content">
-      <h1>GAME <span>WITHOUT LIMITS</span></h1>
+
+      <h1>
+        GAME
+        <span>WITHOUT LIMITS</span>
+      </h1>
 
       <p>
         Level up your setup. Discover gaming equipment,
         accessories, phones and cases built for your world.
       </p>
 
-      <a href="#shop" class="btn">SHOP NOW ⚡</a>
+      <button
+        class="btn"
+        onclick="openStore()">
+        SHOP NOW ⚡
+      </button>
+
     </div>
+
   </section>
 
+  <!-- =========================
+       CATEGORIES
+  ========================= -->
+
   <section>
-    <h2 class="section-title">SHOP BY <span>CATEGORY</span></h2>
+
+    <h2 class="section-title">
+      SHOP BY <span>CATEGORY</span>
+    </h2>
 
     <div class="categories">
+
       <div class="category">
         <div class="icon">🎮</div>
         <h3>Gaming Gear</h3>
@@ -1203,127 +1063,1249 @@ function handleAccount(event) {
         <h3>Phone Cases</h3>
         <p>Protection with gaming style.</p>
       </div>
+
     </div>
+
   </section>
 
-  <section id="shop">
-    <h2 class="section-title">FEATURED <span>PRODUCTS</span></h2>
+  <!-- =========================
+       STORE
+  ========================= -->
 
-    <div class="products">
+  <section id="store">
+
+    <h2 class="section-title">
+      THE <span>STORE</span>
+    </h2>
+
+    <div id="lockedStore" class="store-locked">
+
+      <div class="lock-content">
+
+        <div class="lock-icon">
+          🔐
+        </div>
+
+        <h3>
+          SIGN IN TO ENTER THE STORE
+        </h3>
+
+        <p>
+          Create an account or sign in before accessing
+          the Game Without Limits store.
+        </p>
+
+        <button
+          class="btn"
+          onclick="openAuth('signin')">
+          SIGN IN ⚡
+        </button>
+
+      </div>
+
+    </div>
+
+    <div
+      id="productsArea"
+      class="products"
+      style="display:none;">
 
       <div class="product">
-        <div class="product-image">🎮</div>
+
+        <div class="product-image">
+          🎮
+        </div>
+
         <div class="product-info">
+
           <h3>Gaming Controller</h3>
-          <p>Gaming controller.</p>
-          <div class="price">$49.99</div>
-          <button class="add-btn" onclick="addToCart('Gaming Controller')">
+
+          <p>
+            Gaming controller.
+          </p>
+
+          <div class="price">
+            $49.99
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart('Gaming Controller')">
             ADD TO CART
           </button>
+
         </div>
+
       </div>
 
       <div class="product">
-        <div class="product-image">🎧</div>
+
+        <div class="product-image">
+          🎧
+        </div>
+
         <div class="product-info">
+
           <h3>Gaming Headset</h3>
-          <p>Immersive gaming headset.</p>
-          <div class="price">$59.99</div>
-          <button class="add-btn" onclick="addToCart('Gaming Headset')">
+
+          <p>
+            Immersive gaming headset.
+          </p>
+
+          <div class="price">
+            $59.99
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart('Gaming Headset')">
             ADD TO CART
           </button>
+
         </div>
+
       </div>
 
       <div class="product">
-        <div class="product-image">📱</div>
+
+        <div class="product-image">
+          📱
+        </div>
+
         <div class="product-info">
+
           <h3>Gaming Phone</h3>
-          <p>Mobile gaming device.</p>
-          <div class="price">$299.99</div>
-          <button class="add-btn" onclick="addToCart('Gaming Phone')">
+
+          <p>
+            Mobile gaming device.
+          </p>
+
+          <div class="price">
+            $299.99
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart('Gaming Phone')">
             ADD TO CART
           </button>
+
         </div>
+
       </div>
 
       <div class="product">
-        <div class="product-image">🛡️</div>
+
+        <div class="product-image">
+          🛡️
+        </div>
+
         <div class="product-info">
+
           <h3>Gaming Phone Case</h3>
-          <p>Protective phone case.</p>
-          <div class="price">$19.99</div>
-          <button class="add-btn" onclick="addToCart('Gaming Phone Case')">
+
+          <p>
+            Protective phone case.
+          </p>
+
+          <div class="price">
+            $19.99
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart('Gaming Phone Case')">
             ADD TO CART
           </button>
+
         </div>
+
       </div>
 
     </div>
+
   </section>
+
+  <!-- =========================
+       ABOUT
+  ========================= -->
 
   <section id="about" class="about">
-    <h2 class="section-title">ABOUT <span>US</span></h2>
+
+    <h2 class="section-title">
+      ABOUT <span>US</span>
+    </h2>
 
     <p>
-      Welcome to Game Without Limits — a gaming and technology store
-      focused on gaming equipment, accessories, phones and phone cases.
-      This section can later be customized with your real brand story,
-      mission and information.
+      Welcome to Game Without Limits — a gaming and technology
+      store focused on gaming equipment, accessories, phones
+      and phone cases.
     </p>
+
   </section>
 
+  <!-- =========================
+       CONTACT
+  ========================= -->
+
   <section id="contact">
-    <h2 class="section-title">CONTACT <span>US</span></h2>
+
+    <h2 class="section-title">
+      CONTACT <span>US</span>
+    </h2>
 
     <div class="contact-box">
+
       <form onsubmit="sendMessage(event)">
-        <input type="text" placeholder="Your name" required>
-        <input type="email" placeholder="Your email" required>
-        <textarea placeholder="Your message" required></textarea>
-        <button class="submit" type="submit">SEND MESSAGE</button>
+
+        <input
+          type="text"
+          placeholder="Your name"
+          required
+        >
+
+        <input
+          type="email"
+          placeholder="Your email"
+          required
+        >
+
+        <textarea
+          placeholder="Your message"
+          required>
+        </textarea>
+
+        <button
+          class="submit"
+          type="submit">
+          SEND MESSAGE
+        </button>
+
       </form>
+
     </div>
+
   </section>
 
 </main>
 
-<div id="cartMessage">🛒 Added to your cart!</div>
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
-  <p>© 2026 Game Without Limits. All rights reserved.</p>
-  <p>Level up. Play harder. Game without limits.</p>
+
+  <p>
+    © 2026 Game Without Limits.
+    All rights reserved.
+  </p>
+
+  <p>
+    Level up. Play harder. Game without limits.
+  </p>
+
 </footer>
 
+<!-- CART MESSAGE -->
+
+<div id="cartMessage">
+  🛒 Added to your cart!
+</div>
+
+<!-- =========================
+     AUTH MODAL
+========================= -->
+
+<div
+  id="authOverlay"
+  class="auth-overlay">
+
+  <div class="auth-card">
+
+    <button
+      class="auth-close"
+      onclick="closeAuth()">
+      ×
+    </button>
+
+    <div class="emoji-area">
+
+      <div
+        id="authEmoji"
+        class="emoji">
+        👀
+      </div>
+
+      <span
+        id="floatingWord"
+        class="floating-word">
+        HELLO!
+      </span>
+
+    </div>
+
+    <h1 class="auth-title">
+      GAME
+      <span>WITHOUT LIMITS</span>
+    </h1>
+
+    <p class="auth-subtitle">
+      Your gaming journey starts here.
+    </p>
+
+    <div
+      id="authMode"
+      class="auth-mode">
+      SIGN IN
+    </div>
+
+    <!-- NAME -->
+
+    <div
+      id="nameGroup"
+      class="auth-group"
+      style="display:none;">
+
+      <label for="authName">
+        Name
+      </label>
+
+      <input
+        id="authName"
+        type="text"
+        placeholder="Your name"
+        autocomplete="name">
+
+    </div>
+
+    <!-- EMAIL -->
+
+    <div class="auth-group">
+
+      <label for="authEmail">
+        Email
+      </label>
+
+      <input
+        id="authEmail"
+        type="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+        required>
+
+    </div>
+
+    <!-- PASSWORD -->
+
+    <div class="auth-group">
+
+      <label for="authPassword">
+        Password
+      </label>
+
+      <div class="password-wrapper">
+
+        <input
+          id="authPassword"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required>
+
+        <button
+          type="button"
+          class="password-eye"
+          id="passwordEye"
+          onclick="togglePassword()">
+          👁️
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- SUBMIT -->
+
+    <button
+      id="authSubmit"
+      class="auth-submit"
+      onclick="handleAuth()">
+      SIGN IN ⚡
+    </button>
+
+    <div class="auth-divider">
+      OR
+    </div>
+
+    <!-- GOOGLE -->
+
+    <button
+      class="google-btn"
+      onclick="signInWithGoogle()">
+      🔵 CONTINUE WITH GOOGLE
+    </button>
+
+    <div
+      id="authMessage"
+      class="auth-message">
+    </div>
+
+    <div class="switch-mode">
+
+      <span id="switchText">
+        Don't have an account?
+      </span>
+
+      <button
+        id="switchButton"
+        onclick="switchAuthMode()">
+        SIGN UP
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================================
+     FIREBASE
+     
+     IMPORTANT:
+     Replace the Firebase configuration below with the
+     configuration from YOUR Firebase project.
+
+     Do NOT invent or change these values.
+========================================================== -->
+
+<script type="module">
+
+  import {
+    initializeApp
+  } from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut
+  } from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+  /* ==========================================================
+     PASTE YOUR EXISTING FIREBASE CONFIG HERE
+     
+     Firebase Console:
+     Project settings
+     → Your apps
+     → Web app
+     → Firebase SDK snippet
+     → Config
+  ========================================================== */
+
+  const firebaseConfig = {
+
+    apiKey: "PASTE_YOUR_API_KEY_HERE",
+
+    authDomain:
+      "PASTE_YOUR_PROJECT.firebaseapp.com",
+
+    projectId:
+      "PASTE_YOUR_PROJECT_ID_HERE",
+
+    storageBucket:
+      "PASTE_YOUR_STORAGE_BUCKET_HERE",
+
+    messagingSenderId:
+      "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
+
+    appId:
+      "PASTE_YOUR_APP_ID_HERE"
+
+  };
+
+
+  /* =========================
+     INITIALIZE FIREBASE
+  ========================= */
+
+  let firebaseReady = false;
+  let auth = null;
+  let googleProvider = null;
+
+  try {
+
+    const app = initializeApp(firebaseConfig);
+
+    auth = getAuth(app);
+
+    googleProvider = new GoogleAuthProvider();
+
+    firebaseReady =
+      !firebaseConfig.apiKey.includes("PASTE_");
+
+  } catch (error) {
+
+    console.error(
+      "Firebase initialization error:",
+      error
+    );
+
+  }
+
+
+  /* =========================
+     AUTH STATE
+  ========================= */
+
+  if (auth) {
+
+    onAuthStateChanged(
+      auth,
+      function(user) {
+
+        if (user) {
+
+          unlockStore(user);
+
+        } else {
+
+          lockStore();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================
+     UNLOCK STORE
+  ========================= */
+
+  function unlockStore(user) {
+
+    document.body.classList.remove("locked");
+
+    document
+      .getElementById("authOverlay")
+      .classList.add("hidden");
+
+    document
+      .getElementById("lockedStore")
+      .style.display = "none";
+
+    document
+      .getElementById("productsArea")
+      .style.display = "grid";
+
+    document
+      .getElementById("headerSignIn")
+      .style.display = "none";
+
+    document
+      .getElementById("userStatus")
+      .classList.add("logged-in");
+
+    document
+      .getElementById("userEmail")
+      .textContent =
+      user.email || "Signed in";
+
+  }
+
+
+  /* =========================
+     LOCK STORE
+  ========================= */
+
+  function lockStore() {
+
+    document.body.classList.add("locked");
+
+    document
+      .getElementById("lockedStore")
+      .style.display = "flex";
+
+    document
+      .getElementById("productsArea")
+      .style.display = "none";
+
+    document
+      .getElementById("headerSignIn")
+      .style.display = "block";
+
+    document
+      .getElementById("userStatus")
+      .classList.remove("logged-in");
+
+  }
+
+
+  /* =========================
+     EMAIL / PASSWORD
+  ========================= */
+
+  window.handleAuth = async function() {
+
+    const email =
+      document
+        .getElementById("authEmail")
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById("authPassword")
+        .value;
+
+    const name =
+      document
+        .getElementById("authName")
+        .value
+        .trim();
+
+    const message =
+      document.getElementById("authMessage");
+
+    const button =
+      document.getElementById("authSubmit");
+
+
+    message.textContent = "";
+
+
+    if (!email || !password) {
+
+      message.textContent =
+        "Please enter your email and password.";
+
+      return;
+
+    }
+
+
+    if (!firebaseReady) {
+
+      message.textContent =
+        "Firebase is not connected yet. Add your Firebase configuration first.";
+
+      return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.textContent = "CONNECTING...";
+
+
+    try {
+
+      if (authMode === "signup") {
+
+        if (!name) {
+
+          message.textContent =
+            "Please enter your name.";
+
+          button.disabled = false;
+
+          button.textContent =
+            "CREATE ACCOUNT ⚡";
+
+          return;
+
+        }
+
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      } else {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      }
+
+      authEmoji.textContent = "🤩";
+
+      authEmoji.classList.add("excited");
+
+      createFlyingText("GO!");
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        getFriendlyAuthError(error.code);
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+      authMode === "signup"
+        ? "CREATE ACCOUNT ⚡"
+        : "SIGN IN ⚡";
+
+  };
+
+
+  /* =========================
+     GOOGLE
+  ========================= */
+
+  window.signInWithGoogle = async function() {
+
+    const message =
+      document.getElementById("authMessage");
+
+    message.textContent = "";
+
+
+    if (!firebaseReady) {
+
+      message.textContent =
+        "Firebase is not connected yet. Add your Firebase configuration first.";
+
+      return;
+
+    }
+
+
+    try {
+
+      await signInWithPopup(
+        auth,
+        googleProvider
+      );
+
+      authEmoji.textContent = "🤩";
+
+      authEmoji.classList.add("excited");
+
+      createFlyingText("GO!");
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        getFriendlyAuthError(error.code);
+
+    }
+
+  };
+
+
+  /* =========================
+     SIGN OUT
+  ========================= */
+
+  window.signOutUser = async function() {
+
+    if (!auth) return;
+
+    try {
+
+      await signOut(auth);
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  };
+
+
+  /* =========================
+     FRIENDLY ERRORS
+  ========================= */
+
+  function getFriendlyAuthError(code) {
+
+    switch (code) {
+
+      case "auth/invalid-email":
+        return "That email address is not valid.";
+
+      case "auth/user-not-found":
+        return "No account was found with that email.";
+
+      case "auth/wrong-password":
+        return "The password is incorrect.";
+
+      case "auth/invalid-credential":
+        return "The email or password is incorrect.";
+
+      case "auth/email-already-in-use":
+        return "An account already exists with this email.";
+
+      case "auth/weak-password":
+        return "Your password needs to be stronger.";
+
+      case "auth/popup-closed-by-user":
+        return "Google sign-in was cancelled.";
+
+      case "auth/operation-not-allowed":
+        return "This sign-in provider is not enabled in Firebase.";
+
+      default:
+        return "Something went wrong. Please try again.";
+
+    }
+
+  }
+
+</script>
+
+
+<!-- ==========================================================
+     WEBSITE JAVASCRIPT
+========================================================== -->
+
 <script>
-  let cartCount = 0;
 
-  function addToCart(product) {
-    cartCount++;
-    document.getElementById("cartCount").textContent = cartCount;
+  /* =========================
+     AUTH UI
+  ========================= */
 
-    const message = document.getElementById("cartMessage");
-    message.textContent = "🛒 " + product + " added to your cart!";
-    message.style.display = "block";
+  let authMode = "signin";
+
+  const authOverlay =
+    document.getElementById("authOverlay");
+
+  const authEmoji =
+    document.getElementById("authEmoji");
+
+  const authEmail =
+    document.getElementById("authEmail");
+
+  const authPassword =
+    document.getElementById("authPassword");
+
+  const nameGroup =
+    document.getElementById("nameGroup");
+
+  const authModeTitle =
+    document.getElementById("authMode");
+
+  const authSubmit =
+    document.getElementById("authSubmit");
+
+  const switchText =
+    document.getElementById("switchText");
+
+  const switchButton =
+    document.getElementById("switchButton");
+
+  const floatingWord =
+    document.getElementById("floatingWord");
+
+
+  /* =========================
+     OPEN AUTH
+  ========================= */
+
+  window.openAuth = function(mode = "signin") {
+
+    authMode = mode;
+
+    updateAuthMode();
+
+    authOverlay.classList.remove("hidden");
+
+    document.body.classList.add("locked");
 
     setTimeout(() => {
-      message.style.display = "none";
-    }, 2000);
-  }
 
-  function showCart() {
-    if (cartCount === 0) {
-      alert("Your cart is empty.");
-    } else {
-      alert("You have " + cartCount + " item(s) in your cart.");
+      authEmail.focus();
+
+    }, 150);
+
+  };
+
+
+  /* =========================
+     CLOSE AUTH
+  ========================= */
+
+  window.closeAuth = function() {
+
+    /*
+      Only allow closing if the user is already signed in.
+      Otherwise the store remains protected.
+    */
+
+    if (
+      window.firebaseUserLoggedIn === true
+    ) {
+
+      authOverlay.classList.add("hidden");
+
+      document.body.classList.remove("locked");
+
     }
+
+  };
+
+
+  /* =========================
+     AUTH MODE
+  ========================= */
+
+  function updateAuthMode() {
+
+    if (authMode === "signup") {
+
+      authModeTitle.textContent =
+        "CREATE ACCOUNT";
+
+      nameGroup.style.display =
+        "block";
+
+      authSubmit.textContent =
+        "CREATE ACCOUNT ⚡";
+
+      switchText.textContent =
+        "Already have an account?";
+
+      switchButton.textContent =
+        "SIGN IN";
+
+      authEmoji.textContent =
+        "🙂";
+
+    } else {
+
+      authModeTitle.textContent =
+        "SIGN IN";
+
+      nameGroup.style.display =
+        "none";
+
+      authSubmit.textContent =
+        "SIGN IN ⚡";
+
+      switchText.textContent =
+        "Don't have an account?";
+
+      switchButton.textContent =
+        "SIGN UP";
+
+      authEmoji.textContent =
+        "👀";
+
+    }
+
   }
 
-  function sendMessage(event) {
-    event.preventDefault();
-    alert("Thanks! Your message form is ready. We can connect it to your email or WhatsApp later.");
+
+  window.switchAuthMode = function() {
+
+    authMode =
+      authMode === "signin"
+        ? "signup"
+        : "signin";
+
+    updateAuthMode();
+
+  };
+
+
+  /* =========================
+     PASSWORD
+  ========================= */
+
+  window.togglePassword = function() {
+
+    const eye =
+      document.getElementById("passwordEye");
+
+    if (
+      authPassword.type === "password"
+    ) {
+
+      authPassword.type = "text";
+
+      eye.textContent = "🙈";
+
+    } else {
+
+      authPassword.type = "password";
+
+      eye.textContent = "👁️";
+
+    }
+
+  };
+
+
+  /* =========================
+     EMOJI REACTIONS
+  ========================= */
+
+  function watchEmail() {
+
+    authEmoji.textContent = "👀";
+
+    authEmoji.classList.add("watching");
+
+    authEmoji.classList.remove("excited");
+
   }
+
+
+  function watchPassword() {
+
+    authEmoji.textContent = "🙈";
+
+    authEmoji.classList.add("watching");
+
+    authEmoji.classList.remove("excited");
+
+  }
+
+
+  authEmail.addEventListener(
+    "focus",
+    watchEmail
+  );
+
+
+  authPassword.addEventListener(
+    "focus",
+    watchPassword
+  );
+
+
+  /* =========================
+     TYPING ANIMATION
+  ========================= */
+
+  authEmail.addEventListener(
+    "input",
+    function() {
+
+      watchEmail();
+
+      createFlyingText(
+        authEmail.value.slice(-1) || "@"
+      );
+
+      animateInput(authEmail);
+
+    }
+  );
+
+
+  authPassword.addEventListener(
+    "input",
+    function() {
+
+      watchPassword();
+
+      createFlyingText("✦");
+
+      animateInput(authPassword);
+
+    }
+  );
+
+
+  function animateInput(input) {
+
+    input.animate(
+
+      [
+        {
+          transform: "scale(1)"
+        },
+
+        {
+          transform:
+            "scale(1.025) translateX(3px)"
+        },
+
+        {
+          transform: "scale(1)"
+        }
+
+      ],
+
+      {
+        duration: 350,
+        easing: "ease-out"
+      }
+
+    );
+
+  }
+
+
+  /* =========================
+     FLYING TEXT
+  ========================= */
+
+  function createFlyingText(character) {
+
+    floatingWord.textContent =
+      character;
+
+    floatingWord.classList.remove(
+      "show"
+    );
+
+    void floatingWord.offsetWidth;
+
+    floatingWord.classList.add(
+      "show"
+    );
+
+  }
+
+
+  /* =========================
+     STORE ACCESS
+  ========================= */
+
+  window.openStore = function() {
+
+    const products =
+      document.getElementById(
+        "productsArea"
+      );
+
+    if (
+      products.style.display === "grid"
+    ) {
+
+      document
+        .getElementById("store")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+      return;
+
+    }
+
+    openAuth("signin");
+
+  };
+
+
+  /* =========================
+     CART
+  ========================= */
+
+  let cartCount = 0;
+
+
+  window.addToCart = function(product) {
+
+    cartCount++;
+
+    document
+      .getElementById("cartCount")
+      .textContent = cartCount;
+
+
+    const message =
+      document.getElementById(
+        "cartMessage"
+      );
+
+    message.textContent =
+      "🛒 " +
+      product +
+      " added to your cart!";
+
+    message.style.display =
+      "block";
+
+
+    setTimeout(() => {
+
+      message.style.display =
+        "none";
+
+    }, 2000);
+
+  };
+
+
+  window.showCart = function() {
+
+    if (cartCount === 0) {
+
+      alert(
+        "Your cart is empty."
+      );
+
+    } else {
+
+      alert(
+        "You have " +
+        cartCount +
+        " item(s) in your cart."
+      );
+
+    }
+
+  };
+
+
+  /* =========================
+     CONTACT
+  ========================= */
+
+  window.sendMessage = function(event) {
+
+    event.preventDefault();
+
+    alert(
+      "Thanks! Your message form is ready."
+    );
+
+  };
+
+
+  /* =========================
+     TRACK LOGIN STATE
+  ========================= */
+
+  /*
+    This is updated by Firebase's auth listener.
+  */
+
+  Object.defineProperty(
+    window,
+    "firebaseUserLoggedIn",
+    {
+      value: false,
+      writable: true
+    }
+  );
+
 </script>
 
 </body>
-</html>
+    </html>
