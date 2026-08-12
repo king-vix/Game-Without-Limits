@@ -1,4 +1,182 @@
-<!DOCTYPE html>
+<!-- Account Button -->
+<div class="account-area">
+  <button class="account-btn" onclick="openAccount()">
+    👤 SIGN UP / SIGN IN
+  </button>
+</div>
+
+<!-- Account Popup -->
+<div id="accountModal" class="account-modal">
+  <div class="account-box">
+    <button class="close-account" onclick="closeAccount()">×</button>
+
+    <h2 id="accountTitle">CREATE ACCOUNT</h2>
+    <p id="accountSubtitle">Join Game Without Limits</p>
+
+    <form id="accountForm" onsubmit="handleAccount(event)">
+      <input id="nameField" type="text" placeholder="Your name" required>
+      <input type="email" placeholder="Email address" required>
+      <input type="password" placeholder="Password" required>
+
+      <button type="submit" class="neon-submit">
+        CREATE ACCOUNT ⚡
+      </button>
+    </form>
+
+    <p class="switch-account">
+      Already have an account?
+      <button type="button" onclick="switchToSignIn()">SIGN IN</button>
+    </p>
+  </div>
+</div>
+
+<style>
+.account-area {
+  text-align: center;
+  padding: 25px;
+}
+
+.account-btn,
+.neon-submit {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00c6ff;
+  transition: 0.3s;
+}
+
+.account-btn:hover,
+.neon-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #00c6ff;
+}
+
+.account-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 15, 0.85);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.account-modal.show {
+  display: flex;
+  animation: fadeIn 0.35s ease;
+}
+
+.account-box {
+  width: 90%;
+  max-width: 400px;
+  background: #070b1c;
+  border: 2px solid #00c6ff;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 40px #008cff;
+  animation: popup 0.4s ease;
+}
+
+.account-box h2 {
+  color: #00c6ff;
+  text-shadow: 0 0 15px #00c6ff;
+}
+
+.account-box input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #168cff;
+  background: #0c1228;
+  color: white;
+  outline: none;
+}
+
+.neon-submit {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.close-account {
+  float: right;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.switch-account {
+  margin-top: 20px;
+}
+
+.switch-account button {
+  background: none;
+  border: none;
+  color: #00c6ff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0.7) translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+</style>
+
+<script>
+function openAccount() {
+  document.getElementById("accountModal").classList.add("show");
+}
+
+function closeAccount() {
+  document.getElementById("accountModal").classList.remove("show");
+}
+
+function switchToSignIn() {
+  document.getElementById("accountTitle").textContent = "WELCOME BACK";
+  document.getElementById("accountSubtitle").textContent = "Sign in to Game Without Limits";
+  document.getElementById("nameField").style.display = "none";
+  document.querySelector(".neon-submit").textContent = "SIGN IN ⚡";
+  document.querySelector(".switch-account").innerHTML =
+    'Need an account? <button type="button" onclick="switchToSignUp()">SIGN UP</button>';
+}
+
+function switchToSignUp() {
+  document.getElementById("accountTitle").textContent = "CREATE ACCOUNT";
+  document.getElementById("accountSubtitle").textContent = "Join Game Without Limits";
+  document.getElementById("nameField").style.display = "block";
+  document.querySelector(".neon-submit").textContent = "CREATE ACCOUNT ⚡";
+  document.querySelector(".switch-account").innerHTML =
+    'Already have an account? <button type="button" onclick="switchToSignIn()">SIGN IN</button>';
+}
+
+function handleAccount(event) {
+  event.preventDefault();
+  alert("Account form submitted! Full account storage will be added next.");
+}
+</script><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
