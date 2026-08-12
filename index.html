@@ -195,14 +195,27 @@ function handleAccount(event) {
       scroll-behavior: smooth;
     }
 
-    body {<div id="signinModal" class="signin-modal">
-  <div class="signin-box">
-    <h2>Welcome to Game Without Limits</h2>
-    <p class="subtitle">This is a place where you can buy affordable gaming accessories. Please sign in to continue.</p>
-    <form onsubmit="handleSignIn(event)">
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
-      <button type="submit">Sign In</button>
+    <body>
+
+  <!-- your website content -->
+
+  <!-- sign-in section -->
+  <div id="signinModal" class="signin-modal">
+    <div class="signin-box">
+      <h2>Welcome to Game Without Limits</h2>
+      <p class="subtitle">This is a place where you can buy affordable gaming accessories.</p>
+
+      <form onsubmit="handleSignIn(event)">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Sign In</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- THEN, at the very end of your page -->
+</body>
     </form>
   </div>
 </div>
