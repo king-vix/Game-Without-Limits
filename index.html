@@ -1,323 +1,668 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Without Limits</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
+<title>Game Without Limits - Sign In</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at top left, #343cff, transparent 35%),
+            radial-gradient(circle at bottom right, #7b2cff, transparent 35%),
+            #050713;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    /* MAIN LOGIN CONTAINER */
+
+    .login-container {
+        width: 100%;
+        max-width: 480px;
+        padding: 25px;
+        position: relative;
+    }
+
+    .login-card {
+        position: relative;
+        padding: 40px 30px;
+        border-radius: 30px;
+
+        background: rgba(10, 13, 35, 0.94);
+
+        border: 1px solid rgba(255,255,255,0.15);
+
+        box-shadow:
+            0 30px 80px rgba(0,0,0,0.65),
+            0 0 50px rgba(99,102,255,0.25);
+
+        backdrop-filter: blur(20px);
+
+        overflow: hidden;
+    }
+
+    /* LIGHT EFFECT */
+
+    .login-card::before {
+        content: "";
+        position: absolute;
+        width: 250px;
+        height: 250px;
+
+        background: #6570ff;
+
+        filter: blur(100px);
+        opacity: 0.18;
+
+        top: -120px;
+        right: -100px;
+
+        animation: glowMove 5s infinite alternate;
+    }
+
+    @keyframes glowMove {
+        from {
+            transform: translate(0, 0);
         }
+
+        to {
+            transform: translate(-80px, 100px);
+        }
+    }
+
+    /* TITLE */
+
+    .title {
+        position: relative;
+        z-index: 2;
+
+        text-align: center;
+
+        font-size: clamp(34px, 8vw, 48px);
+
+        font-weight: 1000;
+
+        color: white;
+
+        text-shadow:
+            3px 3px 0 #000,
+            6px 6px 15px rgba(0,0,0,0.7);
+
+        letter-spacing: -2px;
+
+        animation: titleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes titleFloat {
+
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    .subtitle {
+        position: relative;
+        z-index: 2;
+
+        text-align: center;
+
+        margin-top: 10px;
+        margin-bottom: 30px;
+
+        color: #d9dcff;
+
+        font-size: 16px;
+
+        line-height: 1.6;
+
+        text-shadow:
+            2px 2px 4px #000;
+
+        animation: subtitleAppear 1s ease;
+    }
+
+    @keyframes subtitleAppear {
+
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ==============================
+       ANIMATED EMOJI
+    ============================== */
+
+    .emoji-area {
+        position: relative;
+
+        height: 125px;
+
+        margin-bottom: 5px;
+    }
+
+    .emoji {
+        position: absolute;
+
+        right: 35px;
+        top: 5px;
+
+        width: 90px;
+        height: 90px;
+
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 60px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #303875,
+                #0c1028
+            );
+
+        box-shadow:
+            0 15px 35px rgba(0,0,0,0.5),
+            0 0 30px rgba(100,110,255,0.2);
+
+        transition:
+            transform 0.25s ease,
+            right 0.25s ease,
+            top 0.25s ease;
+    }
+
+    /* Emoji floating */
+
+    .emoji.floating {
+        animation: emojiFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes emojiFloat {
+
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-8px) rotate(3deg);
+        }
+    }
+
+    /* Emoji watching the user */
+
+    .emoji.watching {
+        transform:
+            translateX(-12px)
+            scale(1.08)
+            rotate(-5deg);
+    }
+
+    /* Emoji excited */
+
+    .emoji.excited {
+        animation:
+            emojiExcited 0.5s ease infinite alternate;
+    }
+
+    @keyframes emojiExcited {
+
+        from {
+            transform: scale(1);
+        }
+
+        to {
+            transform: scale(1.15) rotate(5deg);
+        }
+    }
+
+    /* TEXT FLYING AROUND */
+
+    .floating-word {
+        position: absolute;
+
+        color: white;
+
+        font-weight: 1000;
+
+        font-size: 14px;
+
+        text-shadow:
+            2px 2px 0 #000,
+            3px 3px 8px rgba(0,0,0,0.8);
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+    .floating-word.show {
+        animation: flyText 1s ease forwards;
+    }
+
+    @keyframes flyText {
+
+        0% {
+            opacity: 0;
+            transform:
+                translate(0, 20px)
+                scale(0.5)
+                rotate(-10deg);
+        }
+
+        30% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            transform:
+                translate(-100px, -70px)
+                scale(1.2)
+                rotate(15deg);
+        }
+    }
+
+    /* ==============================
+       SIGN IN
+    ============================== */
+
+    .signin-title {
+        position: relative;
+        z-index: 2;
+
+        text-align: left;
+
+        margin-bottom: 18px;
+
+        font-size: 30px;
+
+        font-weight: 1000;
+
+        color: white;
+
+        text-shadow:
+            3px 3px 0 #000,
+            5px 5px 10px rgba(0,0,0,0.7);
+    }
+
+    /* INPUT GROUP */
+
+    .input-group {
+        position: relative;
+
+        margin-bottom: 18px;
+    }
+
+    .input-group label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: white;
+
+        font-size: 15px;
+
+        font-weight: 900;
+
+        text-shadow:
+            2px 2px 3px #000;
+    }
+
+    .input-group input {
+        width: 100%;
+
+        padding: 17px 18px;
+
+        border-radius: 15px;
+
+        border: 2px solid #30365e;
+
+        outline: none;
+
+        background: #070918;
+
+        color: white;
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+        box-shadow:
+            inset 0 4px 10px rgba(0,0,0,0.4);
+
+        transition:
+            border-color 0.25s ease,
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .input-group input::placeholder {
+        color: #777c9f;
+        font-weight: 600;
+    }
+
+    .input-group input:focus {
+        border-color: #6974ff;
+
+        transform:
+            translateY(-2px)
+            scale(1.01);
+
+        box-shadow:
+            0 0 0 4px rgba(105,116,255,0.15),
+            0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    /* TYPE ANIMATION */
+
+    .input-group.typing input {
+        animation: typingGlow 0.8s ease;
+    }
+
+    @keyframes typingGlow {
+
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform:
+                scale(1.025)
+                translateX(3px);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* PASSWORD EYE */
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .password-wrapper input {
+        padding-right: 60px;
+    }
+
+    .show-password {
+        position: absolute;
+
+        right: 12px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        color: #aaaed0;
+
+        font-size: 22px;
+
+        cursor: pointer;
+    }
+
+    /* SIGN IN BUTTON */
+
+    .signin-button {
+        width: 100%;
+
+        padding: 18px;
+
+        margin-top: 5px;
+
+        border: none;
+
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #6672ff,
+                #8a4dff
+            );
+
+        color: white;
+
+        font-size: 20px;
+
+        font-weight: 1000;
+
+        cursor: pointer;
+
+        text-shadow:
+            2px 2px 3px #000;
+
+        box-shadow:
+            0 12px 35px rgba(102,114,255,0.35);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .signin-button:hover {
+        transform:
+            translateY(-3px)
+            scale(1.01);
+
+        box-shadow:
+            0 18px 40px rgba(102,114,255,0.5);
+    }
+
+    .signin-button:active {
+        transform: scale(0.97);
+    }
+
+    /* DIVIDER */
+
+    .divider {
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin: 25px 0;
+
+        color: #888dae;
+
+        font-weight: 800;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+
+        height: 1px;
+
+        flex: 1;
+
+        background: #30355b;
+    }
+
+    /* SOCIAL BUTTONS */
+
+    .social-button {
+        width: 100%;
+
+        padding: 15px;
+
+        margin-top: 10px;
+
+        border-radius: 14px;
+
+        background: #11142b;
+
+        border: 1px solid #353a61;
+
+        color: white;
+
+        font-size: 16px;
+
+        font-weight: 900;
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+    }
+
+    .social-button:hover {
+        background: #1a1f3d;
+
+        transform:
+            translateY(-2px);
+    }
+
+    .google {
+        border-color: #4285f4;
+    }
+
+    .facebook {
+        border-color: #1877f2;
+    }
+
+    .apple {
+        border-color: #888;
+    }
+
+    /* SMALL TEXT */
+
+    .small-text {
+        margin-top: 18px;
+
+        text-align: center;
+
+        color: #8d91b4;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 500px) {
 
         body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(circle at top, #20265f 0%, #090b1c 45%, #03040b 100%);
-            color: white;
-        }
-
-        /* =========================
-           SIGN-IN SCREEN
-        ========================== */
-
-        #loginScreen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(2, 3, 12, 0.97);
             overflow-y: auto;
         }
 
+        .login-container {
+            padding: 15px;
+        }
+
         .login-card {
-            width: 100%;
-            max-width: 460px;
-            padding: 35px 28px;
-            border-radius: 28px;
-            text-align: center;
-            background: linear-gradient(145deg, #171a3b, #090b1c);
-            border: 1px solid rgba(255,255,255,0.12);
-            box-shadow:
-                0 25px 80px rgba(0,0,0,0.65),
-                0 0 50px rgba(83,91,255,0.12);
+            padding: 30px 20px;
         }
 
-        /* Animated character */
-
-        .character {
-            width: 105px;
-            height: 105px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            background: linear-gradient(145deg, #292e70, #10132e);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-            transition: transform 0.25s ease;
+        .emoji {
+            right: 15px;
         }
 
-        .character.typing {
-            animation: bounce 0.7s infinite alternate;
+        .emoji-area {
+            height: 115px;
         }
-
-        .character.happy {
-            transform: scale(1.08);
-        }
-
-        @keyframes bounce {
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(-7px);
-            }
-        }
-
-        .login-card h1 {
-            margin: 5px 0 8px;
-            font-size: clamp(30px, 8vw, 46px);
-            font-weight: 900;
-            letter-spacing: -1.5px;
-        }
-
-        .welcome {
-            margin: 0 auto 25px;
-            max-width: 370px;
-            color: #c5c8e8;
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
-        .signin-title {
-            margin: 10px 0 18px;
-            font-size: 28px;
-            font-weight: 900;
-        }
-
-        /* Inputs */
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 14px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 7px;
-            color: #dfe2ff;
-            font-weight: 700;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: 1px solid #353a69;
-            outline: none;
-            background: #070918;
-            color: white;
-            font-size: 16px;
-            transition: 0.2s ease;
-        }
-
-        .input-group input:focus {
-            border-color: #6670ff;
-            box-shadow: 0 0 0 3px rgba(102,112,255,0.15);
-        }
-
-        /* Main sign-in button */
-
-        .signin-button {
-            width: 100%;
-            margin-top: 8px;
-            padding: 17px;
-            border: 0;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #6570ff, #8b5cff);
-            color: white;
-            font-size: 19px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(101,112,255,0.25);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .signin-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(101,112,255,0.4);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            color: #777caa;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            height: 1px;
-            flex: 1;
-            background: #303458;
-        }
-
-        /* Social buttons */
-
-        .social-button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border-radius: 13px;
-            border: 1px solid #34385e;
-            background: #11142b;
-            color: white;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .social-button:hover {
-            background: #1b1f40;
-            transform: translateY(-1px);
-        }
-
-        .social-button.google {
-            border-color: #4285f4;
-        }
-
-        .social-button.facebook {
-            border-color: #1877f2;
-        }
-
-        .social-button.apple {
-            border-color: #777;
-        }
-
-        .small-note {
-            margin-top: 20px;
-            color: #777caa;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        /* =========================
-           STORE
-        ========================== */
-
-        #store {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .store-header {
-            padding: 25px;
-            text-align: center;
-            background: #0b0e21;
-            border-bottom: 1px solid #24284b;
-        }
-
-        .store-header h2 {
-            margin: 0;
-            font-size: 34px;
-            font-weight: 900;
-        }
-
-        .store-header p {
-            color: #aaaed0;
-        }
-
-        .store-content {
-            max-width: 1100px;
-            margin: auto;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .store-content h3 {
-            font-size: 32px;
-            font-weight: 900;
-        }
-
-        .store-content p {
-            color: #b9bdd8;
-            font-size: 17px;
-        }
-
-        .logout-button {
-            margin-top: 25px;
-            padding: 12px 25px;
-            border: 1px solid #ff5577;
-            border-radius: 12px;
-            background: transparent;
-            color: white;
-            cursor: pointer;
-            font-weight: 700;
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-    <!-- =========================
-         SIGN-IN SCREEN
-    ========================== -->
+<div class="login-container">
 
-    <div id="loginScreen">
+    <div class="login-card">
 
-        <div class="login-card">
+        <!-- EMOJI -->
 
-            <div id="character" class="character">🙂</div>
+        <div class="emoji-area">
 
-            <h1>Welcome to Gaming Dalvin</h1>
-
-            <p class="welcome">
-                Welcome to Game Without Limits, where you can get
-                affordable gaming accessories for a great and affordable
-                price. There is no limit to gaming.
-            </p>
-
-            <div class="signin-title">
-                SIGN IN
+            <div id="emoji" class="emoji floating">
+                👀
             </div>
 
-            <form id="loginForm">
+            <span id="floatingWord" class="floating-word">
+                HELLO!
+            </span>
 
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input
-                        id="username"
-                        type="text"
-                        placeholder="Enter your username"
-                        autocomplete="username"
-                        required
-                    >
-                </div>
+        </div>
 
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        autocomplete="email"
-                        required
-                    >
-                </div>
+        <!-- TITLE -->
 
-                <div class="input-group">
-                    <label for="password">Password</label>
+        <h1 class="title">
+            GAME WITHOUT LIMITS
+        </h1>
+
+        <p class="subtitle">
+            Your gaming journey starts here.
+            Sign in and enter the world of gaming.
+        </p>
+
+        <!-- SIGN IN -->
+
+        <h2 class="signin-title">
+            SIGN IN
+        </h2>
+
+        <form id="loginForm">
+
+            <!-- EMAIL -->
+
+            <div class="input-group" id="emailGroup">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="input-group" id="passwordGroup">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
                     <input
                         id="password"
                         type="password"
@@ -325,242 +670,290 @@
                         autocomplete="current-password"
                         required
                     >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword">
+                        👁️
+                    </button>
+
                 </div>
 
-                <button class="signin-button" type="submit">
-                    SIGN IN
-                </button>
-
-            </form>
-
-            <div class="divider">
-                OR
             </div>
 
-            <!-- Connect these buttons to official OAuth providers
-                 when you add real authentication. -->
+            <!-- SIGN IN -->
 
             <button
-                class="social-button google"
-                type="button"
-                onclick="socialLogin('Google')">
-                🔵 Continue with Google
+                type="submit"
+                class="signin-button">
+
+                SIGN IN
+
             </button>
 
-            <button
-                class="social-button facebook"
-                type="button"
-                onclick="socialLogin('Facebook')">
-                🔵 Continue with Facebook
-            </button>
+        </form>
 
-            <button
-                class="social-button apple"
-                type="button"
-                onclick="socialLogin('Apple')">
-                 Continue with Apple
-            </button>
+        <!-- OTHER OPTIONS -->
 
-            <p class="small-note">
-                Your real Google, Facebook, or Apple password should be
-                entered only on that provider's official sign-in page.
-            </p>
-
+        <div class="divider">
+            OR
         </div>
+
+        <button
+            type="button"
+            class="social-button google">
+
+            🔵 Continue with Google
+
+        </button>
+
+        <button
+            type="button"
+            class="social-button facebook">
+
+            🔵 Continue with Facebook
+
+        </button>
+
+        <button
+            type="button"
+            class="social-button apple">
+
+             Continue with Apple
+
+        </button>
+
+        <p class="small-text">
+            Social sign-in buttons must be connected to the
+            providers' official authentication systems before
+            they can be used for real accounts.
+        </p>
+
     </div>
 
-
-    <!-- =========================
-         STORE / HOMEPAGE
-         Hidden until sign-in
-    ========================== -->
-
-    <main id="store">
-
-        <header class="store-header">
-            <h2>Game Without Limits 🎮</h2>
-            <p>Your gaming store homepage</p>
-        </header>
-
-        <section class="store-content">
-
-            <h3>Welcome to the Store</h3>
-
-            <p>
-                Explore the gaming accessories available through
-                Game Without Limits.
-            </p>
-
-            <!-- Add your real products here later. -->
-
-            <button
-                class="logout-button"
-                type="button"
-                onclick="logout()">
-                Sign Out
-            </button>
-
-        </section>
-
-    </main>
+</div>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+<script>
 
-    <script>
+    const emoji = document.getElementById("emoji");
 
-        const loginScreen = document.getElementById("loginScreen");
-        const store = document.getElementById("store");
-        const character = document.getElementById("character");
+    const email = document.getElementById("email");
 
-        const username = document.getElementById("username");
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
+    const password = document.getElementById("password");
+
+    const emailGroup = document.getElementById("emailGroup");
+
+    const passwordGroup = document.getElementById("passwordGroup");
+
+    const floatingWord =
+        document.getElementById("floatingWord");
+
+    const showPassword =
+        document.getElementById("showPassword");
+
+
+    /* =========================
+       EMOJI REACTION
+    ========================== */
+
+    function emojiWatching() {
+
+        emoji.textContent = "👀";
+
+        emoji.classList.add("watching");
+
+        emoji.classList.remove("excited");
+    }
+
+
+    function emojiNormal() {
+
+        emoji.textContent = "🙂";
+
+        emoji.classList.remove("watching");
+
+        emoji.classList.remove("excited");
+    }
+
+
+    function emojiExcited() {
+
+        emoji.textContent = "🤩";
+
+        emoji.classList.remove("watching");
+
+        emoji.classList.add("excited");
+    }
+
+
+    /* =========================
+       EMAIL TYPING
+    ========================== */
+
+    email.addEventListener("input", function() {
+
+        emailGroup.classList.remove("typing");
+
+        void emailGroup.offsetWidth;
+
+        emailGroup.classList.add("typing");
+
+        emojiWatching();
+
+        createFlyingText(
+            email.value.slice(-1) || "@"
+        );
+
+    });
+
+
+    /* =========================
+       PASSWORD TYPING
+    ========================== */
+
+    password.addEventListener("input", function() {
+
+        passwordGroup.classList.remove("typing");
+
+        void passwordGroup.offsetWidth;
+
+        passwordGroup.classList.add("typing");
 
         /*
-         * Keep the store locked when the page first opens.
+         * The emoji watches the password
+         * instead of revealing it.
          */
 
-        function showLogin() {
-            loginScreen.style.display = "flex";
-            store.style.display = "none";
+        emoji.textContent = "🙈";
+
+        emoji.classList.add("watching");
+
+        createFlyingText("✦");
+
+    });
+
+
+    /* =========================
+       FLYING TEXT
+    ========================== */
+
+    function createFlyingText(character) {
+
+        floatingWord.textContent = character;
+
+        floatingWord.classList.remove("show");
+
+        void floatingWord.offsetWidth;
+
+        floatingWord.classList.add("show");
+
+    }
+
+
+    /* =========================
+       FOCUS
+    ========================== */
+
+    email.addEventListener(
+        "focus",
+        emojiWatching
+    );
+
+
+    password.addEventListener(
+        "focus",
+        function() {
+
+            emoji.textContent = "🙈";
+
+            emoji.classList.add("watching");
+
         }
+    );
 
-        /*
-         * Show the store after the demo sign-in form
-         * passes its basic browser validation.
-         */
 
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", function(event) {
+    /* =========================
+       BLUR
+    ========================== */
+
+    email.addEventListener(
+        "blur",
+        emojiNormal
+    );
+
+
+    password.addEventListener(
+        "blur",
+        emojiNormal
+    );
+
+
+    /* =========================
+       SHOW PASSWORD
+    ========================== */
+
+    showPassword.addEventListener(
+        "click",
+        function() {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                showPassword.textContent = "🙈";
+
+            } else {
+
+                password.type = "password";
+
+                showPassword.textContent = "👁️";
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       FORM
+    ========================== */
+
+    document
+        .getElementById("loginForm")
+        .addEventListener(
+            "submit",
+            function(event) {
 
                 event.preventDefault();
 
                 if (
-                    username.value.trim() !== "" &&
                     email.validity.valid &&
-                    password.value.trim() !== ""
+                    password.value.length > 0
                 ) {
 
-                    character.textContent = "😄";
-                    character.classList.add("happy");
+                    emojiExcited();
+
+                    createFlyingText("GO!");
 
                     setTimeout(function() {
-                        loginScreen.style.display = "none";
-                        store.style.display = "block";
-                    }, 700);
 
-                } else {
+                        alert(
+                            "Demo sign-in successful. Connect Firebase Authentication to make this a real account system."
+                        );
 
-                    character.textContent = "😐";
-                    character.classList.remove("happy");
+                    }, 500);
 
                 }
-            });
 
-
-        /*
-         * Emoji reaction while typing.
-         */
-
-        function updateCharacter() {
-
-            const hasUsername =
-                username.value.trim().length >= 3;
-
-            const hasEmail =
-                email.validity.valid;
-
-            const hasPassword =
-                password.value.length > 0;
-
-            /*
-             * Password typing makes the character
-             * close its eyes.
-             */
-
-            if (document.activeElement === password) {
-
-                character.textContent = "😌";
-                character.classList.add("typing");
-
-                return;
             }
+        );
 
-            character.classList.remove("typing");
+</script>
 
-            /*
-             * A sensible-looking username and email
-             * make the character happy.
-             */
-
-            if (hasUsername && hasEmail) {
-
-                character.textContent = "😄";
-                character.classList.add("happy");
-
-            } else {
-
-                character.textContent = "🙂";
-                character.classList.remove("happy");
-            }
-        }
-
-
-        username.addEventListener("input", updateCharacter);
-        email.addEventListener("input", updateCharacter);
-        password.addEventListener("input", updateCharacter);
-
-        username.addEventListener("focus", updateCharacter);
-        email.addEventListener("focus", updateCharacter);
-        password.addEventListener("focus", updateCharacter);
-
-
-        /*
-         * Social-login buttons are placeholders.
-         * Replace these with official OAuth authentication
-         * when your authentication system is connected.
-         */
-
-        function socialLogin(provider) {
-
-            alert(
-                provider +
-                " sign-in needs to be connected to " +
-                provider +
-                "'s official authentication system."
-            );
-        }
-
-
-        /*
-         * Sign out.
-         */
-
-        function logout() {
-
-            store.style.display = "none";
-            loginScreen.style.display = "flex";
-
-            document.getElementById("loginForm").reset();
-
-            character.textContent = "🙂";
-            character.classList.remove("happy");
-            character.classList.remove("typing");
-        }
-
-
-        /*
-         * Always start locked.
-         */
-
-        showLogin();
-
-    </script>
-
+</body>
+            </html>
 </body>
 </html>
     </style>
