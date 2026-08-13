@@ -1,1145 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Without Limits</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #080808;
-      color: white;
-    }
-
-    button, input, textarea, select {
-      font: inherit;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: #111;
-      border-bottom: 1px solid #292929;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .logo {
-      color: #00ff88;
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .menu-btn {
-      background: #00ff88;
-      color: #000;
-      border: 0;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .hero {
-      padding: 70px 20px;
-      text-align: center;
-      background:
-        radial-gradient(circle at center, #123d2b 0%, #080808 60%);
-    }
-
-    .hero h1 {
-      font-size: clamp(35px, 8vw, 75px);
-      margin-bottom: 15px;
-    }
-
-    .hero h1 span {
-      color: #00ff88;
-    }
-
-    .hero p {
-      color: #aaa;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.6;
-    }
-
-    .search-area {
-      padding: 25px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    #search {
-      width: 100%;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #333;
-      background: #151515;
-      color: white;
-      outline: none;
-    }
-
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px 20px 25px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .category-btn {
-      white-space: nowrap;
-      background: #151515;
-      color: white;
-      border: 1px solid #333;
-      padding: 10px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-
-    .category-btn.active,
-    .category-btn:hover {
-      background: #00ff88;
-      color: #000;
-    }
-
-    .products {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-    }
-
-    .product {
-      background: #121212;
-      border: 1px solid #272727;
-      border-radius: 14px;
-      overflow: hidden;
-      transition: .25s;
-    }
-
-    .product:hover {
-      transform: translateY(-5px);
-      border-color: #00ff88;
-    }
-
-    .product img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      background: #1c1c1c;
-    }
-
-    .product-info {
-      padding: 15px;
-    }
-
-    .product-info h3 {
-      margin-bottom: 8px;
-    }
-
-    .description {
-      color: #999;
-      font-size: 14px;
-      min-height: 40px;
-      margin-bottom: 12px;
-    }
-
-    .price {
-      color: #00ff88;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .stock {
-      color: #aaa;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    .buy-btn {
-      width: 100%;
-      border: 0;
-      background: #00ff88;
-      color: #000;
-      padding: 11px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* SIDE MENU */
-
-    .side-menu {
-      position: fixed;
-      top: 0;
-      left: -320px;
-      width: 300px;
-      height: 100vh;
-      background: #111;
-      z-index: 3000;
-      padding: 25px;
-      transition: .3s;
-      box-shadow: 5px 0 30px rgba(0,0,0,.5);
-    }
-
-    .side-menu.open {
-      left: 0;
-    }
-
-    .close-menu {
-      background: transparent;
-      color: white;
-      border: 0;
-      font-size: 28px;
-      cursor: pointer;
-      float: right;
-    }
-
-    .side-menu h2 {
-      color: #00ff88;
-      margin: 35px 0 25px;
-    }
-
-    .side-menu button,
-    .side-menu a {
-      display: block;
-      width: 100%;
-      text-align: left;
-      background: #181818;
-      color: white;
-      border: 1px solid #292929;
-      padding: 13px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .side-menu button:hover,
-    .side-menu a:hover {
-      background: #00ff88;
-      color: #000;
-    }
-
-    /* ADMIN */
-
-    #adminPanel {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 5000;
-      background: #090909;
-      overflow-y: auto;
-      padding: 25px;
-    }
-
-    .admin-header {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .admin-header h2 {
-      color: #00ff88;
-    }
-
-    .admin-container {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .admin-card {
-      background: #141414;
-      border: 1px solid #292929;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .admin-card h3 {
-      margin-bottom: 15px;
-    }
-
-    .admin-form {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .admin-form .full {
-      grid-column: 1 / -1;
-    }
-
-    .admin-form input,
-    .admin-form textarea,
-    .admin-form select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #0d0d0d;
-      color: white;
-    }
-
-    .admin-form textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .admin-btn {
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 8px;
-      background: #00ff88;
-      color: #000;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .danger {
-      background: #ff4444;
-      color: white;
-    }
-
-    .admin-products {
-      display: grid;
-      gap: 10px;
-    }
-
-    .admin-product {
-      background: #0d0d0d;
-      border: 1px solid #292929;
-      border-radius: 10px;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .admin-product img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .admin-product-info {
-      flex: 1;
-    }
-
-    .admin-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .login-box {
-      max-width: 430px;
-      margin: 80px auto;
-      background: #141414;
-      border: 1px solid #292929;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-    }
-
-    .login-box h2 {
-      color: #00ff88;
-      margin-bottom: 10px;
-    }
-
-    .login-box p {
-      color: #999;
-      margin-bottom: 20px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      border-top: 1px solid #222;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 650px) {
-      .admin-form {
-        grid-template-columns: 1fr;
-      }
-
-      .admin-form .full {
-        grid-column: auto;
-      }
-
-      .admin-product {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Without Limits</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050713;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(0, 0, 30, 0.95);
+            border-bottom: 1px solid #142b57;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00c8ff;
+            text-shadow: 0 0 12px #008cff;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 4px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #00c8ff;
+        }
+        .top-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .search-bar {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .content {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+        /* Admin Panel */
+        .admin-login {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background: #050713;
+        }
+        .admin-login form {
+            background: rgba(10, 13, 35, 0.94);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(100, 110, 255, 0.3);
+        }
+        .admin-login h2 {
+            margin-bottom: 20px;
+            color: #00c8ff;
+        }
+        .admin-login input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #30365e;
+            background: #070918;
+            color: white;
+        }
+        .admin-login button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6672ff, #8a4dff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .admin-login button:hover {
+            transform: translateY(-3px);
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+        }
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .top-right {
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<header>
-  <div class="logo">GAME WITHOUT LIMITS</div>
-  <button class="menu-btn" onclick="openMenu()">☰ Menu</button>
-</header>
-
-<!-- SIDE MENU -->
-<aside id="sideMenu" class="side-menu">
-  <button class="close-menu" onclick="closeMenu()">×</button>
-
-  <h2>Explore</h2>
-
-  <button onclick="filterCategory('Phones'); closeMenu()">📱 Phone Categories</button>
-  <button onclick="filterCategory('Handheld'); closeMenu()">🎮 Handheld Gaming</button>
-  <button onclick="filterCategory('Computers'); closeMenu()">💻 Computer Categories</button>
-  <button onclick="filterCategory('Gaming Laptops'); closeMenu()">🔥 Gaming Laptops</button>
-  <button onclick="filterCategory('Accessories'); closeMenu()">🎧 Gaming Accessories</button>
-  <button onclick="filterCategory('All'); closeMenu()">🛍️ All Products</button>
-
-  <h2>Support</h2>
-
-  <a href="https://wa.me/2349049215247" target="_blank">💬 WhatsApp Customer Care</a>
-  <a href="mailto:king691@gmail.com">📧 Contact Us</a>
-  <button onclick="alert('Please contact customer care through WhatsApp for help or to report an issue.')">
-    ⚠️ Report an Issue
-  </button>
-</aside>
-
-<!-- STOREFRONT -->
-
-<section class="hero">
-  <h1>GAME <span>WITHOUT</span> LIMITS</h1>
-  <p>
-    Gaming hardware, phones, handheld devices, computers and accessories.
-    Explore the store and discover your next setup.
-  </p>
-</section>
-
-<section class="search-area">
-  <input
-    id="search"
-    type="search"
-    placeholder="Search products..."
-    oninput="renderProducts()"
-  >
-</section>
-
-<div class="categories">
-  <button class="category-btn active" onclick="filterCategory('All')">All</button>
-  <button class="category-btn" onclick="filterCategory('Phones')">Phones</button>
-  <button class="category-btn" onclick="filterCategory('Handheld')">Handheld</button>
-  <button class="category-btn" onclick="filterCategory('Computers')">Computers</button>
-  <button class="category-btn" onclick="filterCategory('Gaming Laptops')">Gaming Laptops</button>
-  <button class="category-btn" onclick="filterCategory('Accessories')">Accessories</button>
-</div>
-
-<main id="products" class="products"></main>
-
-<footer>
-  © 2026 Game Without Limits
-</footer>
-
-
-<!-- HIDDEN ADMIN PANEL -->
-
-<section id="adminPanel">
-
-  <div class="admin-header">
-    <h2>⚙️ Admin Control</h2>
-    <button class="admin-btn danger" onclick="closeAdmin()">Close Admin</button>
-  </div>
-
-  <div class="admin-container">
-
-    <div class="admin-card">
-      <h3 id="formTitle">Add Product</h3>
-
-      <form id="productForm" class="admin-form">
-
-        <input type="hidden" id="productId">
-
-        <div>
-          <label>Product Name</label>
-          <input id="productName" required>
+    <header>
+        <div class="logo">GAME WITHOUT LIMITS</div>
+        <div class="menu-toggle" id="menuToggle">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-
-        <div>
-          <label>Price (₦)</label>
-          <input id="productPrice" type="number" min="0" required>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="#">Need Help</a></li>
+                <li><a href="#">My Account</a></li>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Vouchers</a></li>
+                <li><a href="#">Categories</a></li>
+            </ul>
+        </nav>
+        <div class="top-right">
+            <input type="text" class="search-bar" placeholder="Search...">
+            <a href="#" onclick="showAdmin()">Sign In (Admin)</a>
+            <a href="#">🛒 Cart</a>
         </div>
-
-        <div>
-          <label>Category</label>
-          <select id="productCategory" required>
-            <option value="Phones">Phones</option>
-            <option value="Handheld">Handheld</option>
-            <option value="Computers">Computers</option>
-            <option value="Gaming Laptops">Gaming Laptops</option>
-            <option value="Accessories">Accessories</option>
-          </select>
+    </header>
+    <main>
+        <div class="content">
+            <h1>Welcome to Game Without Limits</h1>
+            <p>Your one-stop shop for the best gaming equipment and more!</p>
         </div>
+    </main>
 
-        <div>
-          <label>Stock</label>
-          <input id="productStock" type="number" min="0" required>
-        </div>
-
-        <div class="full">
-          <label>Image URL</label>
-          <input
-            id="productImage"
-            type="url"
-            placeholder="https://..."
-            required
-          >
-        </div>
-
-        <div class="full">
-          <label>Description</label>
-          <textarea id="productDescription" required></textarea>
-        </div>
-
-        <div>
-          <button class="admin-btn" type="submit">
-            Save Product
-          </button>
-        </div>
-
-        <div>
-          <button
-            class="admin-btn"
-            type="button"
-            onclick="resetProductForm()"
-          >
-            Clear Form
-          </button>
-        </div>
-
-      </form>
+    <!-- Admin Login Panel -->
+    <div class="admin-login" id="adminLogin">
+        <form onsubmit="handleAdminLogin(event)">
+            <h2>Admin Login</h2>
+            <input type="email" id="adminEmail" placeholder="Admin Email" required>
+            <input type="password" id="adminPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
     </div>
 
-
-    <div class="admin-card">
-      <h3>Your Products</h3>
-      <div id="adminProducts" class="admin-products"></div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- Firebase -->
-
-<script type="module">
-
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-  /*
-    ============================================================
-    IMPORTANT:
-    REPLACE THESE VALUES WITH YOUR OWN FIREBASE CONFIG.
-    Firebase Console → Project settings → Your apps → Web app
-    ============================================================
-  */
-
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  const provider = new GoogleAuthProvider();
-
-  /*
-    Only this Google account gets admin access.
-    Do NOT put your password in this file.
-  */
-
-  const ADMIN_EMAIL = "king691@gmail.com";
-
-
-  let products = [];
-  let selectedCategory = "All";
-
-
-  /* =========================
-     GOOGLE ADMIN LOGIN
-  ========================= */
-
-  window.adminLogin = async function () {
-
-    try {
-
-      const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-
-      if (user.email !== ADMIN_EMAIL) {
-
-        alert("This Google account does not have administrator access.");
-
-        await signOut(auth);
-
-        return;
-      }
-
-      openAdmin();
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Admin login failed.");
-
-    }
-
-  };
-
-
-  /* =========================
-     AUTH STATE
-  ========================= */
-
-  onAuthStateChanged(auth, user => {
-
-    if (user && user.email === ADMIN_EMAIL) {
-
-      // Admin is authenticated.
-
-    }
-
-  });
-
-
-  /* =========================
-     LOAD PRODUCTS
-  ========================= */
-
-  const productsRef = collection(db, "products");
-
-  onSnapshot(productsRef, snapshot => {
-
-    products = snapshot.docs.map(item => ({
-      id: item.id,
-      ...item.data()
-    }));
-
-    renderProducts();
-    renderAdminProducts();
-
-  });
-
-
-  /* =========================
-     STOREFRONT
-  ========================= */
-
-  window.renderProducts = function () {
-
-    const container = document.getElementById("products");
-
-    const search =
-      document.getElementById("search").value.toLowerCase();
-
-    let filtered = products.filter(product => {
-
-      const matchesCategory =
-        selectedCategory === "All" ||
-        product.category === selectedCategory;
-
-      const matchesSearch =
-        (product.name || "").toLowerCase().includes(search) ||
-        (product.description || "").toLowerCase().includes(search);
-
-      return matchesCategory && matchesSearch;
-
-    });
-
-
-    if (!filtered.length) {
-
-      container.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#777">
-          No products found.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML = filtered.map(product => `
-
-      <article class="product">
-
-        <img
-          src="${escapeHTML(product.image || '')}"
-          alt="${escapeHTML(product.name || '')}"
-          onerror="this.src='https://placehold.co/600x400/111/00ff88?text=Product'"
-        >
-
-        <div class="product-info">
-
-          <h3>${escapeHTML(product.name || '')}</h3>
-
-          <p class="description">
-            ${escapeHTML(product.description || '')}
-          </p>
-
-          <div class="price">
-            ₦${Number(product.price || 0).toLocaleString()}
-          </div>
-
-          <div class="stock">
-            ${
-              Number(product.stock || 0) > 0
-              ? `${product.stock} in stock`
-              : "Out of stock"
-            }
-          </div>
-
-          <button
-            class="buy-btn"
-            ${
-              Number(product.stock || 0) <= 0
-              ? "disabled"
-              : ""
-            }
-            onclick="buyProduct('${product.id}')"
-          >
-            ${
-              Number(product.stock || 0) > 0
-              ? "Buy Now"
-              : "Out of Stock"
-            }
-          </button>
-
-        </div>
-
-      </article>
-
-    `).join("");
-
-  };
-
-
-  window.filterCategory = function(category) {
-
-    selectedCategory = category;
-
-    document.querySelectorAll(".category-btn").forEach(button => {
-      button.classList.remove("active");
-    });
-
-    renderProducts();
-
-  };
-
-
-  window.buyProduct = function(id) {
-
-    const product = products.find(item => item.id === id);
-
-    if (!product) return;
-
-    alert(
-      `${product.name}\n\nPrice: ₦${Number(product.price).toLocaleString()}\n\nCheckout/payment can be connected here later.`
-    );
-
-  };
-
-
-  /* =========================
-     ADMIN PANEL
-  ========================= */
-
-  window.openAdmin = function() {
-
-    document.getElementById("adminPanel").style.display = "block";
-
-    renderAdminProducts();
-
-  };
-
-
-  window.closeAdmin = function() {
-
-    document.getElementById("adminPanel").style.display = "none";
-
-  };
-
-
-  /* =========================
-     ADMIN PRODUCT LIST
-  ========================= */
-
-  window.renderAdminProducts = function() {
-
-    const container =
-      document.getElementById("adminProducts");
-
-    if (!container) return;
-
-
-    if (!products.length) {
-
-      container.innerHTML = `
-        <p style="color:#777">
-          No products have been added yet.
-        </p>
-      `;
-
-      return;
-
-    }
-
-
-    container.innerHTML = products.map(product => `
-
-      <div class="admin-product">
-
-        <img
-          src="${escapeHTML(product.image || '')}"
-          alt=""
-        >
-
-        <div class="admin-product-info">
-
-          <strong>
-            ${escapeHTML(product.name || '')}
-          </strong>
-
-          <div style="color:#00ff88">
-            ₦${Number(product.price || 0).toLocaleString()}
-          </div>
-
-          <small style="color:#888">
-            ${escapeHTML(product.category || '')}
-            · Stock: ${Number(product.stock || 0)}
-          </small>
-
-        </div>
-
-        <div class="admin-actions">
-
-          <button
-            class="admin-btn"
-            onclick="editProduct('${product.id}')"
-          >
-            Edit
-          </button>
-
-          <button
-            class="admin-btn danger"
-            onclick="removeProduct('${product.id}')"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-  };
-
-
-  /* =========================
-     ADD / EDIT PRODUCT
-  ========================= */
-
-  document
-    .getElementById("productForm")
-    .addEventListener("submit", async event => {
-
-      event.preventDefault();
-
-
-      const id =
-        document.getElementById("productId").value;
-
-      const productData = {
-
-        name:
-          document.getElementById("productName").value.trim(),
-
-        price:
-          Number(document.getElementById("productPrice").value),
-
-        category:
-          document.getElementById("productCategory").value,
-
-        stock:
-          Number(document.getElementById("productStock").value),
-
-        image:
-          document.getElementById("productImage").value.trim(),
-
-        description:
-          document.getElementById("productDescription").value.trim(),
-
-        updatedAt: serverTimestamp()
-
-      };
-
-
-      try {
-
-        if (id) {
-
-          await updateDoc(
-            doc(db, "products", id),
-            productData
-          );
-
-          alert("Product updated successfully.");
-
-        } else {
-
-          await addDoc(
-            collection(db, "products"),
-            {
-              ...productData,
-              createdAt: serverTimestamp()
-            }
-          );
-
-          alert("Product added successfully.");
-
+    <script>
+        // Toggle mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.style.display = (navMenu.style.display === 'flex') ? 'none' : 'flex';
+        });
+
+        // Show admin login
+        function showAdmin() {
+            document.getElementById('adminLogin').style.display = 'flex';
         }
 
-        resetProductForm();
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Could not save the product. Check your Firebase setup."
-        );
-
-      }
-
-    });
-
-
-  /* =========================
-     EDIT
-  ========================= */
-
-  window.editProduct = function(id) {
-
-    const product =
-      products.find(item => item.id === id);
-
-    if (!product) return;
-
-
-    document.getElementById("productId").value =
-      product.id;
-
-    document.getElementById("productName").value =
-      product.name || "";
-
-    document.getElementById("productPrice").value =
-      product.price || 0;
-
-    document.getElementById("productCategory").value =
-      product.category || "Accessories";
-
-    document.getElementById("productStock").value =
-      product.stock || 0;
-
-    document.getElementById("productImage").value =
-      product.image || "";
-
-    document.getElementById("productDescription").value =
-      product.description || "";
-
-    document.getElementById("formTitle").textContent =
-      "Edit Product";
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  };
-
-
-  /* =========================
-     DELETE
-  ========================= */
-
-  window.removeProduct = async function(id) {
-
-    const product =
-      products.find(item => item.id === id);
-
-    if (!product) return;
-
-
-    const confirmed =
-      confirm(
-        `Delete "${product.name}"? This cannot be undone.`
-      );
-
-    if (!confirmed) return;
-
-
-    try {
-
-      await deleteDoc(
-        doc(db, "products", id)
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Could not delete this product.");
-
-    }
-
-  };
-
-
-  /* =========================
-     RESET FORM
-  ========================= */
-
-  window.resetProductForm = function() {
-
-    document.getElementById("productForm").reset();
-
-    document.getElementById("productId").value = "";
-
-    document.getElementById("formTitle").textContent =
-      "Add Product";
-
-  };
-
-
-  /* =========================
-     MENU
-  ========================= */
-
-  window.openMenu = function() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.add("open");
-
-  };
-
-
-  window.closeMenu = function() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.remove("open");
-
-  };
-
-
-  /* =========================
-     SECURITY HELPER
-  ========================= */
-
-  function escapeHTML(value) {
-
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-
-  }
-
-
-  /*
-    Hidden admin access.
-
-    To open it, use:
-    https://your-site.com/?admin
-
-    The panel will STILL require your Google account.
-  */
-
-  if (window.location.search === "?admin") {
-
-    const login = document.createElement("button");
-
-    login.textContent = "Admin Login";
-
-    login.className = "admin-btn";
-
-    login.style.position = "fixed";
-    login.style.bottom = "20px";
-    login.style.right = "20px";
-    login.style.zIndex = "6000";
-
-    login.onclick = window.adminLogin;
-
-    document.body.appendChild(login);
-
-  }
-
-</script>
-
+        // Handle admin login form (this is just a placeholder, you'd add your logic here)
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            // Here, you'd check credentials against your backend or Firebase
+            if (email === 'kingvix691@gmail.com' && password === 'securepassword123') {
+                alert('Admin login successful! Redirecting to admin panel...');
+                // Redirect to admin panel or show admin controls
+                // Example: window.location.href = '/admin.html';
+            } else {
+                alert('Invalid admin credentials.');
+            }
+        }
+    </script>
 </body>
-  </html>
+</html>
