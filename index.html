@@ -1,2078 +1,1145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Game Without Limits - Gaming equipment, accessories, phones and phone cases.">
-<title>Game Without Limits</title>
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(0,190,255,.18), transparent 30%),
-    radial-gradient(circle at 80% 80%, rgba(0,90,255,.18), transparent 30%),
-    #030611;
-  color: #fff;
-  min-height: 100vh;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(3,6,17,.92);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid #073b70;
-}
-
-nav {
-  max-width: 1250px;
-  margin: auto;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.logo {
-  font-size: 21px;
-  font-weight: 1000;
-  color: #00d9ff;
-  text-shadow: 0 0 15px #008cff;
-}
-
-.logo span {
-  color: #fff;
-}
-
-nav ul {
-  display: flex;
-  gap: 25px;
-  list-style: none;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: .2s;
-}
-
-nav a:hover {
-  color: #00d9ff;
-}
-
-.nav-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.nav-btn {
-  border: 1px solid #00bfff;
-  background: transparent;
-  color: white;
-  padding: 9px 12px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.nav-btn:hover {
-  background: #00aaff;
-  box-shadow: 0 0 18px #008cff;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-  min-height: 650px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 80px 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.stars {
-  position: absolute;
-  inset: 0;
-  opacity: .35;
-  background-image:
-    radial-gradient(#fff 1px, transparent 1px),
-    radial-gradient(#00c8ff 1px, transparent 1px);
-  background-size: 90px 90px, 150px 150px;
-  animation: starsMove 12s linear infinite;
-}
-
-@keyframes starsMove {
-  from { transform: translateY(0); }
-  to { transform: translateY(90px); }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-}
-
-.hero h1 {
-  font-size: clamp(42px, 9vw, 90px);
-  line-height: .95;
-  font-weight: 1000;
-  text-shadow:
-    0 0 10px #00d9ff,
-    0 0 30px #0077ff,
-    5px 5px 0 #000;
-  animation: titlePulse 3s ease-in-out infinite;
-}
-
-.hero h1 span {
-  color: #00d9ff;
-}
-
-@keyframes titlePulse {
-  0%,100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
-}
-
-.hero p {
-  color: #b8e8ff;
-  font-size: 19px;
-  margin: 28px 0;
-}
-
-.btn {
-  display: inline-block;
-  padding: 15px 30px;
-  background: linear-gradient(135deg,#00d9ff,#006eff);
-  color: white;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 1000;
-  box-shadow: 0 0 30px rgba(0,190,255,.5);
-  transition: .2s;
-}
-
-.btn:hover {
-  transform: translateY(-4px) scale(1.03);
-}
-
-/* =========================
-   SECTIONS
-========================= */
-
-section {
-  max-width: 1250px;
-  margin: auto;
-  padding: 75px 20px;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 38px;
-  margin-bottom: 45px;
-}
-
-.section-title span {
-  color: #00d9ff;
-  text-shadow: 0 0 15px #008cff;
-}
-
-/* =========================
-   CATEGORIES
-========================= */
-
-.categories {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 18px;
-}
-
-.category {
-  background: linear-gradient(145deg,#09152c,#050914);
-  border: 1px solid #07518a;
-  border-radius: 18px;
-  padding: 30px 15px;
-  text-align: center;
-  transition: .25s;
-}
-
-.category:hover {
-  transform: translateY(-8px);
-  border-color: #00d9ff;
-  box-shadow: 0 0 30px rgba(0,190,255,.25);
-}
-
-.category .icon {
-  font-size: 50px;
-  margin-bottom: 12px;
-}
-
-.category h3 {
-  color: #00d9ff;
-}
-
-.category p {
-  color: #8da9bd;
-  margin-top: 7px;
-}
-
-/* =========================
-   STORE
-========================= */
-
-#store {
-  display: none;
-}
-
-.store-locked {
-  text-align: center;
-  padding: 70px 20px;
-}
-
-.store-locked .lock {
-  font-size: 70px;
-  animation: lockFloat 2s infinite ease-in-out;
-}
-
-@keyframes lockFloat {
-  50% {
-    transform: translateY(-10px) rotate(5deg);
-  }
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 20px;
-}
-
-.product {
-  background: #070d1e;
-  border: 1px solid #124774;
-  border-radius: 18px;
-  overflow: hidden;
-  transition: .25s;
-}
-
-.product:hover {
-  transform: translateY(-7px);
-  border-color: #00d9ff;
-  box-shadow: 0 0 30px rgba(0,180,255,.25);
-}
-
-.product-image {
-  height: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 80px;
-  background:
-    radial-gradient(circle,rgba(0,200,255,.2),transparent 60%),
-    #050a18;
-}
-
-.product-info {
-  padding: 18px;
-}
-
-.product-info p {
-  color: #8fa9bd;
-  font-size: 14px;
-  margin: 8px 0;
-}
-
-.price {
-  color: #00e1ff;
-  font-size: 23px;
-  font-weight: 1000;
-  margin: 12px 0;
-}
-
-.add-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 9px;
-  border: 1px solid #00c8ff;
-  background: transparent;
-  color: #00d9ff;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  background: #00aaff;
-  color: white;
-  box-shadow: 0 0 20px #008cff;
-}
-
-/* =========================
-   ABOUT / CONTACT
-========================= */
-
-.about {
-  text-align: center;
-  max-width: 850px;
-}
-
-.about p {
-  color: #a9c8dc;
-  font-size: 18px;
-}
-
-.contact-box {
-  max-width: 650px;
-  margin: auto;
-  padding: 30px;
-  background: #080e20;
-  border: 1px solid #124774;
-  border-radius: 18px;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border: 1px solid #164b78;
-  background: #040814;
-  color: white;
-  outline: none;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #00d9ff;
-  box-shadow: 0 0 15px rgba(0,200,255,.2);
-}
-
-textarea {
-  min-height: 120px;
-}
-
-.submit {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg,#00d9ff,#006eff);
-  border: 0;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* =========================
-   LOGIN MODAL
-========================= */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 5000;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: rgba(0,0,10,.88);
-  backdrop-filter: blur(12px);
-}
-
-.modal.show {
-  display: flex;
-  animation: fadeIn .3s ease;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 450px;
-  background:
-    radial-gradient(circle at top right,rgba(0,210,255,.15),transparent 35%),
-    #070c1e;
-  border: 2px solid #00c8ff;
-  border-radius: 25px;
-  padding: 30px;
-  position: relative;
-  box-shadow:
-    0 0 40px rgba(0,174,255,.35),
-    0 25px 80px rgba(0,0,0,.7);
-}
-
-.close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  background: none;
-  border: 0;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-/* =========================
-   SEMI 3D EMOJI
-========================= */
-
-.emoji-stage {
-  height: 130px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.emoji {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 65px;
-  background:
-    radial-gradient(circle at 35% 25%,#ffffff 0 5%,#ffe58a 8%,#ffc928 40%,#d58b00 100%);
-  box-shadow:
-    inset -12px -15px 20px rgba(0,0,0,.25),
-    inset 8px 8px 12px rgba(255,255,255,.45),
-    0 18px 35px rgba(0,0,0,.5),
-    0 0 30px rgba(0,210,255,.4);
-  animation: emoji3d 3s ease-in-out infinite;
-}
-
-@keyframes emoji3d {
-  0%,100% {
-    transform: translateY(0) rotateY(0deg) rotateZ(0deg);
-  }
-  25% {
-    transform: translateY(-7px) rotateY(-12deg) rotateZ(-3deg);
-  }
-  50% {
-    transform: translateY(0) rotateY(12deg) rotateZ(3deg);
-  }
-  75% {
-    transform: translateY(-7px) rotateY(-8deg);
-  }
-}
-
-.emoji.watch {
-  animation: emojiWatch .45s ease forwards;
-}
-
-@keyframes emojiWatch {
-  50% {
-    transform: translateX(-15px) scale(1.12) rotate(-6deg);
-  }
-}
-
-.login-title {
-  text-align: center;
-  font-size: 30px;
-  color: white;
-  text-shadow: 3px 3px #000,0 0 15px #00c8ff;
-  margin-bottom: 8px;
-}
-
-.beta {
-  text-align: center;
-  color: #00d9ff;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-/* =========================
-   INPUT ANIMATION
-========================= */
-
-.input-wrap {
-  position: relative;
-  margin-bottom: 17px;
-}
-
-.input-wrap label {
-  display: block;
-  margin-bottom: 7px;
-  font-weight: bold;
-}
-
-.input-wrap input {
-  padding: 16px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.input-wrap.typing input {
-  animation: inputBounce .25s ease;
-}
-
-@keyframes inputBounce {
-  50% {
-    transform: translateX(4px) scale(1.015);
-  }
-}
-
-.fly-text {
-  position: absolute;
-  right: 20px;
-  top: 50px;
-  color: #00eaff;
-  font-size: 22px;
-  font-weight: 1000;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.fly-text.active {
-  animation: flyAway .8s ease forwards;
-}
-
-@keyframes flyAway {
-  0% {
-    opacity: 0;
-    transform: translate(0,0) scale(.5);
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-100px,-65px) rotate(20deg) scale(1.4);
-  }
-}
-
-.login-submit {
-  width: 100%;
-  padding: 16px;
-  border: 0;
-  border-radius: 13px;
-  background: linear-gradient(135deg,#00d9ff,#006eff);
-  color: white;
-  font-size: 18px;
-  font-weight: 1000;
-  cursor: pointer;
-  box-shadow: 0 0 25px rgba(0,190,255,.45);
-}
-
-.login-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(0,190,255,.7);
-}
-
-.login-note {
-  color: #7f9aad;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 15px;
-}
-
-/* =========================
-   CART
-========================= */
-
-.cart-panel {
-  position: fixed;
-  right: -430px;
-  top: 0;
-  height: 100%;
-  width: min(430px,100%);
-  background: #050a19;
-  border-left: 2px solid #00c8ff;
-  z-index: 4500;
-  padding: 25px;
-  transition: .35s;
-  box-shadow: -10px 0 40px rgba(0,180,255,.2);
-  overflow-y: auto;
-}
-
-.cart-panel.open {
-  right: 0;
-}
-
-.cart-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.cart-head button {
-  background: none;
-  color: white;
-  border: 0;
-  font-size: 27px;
-  cursor: pointer;
-}
-
-.cart-item {
-  padding: 15px;
-  margin-bottom: 10px;
-  border: 1px solid #124774;
-  border-radius: 12px;
-}
-
-.cart-total {
-  margin: 25px 0;
-  font-size: 23px;
-  font-weight: bold;
-  color: #00d9ff;
-}
-
-.checkout-btn {
-  width: 100%;
-  padding: 15px;
-  border: 0;
-  border-radius: 11px;
-  background: linear-gradient(135deg,#00d9ff,#006eff);
-  color: white;
-  font-weight: 1000;
-  cursor: pointer;
-}
-
-/* =========================
-   CHECKOUT
-========================= */
-
-.checkout-box {
-  max-width: 550px;
-  width: 100%;
-  background: #070d20;
-  border: 2px solid #00c8ff;
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 0 40px rgba(0,170,255,.3);
-}
-
-.payment-options {
-  display: grid;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.payment-option {
-  padding: 15px;
-  border: 1px solid #16527e;
-  border-radius: 12px;
-  background: #050a17;
-  color: white;
-  cursor: pointer;
-  text-align: left;
-}
-
-.payment-option.selected {
-  border-color: #00d9ff;
-  background: rgba(0,180,255,.12);
-  box-shadow: 0 0 15px rgba(0,190,255,.2);
-}
-
-.currency {
-  display: flex;
-  gap: 10px;
-  margin: 15px 0;
-}
-
-.currency button {
-  flex: 1;
-  padding: 11px;
-  background: #071126;
-  color: white;
-  border: 1px solid #14527f;
-  border-radius: 9px;
-  cursor: pointer;
-}
-
-.currency button.active {
-  background: #008fd1;
-  border-color: #00d9ff;
-}
-
-/* =========================
-   AI ASSISTANT
-========================= */
-
-.ai-button {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  border: 2px solid #00e1ff;
-  background: linear-gradient(135deg,#00d9ff,#006eff);
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  z-index: 4000;
-  box-shadow: 0 0 30px #008cff;
-  animation: aiPulse 2s infinite;
-}
-
-@keyframes aiPulse {
-  50% {
-    transform: scale(1.08);
-    box-shadow: 0 0 45px #00bfff;
-  }
-}
-
-.ai-panel {
-  position: fixed;
-  right: 20px;
-  bottom: 95px;
-  width: min(360px,calc(100% - 40px));
-  background: #050a18;
-  border: 1px solid #00c8ff;
-  border-radius: 18px;
-  padding: 20px;
-  z-index: 3999;
-  display: none;
-  box-shadow: 0 0 30px rgba(0,190,255,.35);
-}
-
-.ai-panel.show {
-  display: block;
-}
-
-.ai-message {
-  color: #bfeeff;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
-
-.ai-panel input {
-  margin-bottom: 8px;
-}
-
-.ai-panel button {
-  padding: 10px 15px;
-  border-radius: 9px;
-  border: 0;
-  background: #00aaff;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* =========================
-   SUCCESS
-========================= */
-
-.success-box {
-  text-align: center;
-  max-width: 450px;
-  background: #070d20;
-  border: 2px solid #00e1ff;
-  border-radius: 22px;
-  padding: 40px;
-  box-shadow: 0 0 50px rgba(0,190,255,.4);
-}
-
-.success-icon {
-  font-size: 75px;
-  animation: successPop .7s ease infinite alternate;
-}
-
-@keyframes successPop {
-  to {
-    transform: scale(1.12) rotate(4deg);
-  }
-}
-
-.success-box h2 {
-  color: #00e1ff;
-  margin: 15px 0;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-  text-align: center;
-  padding: 35px 20px;
-  color: #71889b;
-  border-top: 1px solid #12345b;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:900px) {
-  .categories,
-  .products {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  nav ul {
-    display: none;
-  }
-}
-
-@media(max-width:550px) {
-  .categories,
-  .products {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    min-height: 560px;
-  }
-
-  .hero h1 {
-    font-size: 48px;
-  }
-
-  .nav-buttons .nav-btn:first-child {
-    display: none;
-  }
-}
-
-@keyframes fadeIn {
-  from {opacity:0}
-  to {opacity:1}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Without Limits</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080808;
+      color: white;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #111;
+      border-bottom: 1px solid #292929;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      color: #00ff88;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .menu-btn {
+      background: #00ff88;
+      color: #000;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 70px 20px;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, #123d2b 0%, #080808 60%);
+    }
+
+    .hero h1 {
+      font-size: clamp(35px, 8vw, 75px);
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #00ff88;
+    }
+
+    .hero p {
+      color: #aaa;
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .search-area {
+      padding: 25px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    #search {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #151515;
+      color: white;
+      outline: none;
+    }
+
+    .categories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 20px 25px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .category-btn {
+      white-space: nowrap;
+      background: #151515;
+      color: white;
+      border: 1px solid #333;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      background: #00ff88;
+      color: #000;
+    }
+
+    .products {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+    }
+
+    .product {
+      background: #121212;
+      border: 1px solid #272727;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      border-color: #00ff88;
+    }
+
+    .product img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #1c1c1c;
+    }
+
+    .product-info {
+      padding: 15px;
+    }
+
+    .product-info h3 {
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #999;
+      font-size: 14px;
+      min-height: 40px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      color: #00ff88;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .stock {
+      color: #aaa;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      border: 0;
+      background: #00ff88;
+      color: #000;
+      padding: 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* SIDE MENU */
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      height: 100vh;
+      background: #111;
+      z-index: 3000;
+      padding: 25px;
+      transition: .3s;
+      box-shadow: 5px 0 30px rgba(0,0,0,.5);
+    }
+
+    .side-menu.open {
+      left: 0;
+    }
+
+    .close-menu {
+      background: transparent;
+      color: white;
+      border: 0;
+      font-size: 28px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .side-menu h2 {
+      color: #00ff88;
+      margin: 35px 0 25px;
+    }
+
+    .side-menu button,
+    .side-menu a {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: #181818;
+      color: white;
+      border: 1px solid #292929;
+      padding: 13px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .side-menu button:hover,
+    .side-menu a:hover {
+      background: #00ff88;
+      color: #000;
+    }
+
+    /* ADMIN */
+
+    #adminPanel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: #090909;
+      overflow-y: auto;
+      padding: 25px;
+    }
+
+    .admin-header {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .admin-header h2 {
+      color: #00ff88;
+    }
+
+    .admin-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .admin-card {
+      background: #141414;
+      border: 1px solid #292929;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .admin-card h3 {
+      margin-bottom: 15px;
+    }
+
+    .admin-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .admin-form .full {
+      grid-column: 1 / -1;
+    }
+
+    .admin-form input,
+    .admin-form textarea,
+    .admin-form select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #0d0d0d;
+      color: white;
+    }
+
+    .admin-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .admin-btn {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background: #00ff88;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .danger {
+      background: #ff4444;
+      color: white;
+    }
+
+    .admin-products {
+      display: grid;
+      gap: 10px;
+    }
+
+    .admin-product {
+      background: #0d0d0d;
+      border: 1px solid #292929;
+      border-radius: 10px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .admin-product img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .admin-product-info {
+      flex: 1;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .login-box {
+      max-width: 430px;
+      margin: 80px auto;
+      background: #141414;
+      border: 1px solid #292929;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    .login-box p {
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      border-top: 1px solid #222;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 650px) {
+      .admin-form {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-form .full {
+        grid-column: auto;
+      }
+
+      .admin-product {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
-<nav>
-
-  <div class="logo">
-    GAME <span>WITHOUT LIMITS</span>
-  </div>
-
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#categories">Categories</a></li>
-    <li><a href="#store">Store</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
-
-  <div class="nav-buttons">
-    <button class="nav-btn" onclick="openLogin()">👤 Sign In</button>
-    <button class="nav-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
-  </div>
-
-</nav>
+  <div class="logo">GAME WITHOUT LIMITS</div>
+  <button class="menu-btn" onclick="openMenu()">☰ Menu</button>
 </header>
 
-
-<!-- =========================
-     HERO
-========================= -->
-
-<main>
-
-<section class="hero" id="home">
-
-  <div class="stars"></div>
-
-  <div class="hero-content">
-
-    <h1>
-      GAME <span>WITHOUT LIMITS</span>
-    </h1>
-
-    <p>
-      Level up your setup. Discover gaming equipment,
-      accessories, phones and phone cases.
-    </p>
-
-    <a href="#categories" class="btn">
-      EXPLORE STORE ⚡
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     CATEGORIES
-========================= -->
-
-<section id="categories">
-
-  <h2 class="section-title">
-    SHOP BY <span>CATEGORY</span>
-  </h2>
-
-  <div class="categories">
-
-    <div class="category">
-      <div class="icon">🎮</div>
-      <h3>Gaming Gear</h3>
-      <p>Level up your gaming setup.</p>
-    </div>
-
-    <div class="category">
-      <div class="icon">🎧</div>
-      <h3>Accessories</h3>
-      <p>Accessories for your setup.</p>
-    </div>
-
-    <div class="category">
-      <div class="icon">📱</div>
-      <h3>Phones</h3>
-      <p>Mobile technology.</p>
-    </div>
-
-    <div class="category">
-      <div class="icon">🛡️</div>
-      <h3>Phone Cases</h3>
-      <p>Protect your device.</p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     STORE
-========================= -->
-
-<section id="store">
-
-  <h2 class="section-title">
-    GAME WITHOUT <span>LIMITS STORE</span>
-  </h2>
-
-  <div class="products">
-
-    <div class="product">
-
-      <div class="product-image">🎮</div>
-
-      <div class="product-info">
-
-        <h3>Pro Gaming Controller</h3>
-
-        <p>Sample gaming controller.</p>
-
-        <div class="price">
-          ₦45,000
-        </div>
-
-        <button class="add-btn"
-          onclick="addToCart('Pro Gaming Controller',45000)">
-          ADD TO CART
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="product">
-
-      <div class="product-image">🎧</div>
-
-      <div class="product-info">
-
-        <h3>Gaming Headset</h3>
-
-        <p>Sample wireless gaming headset.</p>
-
-        <div class="price">
-          ₦65,000
-        </div>
-
-        <button class="add-btn"
-          onclick="addToCart('Gaming Headset',65000)">
-          ADD TO CART
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="product">
-
-      <div class="product-image">📱</div>
-
-      <div class="product-info">
-
-        <h3>Gaming Smartphone</h3>
-
-        <p>Sample gaming smartphone.</p>
-
-        <div class="price">
-          ₦350,000
-        </div>
-
-        <button class="add-btn"
-          onclick="addToCart('Gaming Smartphone',350000)">
-          ADD TO CART
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="product">
-
-      <div class="product-image">🛡️</div>
-
-      <div class="product-info">
-
-        <h3>Gaming Phone Case</h3>
-
-        <p>Sample protective phone case.</p>
-
-        <div class="price">
-          ₦15,000
-        </div>
-
-        <button class="add-btn"
-          onclick="addToCart('Gaming Phone Case',15000)">
-          ADD TO CART
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section id="about" class="about">
-
-  <h2 class="section-title">
-    ABOUT <span>GAME WITHOUT LIMITS</span>
-  </h2>
-
+<!-- SIDE MENU -->
+<aside id="sideMenu" class="side-menu">
+  <button class="close-menu" onclick="closeMenu()">×</button>
+
+  <h2>Explore</h2>
+
+  <button onclick="filterCategory('Phones'); closeMenu()">📱 Phone Categories</button>
+  <button onclick="filterCategory('Handheld'); closeMenu()">🎮 Handheld Gaming</button>
+  <button onclick="filterCategory('Computers'); closeMenu()">💻 Computer Categories</button>
+  <button onclick="filterCategory('Gaming Laptops'); closeMenu()">🔥 Gaming Laptops</button>
+  <button onclick="filterCategory('Accessories'); closeMenu()">🎧 Gaming Accessories</button>
+  <button onclick="filterCategory('All'); closeMenu()">🛍️ All Products</button>
+
+  <h2>Support</h2>
+
+  <a href="https://wa.me/2349049215247" target="_blank">💬 WhatsApp Customer Care</a>
+  <a href="mailto:king691@gmail.com">📧 Contact Us</a>
+  <button onclick="alert('Please contact customer care through WhatsApp for help or to report an issue.')">
+    ⚠️ Report an Issue
+  </button>
+</aside>
+
+<!-- STOREFRONT -->
+
+<section class="hero">
+  <h1>GAME <span>WITHOUT</span> LIMITS</h1>
   <p>
-    Welcome to Game Without Limits — a gaming and technology
-    marketplace. This website is currently in beta and is
-    being prepared for its official launch on August 20.
+    Gaming hardware, phones, handheld devices, computers and accessories.
+    Explore the store and discover your next setup.
   </p>
-
 </section>
 
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section>
-
-  <h2 class="section-title">
-    CONTACT <span>US</span>
-  </h2>
-
-  <div class="contact-box">
-
-    <form onsubmit="sendMessage(event)">
-
-      <input
-        type="text"
-        placeholder="Your name"
-        required>
-
-      <input
-        type="email"
-        placeholder="Your email"
-        required>
-
-      <textarea
-        placeholder="Your message"
-        required></textarea>
-
-      <button class="submit">
-        SEND MESSAGE
-      </button>
-
-    </form>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<!-- =========================
-     LOGIN MODAL
-========================= -->
-
-<div class="modal" id="loginModal">
-
-  <div class="login-card">
-
-    <button class="close" onclick="closeLogin()">×</button>
-
-    <div class="emoji-stage">
-
-      <div class="emoji" id="emoji">
-        👀
-      </div>
-
-    </div>
-
-    <h2 class="login-title">
-      WELCOME GAMER
-    </h2>
-
-    <p class="beta">
-      🚀 BETA • OFFICIAL LAUNCH: AUGUST 20
-    </p>
-
-    <form onsubmit="signIn(event)">
-
-      <div class="input-wrap" id="usernameWrap">
-
-        <label>Username</label>
-
-        <input
-          id="username"
-          type="text"
-          placeholder="Enter your username"
-          required>
-
-        <span class="fly-text" id="usernameFly">
-          ✨
-        </span>
-
-      </div>
-
-
-      <div class="input-wrap" id="emailWrap">
-
-        <label>Email</label>
-
-        <input
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          required>
-
-        <span class="fly-text" id="emailFly">
-          💫
-        </span>
-
-      </div>
-
-
-      <div class="input-wrap" id="passwordWrap">
-
-        <label>Password</label>
-
-        <input
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          required>
-
-        <span class="fly-text" id="passwordFly">
-          🔐
-        </span>
-
-      </div>
-
-
-      <button class="login-submit">
-        SIGN IN ⚡
-      </button>
-
-    </form>
-
-    <p class="login-note">
-      Your Store access will unlock after signing in.
-    </p>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     CART
-========================= -->
-
-<div class="cart-panel" id="cartPanel">
-
-  <div class="cart-head">
-
-    <h2>🛒 YOUR CART</h2>
-
-    <button onclick="closeCart()">×</button>
-
-  </div>
-
-  <div id="cartItems"></div>
-
-  <div class="cart-total">
-    Total: ₦<span id="cartTotal">0</span>
-  </div>
-
-  <button class="checkout-btn" onclick="openCheckout()">
-    OFFICIAL CHECKOUT →
-  </button>
-
-</div>
-
-
-<!-- =========================
-     CHECKOUT MODAL
-========================= -->
-
-<div class="modal" id="checkoutModal">
-
-  <div class="checkout-box">
-
-    <button class="close" onclick="closeCheckout()">×</button>
-
-    <h2>SECURE CHECKOUT</h2>
-
-    <p style="color:#8fb6ca;margin-top:8px">
-      Choose your currency and payment method.
-    </p>
-
-
-    <div class="currency">
-
-      <button
-        id="ngnBtn"
-        class="active"
-        onclick="setCurrency('NGN')">
-        🇳🇬 NGN ₦
-      </button>
-
-      <button
-        id="usdBtn"
-        onclick="setCurrency('USD')">
-        🇺🇸 USD $
-      </button>
-
-    </div>
-
-
-    <h3>Payment Method</h3>
-
-    <div class="payment-options">
-
-      <button
-        class="payment-option selected"
-        onclick="selectPayment(this,'Card')">
-        💳 Card
-      </button>
-
-      <button
-        class="payment-option"
-        onclick="selectPayment(this,'Bank Transfer')">
-        🏦 Bank Transfer
-      </button>
-
-      <button
-        class="payment-option"
-        onclick="selectPayment(this,'PayPal')">
-        🅿️ PayPal
-      </button>
-
-    </div>
-
-
-    <div class="cart-total">
-      Amount:
-      <span id="checkoutAmount">₦0</span>
-    </div>
-
-    <button
-      class="checkout-btn"
-      onclick="processDemoPayment()">
-      CONTINUE TO PAYMENT
-    </button>
-
-    <p style="font-size:12px;color:#71889b;margin-top:15px;text-align:center">
-      DEMO MODE — no real money will be charged.
-      Connect your approved payment provider for live payments.
-    </p>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     SUCCESS MODAL
-========================= -->
-
-<div class="modal" id="successModal">
-
-  <div class="success-box">
-
-    <div class="success-icon">
-      🎉
-    </div>
-
-    <h2>ORDER CONFIRMED!</h2>
-
-    <p id="successText">
-      Your demo order has been created successfully.
-    </p>
-
-    <br>
-
-    <button
-      class="checkout-btn"
-      onclick="closeSuccess()">
-      CONTINUE SHOPPING
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     AI ASSISTANT
-========================= -->
-
-<button
-  class="ai-button"
-  onclick="toggleAI()">
-  🤖
-</button>
-
-<div class="ai-panel" id="aiPanel">
-
-  <h3 style="color:#00d9ff;margin-bottom:10px">
-    🤖 Game Without Limits AI
-  </h3>
-
-  <div class="ai-message" id="aiMessage">
-    Hi gamer! I'm your Game Without Limits assistant.
-    Ask me what is available in the Store.
-  </div>
-
+<section class="search-area">
   <input
-    id="aiInput"
-    placeholder="Ask me something..."
-    onkeydown="if(event.key==='Enter')askAI()">
+    id="search"
+    type="search"
+    placeholder="Search products..."
+    oninput="renderProducts()"
+  >
+</section>
 
-  <button onclick="askAI()">
-    ASK AI
-  </button>
-
-  <button onclick="speakCurrentAI()">
-    🔊 Speak
-  </button>
-
+<div class="categories">
+  <button class="category-btn active" onclick="filterCategory('All')">All</button>
+  <button class="category-btn" onclick="filterCategory('Phones')">Phones</button>
+  <button class="category-btn" onclick="filterCategory('Handheld')">Handheld</button>
+  <button class="category-btn" onclick="filterCategory('Computers')">Computers</button>
+  <button class="category-btn" onclick="filterCategory('Gaming Laptops')">Gaming Laptops</button>
+  <button class="category-btn" onclick="filterCategory('Accessories')">Accessories</button>
 </div>
 
+<main id="products" class="products"></main>
 
 <footer>
-
-  <p>
-    © 2026 Game Without Limits.
-  </p>
-
-  <p>
-    Level up. Play harder. Game without limits.
-  </p>
-
+  © 2026 Game Without Limits
 </footer>
 
 
-<script>
-
-/* =========================
-   USER
-========================= */
-
-let currentUser = null;
-
-
-/* =========================
-   CART
-========================= */
-
-let cart = [];
-
-let currency = "NGN";
-
-let selectedPayment = "Card";
-
-
-function addToCart(name, price) {
-
-  if (!currentUser) {
-
-    alert("🔐 Please sign in before accessing the Store.");
-
-    openLogin();
-
-    return;
-  }
-
-  cart.push({
-    name: name,
-    price: price
-  });
-
-  updateCart();
-
-  speak("Added " + name + " to your cart.");
-
-}
-
-
-function updateCart() {
-
-  document.getElementById("cartCount").textContent =
-    cart.length;
-
-  const container =
-    document.getElementById("cartItems");
-
-  container.innerHTML = "";
-
-  let total = 0;
-
-  cart.forEach((item,index) => {
-
-    total += item.price;
-
-    const div =
-      document.createElement("div");
-
-    div.className = "cart-item";
-
-    div.innerHTML = `
-      <strong>${item.name}</strong>
-      <br>
-      <span style="color:#00d9ff">
-        ₦${item.price.toLocaleString()}
-      </span>
-      <br>
-      <button
-        style="margin-top:8px;background:#071126;color:#ff6688;border:1px solid #ff6688;padding:6px 10px;border-radius:7px;cursor:pointer"
-        onclick="removeCartItem(${index})">
-        Remove
-      </button>
-    `;
-
-    container.appendChild(div);
-
-  });
-
-  document.getElementById("cartTotal").textContent =
-    total.toLocaleString();
-
-  updateCheckoutAmount();
-
-}
-
-
-function removeCartItem(index) {
-
-  cart.splice(index,1);
-
-  updateCart();
-
-}
-
-
-function openCart() {
-
-  if (!currentUser) {
-
-    alert("🔐 Sign in first to use the Store.");
-
-    openLogin();
-
-    return;
-  }
-
-  document
-    .getElementById("cartPanel")
-    .classList.add("open");
-
-}
-
-
-function closeCart() {
-
-  document
-    .getElementById("cartPanel")
-    .classList.remove("open");
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-function openLogin() {
-
-  document
-    .getElementById("loginModal")
-    .classList.add("show");
-
-}
-
-
-function closeLogin() {
-
-  document
-    .getElementById("loginModal")
-    .classList.remove("show");
-
-}
-
-
-function signIn(event) {
-
-  event.preventDefault();
-
-  const username =
-    document.getElementById("username").value.trim();
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  if (!username || !email || !password) {
-
-    return;
-
-  }
-
-  currentUser = {
-    username: username,
-    email: email
+<!-- HIDDEN ADMIN PANEL -->
+
+<section id="adminPanel">
+
+  <div class="admin-header">
+    <h2>⚙️ Admin Control</h2>
+    <button class="admin-btn danger" onclick="closeAdmin()">Close Admin</button>
+  </div>
+
+  <div class="admin-container">
+
+    <div class="admin-card">
+      <h3 id="formTitle">Add Product</h3>
+
+      <form id="productForm" class="admin-form">
+
+        <input type="hidden" id="productId">
+
+        <div>
+          <label>Product Name</label>
+          <input id="productName" required>
+        </div>
+
+        <div>
+          <label>Price (₦)</label>
+          <input id="productPrice" type="number" min="0" required>
+        </div>
+
+        <div>
+          <label>Category</label>
+          <select id="productCategory" required>
+            <option value="Phones">Phones</option>
+            <option value="Handheld">Handheld</option>
+            <option value="Computers">Computers</option>
+            <option value="Gaming Laptops">Gaming Laptops</option>
+            <option value="Accessories">Accessories</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Stock</label>
+          <input id="productStock" type="number" min="0" required>
+        </div>
+
+        <div class="full">
+          <label>Image URL</label>
+          <input
+            id="productImage"
+            type="url"
+            placeholder="https://..."
+            required
+          >
+        </div>
+
+        <div class="full">
+          <label>Description</label>
+          <textarea id="productDescription" required></textarea>
+        </div>
+
+        <div>
+          <button class="admin-btn" type="submit">
+            Save Product
+          </button>
+        </div>
+
+        <div>
+          <button
+            class="admin-btn"
+            type="button"
+            onclick="resetProductForm()"
+          >
+            Clear Form
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+
+    <div class="admin-card">
+      <h3>Your Products</h3>
+      <div id="adminProducts" class="admin-products"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Firebase -->
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+
+  /*
+    ============================================================
+    IMPORTANT:
+    REPLACE THESE VALUES WITH YOUR OWN FIREBASE CONFIG.
+    Firebase Console → Project settings → Your apps → Web app
+    ============================================================
+  */
+
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.firebasestorage.app",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
   };
 
-  document.getElementById("loginModal")
-    .classList.remove("show");
 
-  document.getElementById("store")
-    .style.display = "block";
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  document.getElementById("store")
-    .scrollIntoView({
+  const provider = new GoogleAuthProvider();
+
+  /*
+    Only this Google account gets admin access.
+    Do NOT put your password in this file.
+  */
+
+  const ADMIN_EMAIL = "king691@gmail.com";
+
+
+  let products = [];
+  let selectedCategory = "All";
+
+
+  /* =========================
+     GOOGLE ADMIN LOGIN
+  ========================= */
+
+  window.adminLogin = async function () {
+
+    try {
+
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+
+      if (user.email !== ADMIN_EMAIL) {
+
+        alert("This Google account does not have administrator access.");
+
+        await signOut(auth);
+
+        return;
+      }
+
+      openAdmin();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Admin login failed.");
+
+    }
+
+  };
+
+
+  /* =========================
+     AUTH STATE
+  ========================= */
+
+  onAuthStateChanged(auth, user => {
+
+    if (user && user.email === ADMIN_EMAIL) {
+
+      // Admin is authenticated.
+
+    }
+
+  });
+
+
+  /* =========================
+     LOAD PRODUCTS
+  ========================= */
+
+  const productsRef = collection(db, "products");
+
+  onSnapshot(productsRef, snapshot => {
+
+    products = snapshot.docs.map(item => ({
+      id: item.id,
+      ...item.data()
+    }));
+
+    renderProducts();
+    renderAdminProducts();
+
+  });
+
+
+  /* =========================
+     STOREFRONT
+  ========================= */
+
+  window.renderProducts = function () {
+
+    const container = document.getElementById("products");
+
+    const search =
+      document.getElementById("search").value.toLowerCase();
+
+    let filtered = products.filter(product => {
+
+      const matchesCategory =
+        selectedCategory === "All" ||
+        product.category === selectedCategory;
+
+      const matchesSearch =
+        (product.name || "").toLowerCase().includes(search) ||
+        (product.description || "").toLowerCase().includes(search);
+
+      return matchesCategory && matchesSearch;
+
+    });
+
+
+    if (!filtered.length) {
+
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#777">
+          No products found.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML = filtered.map(product => `
+
+      <article class="product">
+
+        <img
+          src="${escapeHTML(product.image || '')}"
+          alt="${escapeHTML(product.name || '')}"
+          onerror="this.src='https://placehold.co/600x400/111/00ff88?text=Product'"
+        >
+
+        <div class="product-info">
+
+          <h3>${escapeHTML(product.name || '')}</h3>
+
+          <p class="description">
+            ${escapeHTML(product.description || '')}
+          </p>
+
+          <div class="price">
+            ₦${Number(product.price || 0).toLocaleString()}
+          </div>
+
+          <div class="stock">
+            ${
+              Number(product.stock || 0) > 0
+              ? `${product.stock} in stock`
+              : "Out of stock"
+            }
+          </div>
+
+          <button
+            class="buy-btn"
+            ${
+              Number(product.stock || 0) <= 0
+              ? "disabled"
+              : ""
+            }
+            onclick="buyProduct('${product.id}')"
+          >
+            ${
+              Number(product.stock || 0) > 0
+              ? "Buy Now"
+              : "Out of Stock"
+            }
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join("");
+
+  };
+
+
+  window.filterCategory = function(category) {
+
+    selectedCategory = category;
+
+    document.querySelectorAll(".category-btn").forEach(button => {
+      button.classList.remove("active");
+    });
+
+    renderProducts();
+
+  };
+
+
+  window.buyProduct = function(id) {
+
+    const product = products.find(item => item.id === id);
+
+    if (!product) return;
+
+    alert(
+      `${product.name}\n\nPrice: ₦${Number(product.price).toLocaleString()}\n\nCheckout/payment can be connected here later.`
+    );
+
+  };
+
+
+  /* =========================
+     ADMIN PANEL
+  ========================= */
+
+  window.openAdmin = function() {
+
+    document.getElementById("adminPanel").style.display = "block";
+
+    renderAdminProducts();
+
+  };
+
+
+  window.closeAdmin = function() {
+
+    document.getElementById("adminPanel").style.display = "none";
+
+  };
+
+
+  /* =========================
+     ADMIN PRODUCT LIST
+  ========================= */
+
+  window.renderAdminProducts = function() {
+
+    const container =
+      document.getElementById("adminProducts");
+
+    if (!container) return;
+
+
+    if (!products.length) {
+
+      container.innerHTML = `
+        <p style="color:#777">
+          No products have been added yet.
+        </p>
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML = products.map(product => `
+
+      <div class="admin-product">
+
+        <img
+          src="${escapeHTML(product.image || '')}"
+          alt=""
+        >
+
+        <div class="admin-product-info">
+
+          <strong>
+            ${escapeHTML(product.name || '')}
+          </strong>
+
+          <div style="color:#00ff88">
+            ₦${Number(product.price || 0).toLocaleString()}
+          </div>
+
+          <small style="color:#888">
+            ${escapeHTML(product.category || '')}
+            · Stock: ${Number(product.stock || 0)}
+          </small>
+
+        </div>
+
+        <div class="admin-actions">
+
+          <button
+            class="admin-btn"
+            onclick="editProduct('${product.id}')"
+          >
+            Edit
+          </button>
+
+          <button
+            class="admin-btn danger"
+            onclick="removeProduct('${product.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+  };
+
+
+  /* =========================
+     ADD / EDIT PRODUCT
+  ========================= */
+
+  document
+    .getElementById("productForm")
+    .addEventListener("submit", async event => {
+
+      event.preventDefault();
+
+
+      const id =
+        document.getElementById("productId").value;
+
+      const productData = {
+
+        name:
+          document.getElementById("productName").value.trim(),
+
+        price:
+          Number(document.getElementById("productPrice").value),
+
+        category:
+          document.getElementById("productCategory").value,
+
+        stock:
+          Number(document.getElementById("productStock").value),
+
+        image:
+          document.getElementById("productImage").value.trim(),
+
+        description:
+          document.getElementById("productDescription").value.trim(),
+
+        updatedAt: serverTimestamp()
+
+      };
+
+
+      try {
+
+        if (id) {
+
+          await updateDoc(
+            doc(db, "products", id),
+            productData
+          );
+
+          alert("Product updated successfully.");
+
+        } else {
+
+          await addDoc(
+            collection(db, "products"),
+            {
+              ...productData,
+              createdAt: serverTimestamp()
+            }
+          );
+
+          alert("Product added successfully.");
+
+        }
+
+        resetProductForm();
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "Could not save the product. Check your Firebase setup."
+        );
+
+      }
+
+    });
+
+
+  /* =========================
+     EDIT
+  ========================= */
+
+  window.editProduct = function(id) {
+
+    const product =
+      products.find(item => item.id === id);
+
+    if (!product) return;
+
+
+    document.getElementById("productId").value =
+      product.id;
+
+    document.getElementById("productName").value =
+      product.name || "";
+
+    document.getElementById("productPrice").value =
+      product.price || 0;
+
+    document.getElementById("productCategory").value =
+      product.category || "Accessories";
+
+    document.getElementById("productStock").value =
+      product.stock || 0;
+
+    document.getElementById("productImage").value =
+      product.image || "";
+
+    document.getElementById("productDescription").value =
+      product.description || "";
+
+    document.getElementById("formTitle").textContent =
+      "Edit Product";
+
+    window.scrollTo({
+      top: 0,
       behavior: "smooth"
     });
 
-  speak(
-    "Welcome " +
-    username +
-    "! You are now signed in to Game Without Limits. " +
-    "The website is currently in beta and is planned for official launch on August 20. " +
-    "I'll help you explore the store."
-  );
-
-}
+  };
 
 
-/* =========================
-   INPUT ANIMATION
-========================= */
+  /* =========================
+     DELETE
+  ========================= */
 
-function setupTyping(inputId,wrapId,flyId) {
+  window.removeProduct = async function(id) {
 
-  const input =
-    document.getElementById(inputId);
+    const product =
+      products.find(item => item.id === id);
 
-  const wrap =
-    document.getElementById(wrapId);
+    if (!product) return;
 
-  const fly =
-    document.getElementById(flyId);
 
-  input.addEventListener("input",function() {
+    const confirmed =
+      confirm(
+        `Delete "${product.name}"? This cannot be undone.`
+      );
 
-    wrap.classList.remove("typing");
+    if (!confirmed) return;
 
-    void wrap.offsetWidth;
 
-    wrap.classList.add("typing");
+    try {
+
+      await deleteDoc(
+        doc(db, "products", id)
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Could not delete this product.");
+
+    }
+
+  };
+
+
+  /* =========================
+     RESET FORM
+  ========================= */
+
+  window.resetProductForm = function() {
+
+    document.getElementById("productForm").reset();
+
+    document.getElementById("productId").value = "";
+
+    document.getElementById("formTitle").textContent =
+      "Add Product";
+
+  };
+
+
+  /* =========================
+     MENU
+  ========================= */
+
+  window.openMenu = function() {
 
     document
-      .getElementById("emoji")
-      .classList.add("watch");
+      .getElementById("sideMenu")
+      .classList.add("open");
 
-    fly.classList.remove("active");
-
-    void fly.offsetWidth;
-
-    fly.classList.add("active");
-
-    setTimeout(() => {
-
-      document
-        .getElementById("emoji")
-        .classList.remove("watch");
-
-    },450);
-
-  });
-
-}
+  };
 
 
-setupTyping(
-  "username",
-  "usernameWrap",
-  "usernameFly"
-);
+  window.closeMenu = function() {
 
-setupTyping(
-  "email",
-  "emailWrap",
-  "emailFly"
-);
+    document
+      .getElementById("sideMenu")
+      .classList.remove("open");
 
-setupTyping(
-  "password",
-  "passwordWrap",
-  "passwordFly"
-);
+  };
 
 
-/* =========================
-   CHECKOUT
-========================= */
+  /* =========================
+     SECURITY HELPER
+  ========================= */
 
-function openCheckout() {
+  function escapeHTML(value) {
 
-  if (cart.length === 0) {
-
-    alert("Your cart is empty.");
-
-    return;
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
 
   }
 
-  closeCart();
-
-  document
-    .getElementById("checkoutModal")
-    .classList.add("show");
-
-  updateCheckoutAmount();
-
-}
-
-
-function closeCheckout() {
-
-  document
-    .getElementById("checkoutModal")
-    .classList.remove("show");
-
-}
-
-
-function selectPayment(button,method) {
-
-  document
-    .querySelectorAll(".payment-option")
-    .forEach(btn =>
-      btn.classList.remove("selected")
-    );
-
-  button.classList.add("selected");
-
-  selectedPayment = method;
-
-  speak(
-    method +
-    " selected as your payment method."
-  );
-
-}
-
-
-function setCurrency(type) {
-
-  currency = type;
-
-  document
-    .getElementById("ngnBtn")
-    .classList.toggle(
-      "active",
-      type === "NGN"
-    );
-
-  document
-    .getElementById("usdBtn")
-    .classList.toggle(
-      "active",
-      type === "USD"
-    );
-
-  updateCheckoutAmount();
-
-}
-
-
-function updateCheckoutAmount() {
-
-  let total = cart.reduce(
-    (sum,item) => sum + item.price,
-    0
-  );
-
-  if (currency === "NGN") {
-
-    document.getElementById(
-      "checkoutAmount"
-    ).textContent =
-      "₦" + total.toLocaleString();
-
-  } else {
-
-    /*
-      Demo conversion only.
-      Replace with live exchange-rate logic
-      when your real payment provider is connected.
-    */
-
-    const usd =
-      total / 1500;
-
-    document.getElementById(
-      "checkoutAmount"
-    ).textContent =
-      "$" + usd.toFixed(2);
-
-  }
-
-}
-
-
-/* =========================
-   DEMO PAYMENT
-========================= */
-
-function processDemoPayment() {
-
-  closeCheckout();
-
-  document
-    .getElementById("successModal")
-    .classList.add("show");
-
-  const name =
-    currentUser
-      ? currentUser.username
-      : "Gamer";
-
-  document.getElementById(
-    "successText"
-  ).textContent =
-    "Great job, " +
-    name +
-    "! Your demo order has been created using " +
-    selectedPayment +
-    ". No real money was charged.";
-
-  speak(
-    "Order confirmed, " +
-    name +
-    ". This was a demo payment, so no real money was charged."
-  );
-
-  cart = [];
-
-  updateCart();
-
-}
-
-
-function closeSuccess() {
-
-  document
-    .getElementById("successModal")
-    .classList.remove("show");
-
-}
-
-
-/* =========================
-   AI VOICE
-========================= */
-
-function speak(text) {
-
-  if (!("speechSynthesis" in window)) {
-
-    return;
-
-  }
-
-  window.speechSynthesis.cancel();
-
-  const voice =
-    new SpeechSynthesisUtterance(text);
-
-  voice.rate = .92;
-  voice.pitch = 1.03;
-  voice.volume = 1;
-
-  const voices =
-    window.speechSynthesis.getVoices();
-
-  const preferred =
-    voices.find(v =>
-      /Google|Microsoft|Samantha|Natural/i
-        .test(v.name)
-    );
-
-  if (preferred) {
-    voice.voice = preferred;
-  }
-
-  window.speechSynthesis.speak(voice);
-
-}
-
-
-function speakCurrentAI() {
-
-  const text =
-    document.getElementById(
-      "aiMessage"
-    ).textContent;
-
-  speak(text);
-
-}
-
-
-/* =========================
-   AUTOMATIC AI WELCOME
-========================= */
-
-function automaticWelcome() {
-
-  const message =
-    "Welcome to Game Without Limits! " +
-    "I'm your AI gaming assistant. " +
-    "This website is currently in beta and is planned for official launch on August 20. " +
-    "Sign in to unlock the Store and explore our gaming equipment, accessories, phones and phone cases.";
 
   /*
-    Browsers can block automatic speech until
-    the visitor interacts with the page.
-    We therefore try automatically and also
-    provide the AI button as a fallback.
+    Hidden admin access.
+
+    To open it, use:
+    https://your-site.com/?admin
+
+    The panel will STILL require your Google account.
   */
 
-  setTimeout(() => {
+  if (window.location.search === "?admin") {
 
-    speak(message);
+    const login = document.createElement("button");
 
-  },1200);
+    login.textContent = "Admin Login";
 
-}
+    login.className = "admin-btn";
 
+    login.style.position = "fixed";
+    login.style.bottom = "20px";
+    login.style.right = "20px";
+    login.style.zIndex = "6000";
 
-window.addEventListener(
-  "load",
-  automaticWelcome
-);
+    login.onclick = window.adminLogin;
 
-
-/* =========================
-   AI PANEL
-========================= */
-
-function toggleAI() {
-
-  document
-    .getElementById("aiPanel")
-    .classList.toggle("show");
-
-}
-
-
-function askAI() {
-
-  const input =
-    document
-      .getElementById("aiInput")
-      .value
-      .toLowerCase()
-      .trim();
-
-  let response = "";
-
-  if (!input) {
-
-    response =
-      "Ask me about gaming controllers, headsets, phones, phone cases, your cart, or checkout.";
+    document.body.appendChild(login);
 
   }
-
-  else if (
-    input.includes("controller")
-  ) {
-
-    response =
-      "We currently have a sample Pro Gaming Controller listed for ₦45,000.";
-
-  }
-
-  else if (
-    input.includes("headset")
-  ) {
-
-    response =
-      "We currently have a sample Gaming Headset listed for ₦65,000.";
-
-  }
-
-  else if (
-    input.includes("phone")
-  ) {
-
-    response =
-      "We currently have a sample Gaming Smartphone listed for ₦350,000.";
-
-  }
-
-  else if (
-    input.includes("case")
-  ) {
-
-    response =
-      "We currently have a sample Gaming Phone Case listed for ₦15,000.";
-
-  }
-
-  else if (
-    input.includes("store")
-  ) {
-
-    response =
-      currentUser
-        ? "The Store is unlocked for you. You can browse the products and add items to your cart."
-        : "The Store requires you to sign in first.";
-
-  }
-
-  else if (
-    input.includes("payment") ||
-    input.includes("pay")
-  ) {
-
-    response =
-      "The demo checkout supports Card, Bank Transfer and PayPal selection, with NGN and USD display.";
-
-  }
-
-  else if (
-    input.includes("hello") ||
-    input.includes("hi")
-  ) {
-
-    response =
-      "Hey gamer! Welcome to Game Without Limits.";
-
-  }
-
-  else {
-
-    response =
-      "I'm your Game Without Limits assistant. Ask me about products, the Store, checkout or payment options.";
-
-  }
-
-  if (currentUser) {
-
-    response =
-      currentUser.username +
-      ", " +
-      response;
-
-  }
-
-  document.getElementById(
-    "aiMessage"
-  ).textContent = response;
-
-  speak(response);
-
-}
-
-
-/* =========================
-   CONTACT
-========================= */
-
-function sendMessage(event) {
-
-  event.preventDefault();
-
-  alert(
-    "Thanks! Your message form is ready for connection to your real contact system."
-  );
-
-}
-
-
-/* =========================
-   USER EXPERIENCE
-========================= */
-
-document.addEventListener(
-  "click",
-  function() {
-
-    /*
-      Browsers commonly require a user gesture
-      before allowing spoken audio.
-      Once the visitor clicks, make the AI welcome
-      available.
-    */
-
-  },
-  {once:true}
-);
 
 </script>
 
 </body>
-    </html>
+  </html>
