@@ -1,1147 +1,484 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Without Limits</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #080808;
-      color: white;
-    }
-
-    button, input, textarea, select {
-      font: inherit;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: #111;
-      border-bottom: 1px solid #292929;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .logo {
-      color: #00ff88;
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .menu-btn {
-      background: #00ff88;
-      color: #000;
-      border: 0;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .hero {
-      padding: 70px 20px;
-      text-align: center;
-      background:
-        radial-gradient(circle at center, #123d2b 0%, #080808 60%);
-    }
-
-    .hero h1 {
-      font-size: clamp(35px, 8vw, 75px);
-      margin-bottom: 15px;
-    }
-
-    .hero h1 span {
-      color: #00ff88;
-    }
-
-    .hero p {
-      color: #aaa;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.6;
-    }
-
-    .search-area {
-      padding: 25px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    #search {
-      width: 100%;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #333;
-      background: #151515;
-      color: white;
-      outline: none;
-    }
-
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px 20px 25px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .category-btn {
-      white-space: nowrap;
-      background: #151515;
-      color: white;
-      border: 1px solid #333;
-      padding: 10px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-
-    .category-btn.active,
-    .category-btn:hover {
-      background: #00ff88;
-      color: #000;
-    }
-
-    .products {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-    }
-
-    .product {
-      background: #121212;
-      border: 1px solid #272727;
-      border-radius: 14px;
-      overflow: hidden;
-      transition: .25s;
-    }
-
-    .product:hover {
-      transform: translateY(-5px);
-      border-color: #00ff88;
-    }
-
-    .product img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      background: #1c1c1c;
-    }
-
-    .product-info {
-      padding: 15px;
-    }
-
-    .product-info h3 {
-      margin-bottom: 8px;
-    }
-
-    .description {
-      color: #999;
-      font-size: 14px;
-      min-height: 40px;
-      margin-bottom: 12px;
-    }
-
-    .price {
-      color: #00ff88;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .stock {
-      color: #aaa;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    .buy-btn {
-      width: 100%;
-      border: 0;
-      background: #00ff88;
-      color: #000;
-      padding: 11px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* SIDE MENU */
-
-    .side-menu {
-      position: fixed;
-      top: 0;
-      left: -320px;
-      width: 300px;
-      height: 100vh;
-      background: #111;
-      z-index: 3000;
-      padding: 25px;
-      transition: .3s;
-      box-shadow: 5px 0 30px rgba(0,0,0,.5);
-    }
-
-    .side-menu.open {
-      left: 0;
-    }
-
-    .close-menu {
-      background: transparent;
-      color: white;
-      border: 0;
-      font-size: 28px;
-      cursor: pointer;
-      float: right;
-    }
-
-    .side-menu h2 {
-      color: #00ff88;
-      margin: 35px 0 25px;
-    }
-
-    .side-menu button,
-    .side-menu a {
-      display: block;
-      width: 100%;
-      text-align: left;
-      background: #181818;
-      color: white;
-      border: 1px solid #292929;
-      padding: 13px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .side-menu button:hover,
-    .side-menu a:hover {
-      background: #00ff88;
-      color: #000;
-    }
-
-    /* ADMIN */
-
-    #adminPanel {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 5000;
-      background: #090909;
-      overflow-y: auto;
-      padding: 25px;
-    }
-
-    .admin-header {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .admin-header h2 {
-      color: #00ff88;
-    }
-
-    .admin-container {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .admin-card {
-      background: #141414;
-      border: 1px solid #292929;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .admin-card h3 {
-      margin-bottom: 15px;
-    }
-
-    .admin-form {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .admin-form .full {
-      grid-column: 1 / -1;
-    }
-
-    .admin-form input,
-    .admin-form textarea,
-    .admin-form select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background: #0d0d0d;
-      color: white;
-    }
-
-    .admin-form textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .admin-btn {
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 8px;
-      background: #00ff88;
-      color: #000;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .danger {
-      background: #ff4444;
-      color: white;
-    }
-
-    .admin-products {
-      display: grid;
-      gap: 10px;
-    }
-
-    .admin-product {
-      background: #0d0d0d;
-      border: 1px solid #292929;
-      border-radius: 10px;
-      padding: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .admin-product img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .admin-product-info {
-      flex: 1;
-    }
-
-    .admin-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .login-box {
-      max-width: 430px;
-      margin: 80px auto;
-      background: #141414;
-      border: 1px solid #292929;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-    }
-
-    .login-box h2 {
-      color: #00ff88;
-      margin-bottom: 10px;
-    }
-
-    .login-box p {
-      color: #999;
-      margin-bottom: 20px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      border-top: 1px solid #222;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 650px) {
-      .admin-form {
-        grid-template-columns: 1fr;
-      }
-
-      .admin-form .full {
-        grid-column: auto;
-      }
-
-      .admin-product {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <div class="logo">GAME WITHOUT LIMITS</div>
-  <button class="menu-btn" onclick="openMenu()">☰ Menu</button>
-</header>
-
-<!-- SIDE MENU -->
-<aside id="sideMenu" class="side-menu">
-  <button class="close-menu" onclick="closeMenu()">×</button>
-
-  <h2>Explore</h2>
-
-  <button onclick="filterCategory('Phones'); closeMenu()">📱 Phone Categories</button>
-  <button onclick="filterCategory('Handheld'); closeMenu()">🎮 Handheld Gaming</button>
-  <button onclick="filterCategory('Computers'); closeMenu()">💻 Computer Categories</button>
-  <button onclick="filterCategory('Gaming Laptops'); closeMenu()">🔥 Gaming Laptops</button>
-  <button onclick="filterCategory('Accessories'); closeMenu()">🎧 Gaming Accessories</button>
-  <button onclick="filterCategory('All'); closeMenu()">🛍️ All Products</button>
-
-  <h2>Support</h2>
-
-  <a href="https://wa.me/2349049215247" target="_blank">💬 WhatsApp Customer Care</a>
-  <a href="mailto:king691@gmail.com">📧 Contact Us</a>
-  <button onclick="alert('Please contact customer care through WhatsApp for help or to report an issue.')">
-    ⚠️ Report an Issue
-  </button>
-</aside>
-
-<!-- STOREFRONT -->
-
-<section class="hero">
-  <h1>GAME <span>WITHOUT</span> LIMITS</h1>
-  <p>
-    Gaming hardware, phones, handheld devices, computers and accessories.
-    Explore the store and discover your next setup.
-  </p>
-</section>
-
-<section class="search-area">
-  <input
-    id="search"
-    type="search"
-    placeholder="Search products..."
-    oninput="renderProducts()"
-  >
-</section>
-
-<div class="categories">
-  <button class="category-btn active" onclick="filterCategory('All')">All</button>
-  <button class="category-btn" onclick="filterCategory('Phones')">Phones</button>
-  <button class="category-btn" onclick="filterCategory('Handheld')">Handheld</button>
-  <button class="category-btn" onclick="filterCategory('Computers')">Computers</button>
-  <button class="category-btn" onclick="filterCategory('Gaming Laptops')">Gaming Laptops</button>
-  <button class="category-btn" onclick="filterCategory('Accessories')">Accessories</button>
-</div>
-
-<main id="products" class="products"></main>
-
-<footer>
-  © 2026 Game Without Limits
-</footer>
-
-
-<!-- HIDDEN ADMIN PANEL -->
-
-<section id="adminPanel">
-
-  <div class="admin-header">
-    <h2>⚙️ Admin Control</h2>
-    <button class="admin-btn danger" onclick="closeAdmin()">Close Admin</button>
-  </div>
-
-  <div class="admin-container">
-
-    <div class="admin-card">
-      <h3 id="formTitle">Add Product</h3>
-
-      <form id="productForm" class="admin-form">
-
-        <input type="hidden" id="productId">
-
-        <div>
-          <label>Product Name</label>
-          <input id="productName" required>
-        </div>
-
-        <div>
-          <label>Price (₦)</label>
-          <input id="productPrice" type="number" min="0" required>
-        </div>
-
-        <div>
-          <label>Category</label>
-          <select id="productCategory" required>
-            <option value="Phones">Phones</option>
-            <option value="Handheld">Handheld</option>
-            <option value="Computers">Computers</option>
-            <option value="Gaming Laptops">Gaming Laptops</option>
-            <option value="Accessories">Accessories</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Stock</label>
-          <input id="productStock" type="number" min="0" required>
-        </div>
-
-        <div class="full">
-          <label>Image URL</label>
-          <input
-            id="productImage"
-            type="url"
-            placeholder="https://..."
-            required
-          >
-        </div>
-
-        <div class="full">
-          <label>Description</label>
-          <textarea id="productDescription" required></textarea>
-        </div>
-
-        <div>
-          <button class="admin-btn" type="submit">
-            Save Product
-          </button>
-        </div>
-
-        <div>
-          <button
-            class="admin-btn"
-            type="button"
-            onclick="resetProductForm()"
-          >
-            Clear Form
-          </button>
-        </div>
-
-      </form>
-    </div>
-
-
-    <div class="admin-card">
-      <h3>Your Products</h3>
-      <div id="adminProducts" class="admin-products"></div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- Firebase -->
-
-<script type="module">
-
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-
-  /*
-    ============================================================
-    IMPORTANT:
-    REPLACE THESE VALUES WITH YOUR OWN FIREBASE CONFIG.
-    Firebase Console → Project settings → Your apps → Web app
-    ============================================================
-  */
-
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+ page.classList.toggle('hidden', page.id !== button.dataset.tab);
   };
+});
 
+const dateKey = () => new Date().toISOString().slice(0, 10);
+let timerId = null;
+let total = 50 * 60;
+let remaining = total;
+let sessionStarted = false;
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+function updateTimer() {
+  const minutes = Math.floor(remaining / 60);
+  const seconds = remaining % 60;
+  $('timer').textContent =
+    String(minutes).padStart(2, '0') + ':' +
+    String(seconds).padStart(2, '0');
+  $('timerProgress').style.width =
+    ((total - remaining) / total * 100) + '%';
+}
 
-  const provider = new GoogleAuthProvider();
+function stopTimer() {
+  if (timerId) clearInterval(timerId);
+  timerId = null;
+}
 
-  /*
-    Only this Google account gets admin access.
-    Do NOT put your password in this file.
-  */
+function completeSession() {
+  stopTimer();
+  if (Number($('session').value) >= 25) {
+    const minutes = Math.round(total / 60);
+    const day = dateKey();
+    data.days[day] = (data.days[day] || 0) + minutes;
+    data.allTime = (data.allTime || 0) + minutes;
+    save('kv-ijmb-progress', data);
+    renderStats();
+  }
+  $('phase').textContent = 'Session complete! 🎉';
+  $('timerNote').textContent = 'Take a break or start another session.';
+  $('startBtn').textContent = '▶ Start again';
+}
 
-  const ADMIN_EMAIL = "king691@gmail.com";
+$('startBtn').onclick = () => {
+  if (timerId) return;
+  if (!sessionStarted) {
+    total = Number($('session').value) * 60;
+    remaining = total;
+    sessionStarted = true;
+  }
+  $('phase').textContent = 'Stay focused';
+  $('timerNote').textContent = 'One task. No distractions.';
+  $('startBtn').textContent = '▶ Running';
+  timerId = setInterval(() => {
+    remaining--;
+    updateTimer();
+    if (remaining <= 0) completeSession();
+  }, 1000);
+};
 
+$('pauseBtn').onclick = () => {
+  stopTimer();
+  $('phase').textContent = 'Paused';
+  $('startBtn').textContent = '▶ Resume';
+};
 
-  let products = [];
-  let selectedCategory = "All";
+$('resetBtn').onclick = () => {
+  stopTimer();
+  sessionStarted = false;
+  total = Number($('session').value) * 60;
+  remaining = total;
+  $('phase').textContent = 'Ready when you are';
+  $('timerNote').textContent = 'Choose one task, then begin.';
+  updateTimer();
+};
 
+$('session').onchange = () => $('resetBtn').click();
 
-  /* =========================
-     GOOGLE ADMIN LOGIN
-  ========================= */
+const taskBoxes = [...document.querySelectorAll('[data-task]')];
 
-  window.adminLogin = async function () {
-
-    try {
-
-      const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-
-      if (user.email !== ADMIN_EMAIL) {
-
-        alert("This Google account does not have administrator access.");
-
-        await signOut(auth);
-
-        return;
-      }
-
-      openAdmin();
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Admin login failed.");
-
-    }
-
-  };
-
-
-  /* =========================
-     AUTH STATE
-  ========================= */
-
-  onAuthStateChanged(auth, user => {
-
-    if (user && user.email === ADMIN_EMAIL) {
-
-      // Admin is authenticated.
-
-    }
-
+function renderTasks() {
+  taskBoxes.forEach(box => {
+    box.checked = !!tasks[box.dataset.task];
+    box.closest('.task').classList.toggle('done', box.checked);
   });
+  updateTasks();
+}
 
+function updateTasks() {
+  const count = taskBoxes.filter(box => box.checked).length;
+  $('taskCount').textContent = `${count} of ${taskBoxes.length} tasks complete`;
+  $('taskProgress').style.width = count / taskBoxes.length * 100 + '%';
+  $('taskStat').textContent = `${count}/${taskBoxes.length}`;
+  tasks = {};
+  taskBoxes.forEach(box => tasks[box.dataset.task] = box.checked);
+  save('kv-ijmb-tasks', tasks);
+}
 
-  /* =========================
-     LOAD PRODUCTS
-  ========================= */
+taskBoxes.forEach(box => box.addEventListener('change', updateTasks));
 
-  const productsRef = collection(db, "products");
+$('clearTasks').onclick = () => {
+  taskBoxes.forEach(box => box.checked = false);
+  updateTasks();
+};
 
-  onSnapshot(productsRef, snapshot => {
+let audioCtx = null;
+let master = null;
+let musicOn = false;
+let oscillators = [];
+let noiseGain = null;
 
-    products = snapshot.docs.map(item => ({
-      id: item.id,
-      ...item.data()
-    }));
+function setupAudio() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) {
+    $('musicStatus').textContent = 'Audio is not supported by this browser.';
+    return false;
+  }
 
-    renderProducts();
-    renderAdminProducts();
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
+    master = audioCtx.createGain();
+    master.gain.value = 0;
+    master.connect(audioCtx.destination);
 
-  });
-
-
-  /* =========================
-     STOREFRONT
-  ========================= */
-
-  window.renderProducts = function () {
-
-    const container = document.getElementById("products");
-
-    const search =
-      document.getElementById("search").value.toLowerCase();
-
-    let filtered = products.filter(product => {
-
-      const matchesCategory =
-        selectedCategory === "All" ||
-        product.category === selectedCategory;
-
-      const matchesSearch =
-        (product.name || "").toLowerCase().includes(search) ||
-        (product.description || "").toLowerCase().includes(search);
-
-      return matchesCategory && matchesSearch;
-
+    [110, 164.81, 220, 329.63].forEach((frequency, index) => {
+      const oscillator = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      oscillator.type = index === 1 ? 'triangle' : 'sine';
+      oscillator.frequency.value = frequency;
+      gain.gain.value = [0.2, 0.1, 0.07, 0.035][index];
+      oscillator.connect(gain);
+      gain.connect(master);
+      oscillator.start();
+      oscillators.push(oscillator);
     });
 
-
-    if (!filtered.length) {
-
-      container.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:60px;color:#777">
-          No products found.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    container.innerHTML = filtered.map(product => `
-
-      <article class="product">
-
-        <img
-          src="${escapeHTML(product.image || '')}"
-          alt="${escapeHTML(product.name || '')}"
-          onerror="this.src='https://placehold.co/600x400/111/00ff88?text=Product'"
-        >
-
-        <div class="product-info">
-
-          <h3>${escapeHTML(product.name || '')}</h3>
-
-          <p class="description">
-            ${escapeHTML(product.description || '')}
-          </p>
-
-          <div class="price">
-            ₦${Number(product.price || 0).toLocaleString()}
-          </div>
-
-          <div class="stock">
-            ${
-              Number(product.stock || 0) > 0
-              ? `${product.stock} in stock`
-              : "Out of stock"
-            }
-          </div>
-
-          <button
-            class="buy-btn"
-            ${
-              Number(product.stock || 0) <= 0
-              ? "disabled"
-              : ""
-            }
-            onclick="buyProduct('${product.id}')"
-          >
-            ${
-              Number(product.stock || 0) > 0
-              ? "Buy Now"
-              : "Out of Stock"
-            }
-          </button>
-
-        </div>
-
-      </article>
-
-    `).join("");
-
-  };
-
-
-  window.filterCategory = function(category) {
-
-    selectedCategory = category;
-
-    document.querySelectorAll(".category-btn").forEach(button => {
-      button.classList.remove("active");
-    });
-
-    renderProducts();
-
-  };
-
-
-  window.buyProduct = function(id) {
-
-    const product = products.find(item => item.id === id);
-
-    if (!product) return;
-
-    alert(
-      `${product.name}\n\nPrice: ₦${Number(product.price).toLocaleString()}\n\nCheckout/payment can be connected here later.`
+    const buffer = audioCtx.createBuffer(
+      1, audioCtx.sampleRate * 2, audioCtx.sampleRate
     );
-
-  };
-
-
-  /* =========================
-     ADMIN PANEL
-  ========================= */
-
-  window.openAdmin = function() {
-
-    document.getElementById("adminPanel").style.display = "block";
-
-    renderAdminProducts();
-
-  };
-
-
-  window.closeAdmin = function() {
-
-    document.getElementById("adminPanel").style.display = "none";
-
-  };
-
-
-  /* =========================
-     ADMIN PRODUCT LIST
-  ========================= */
-
-  window.renderAdminProducts = function() {
-
-    const container =
-      document.getElementById("adminProducts");
-
-    if (!container) return;
-
-
-    if (!products.length) {
-
-      container.innerHTML = `
-        <p style="color:#777">
-          No products have been added yet.
-        </p>
-      `;
-
-      return;
-
+    const channel = buffer.getChannelData(0);
+    for (let i = 0; i < channel.length; i++) {
+      channel[i] = Math.random() * 2 - 1;
     }
 
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    noise.loop = true;
 
-    container.innerHTML = products.map(product => `
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 500;
 
-      <div class="admin-product">
+    noiseGain = audioCtx.createGain();
+    noiseGain.gain.value = 0;
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(master);
+    noise.start();
+  }
+  return true;
+}
 
-        <img
-          src="${escapeHTML(product.image || '')}"
-          alt=""
-        >
+function setSoundMode() {
+  if (!audioCtx) return;
+  const rain = $('soundMode').value === 'rain';
+  oscillators.forEach(oscillator => {
+    oscillator.detune.value = rain ? 12 : 0;
+  });
+  noiseGain.gain.setTargetAtTime(
+    rain ? 0.035 : 0, audioCtx.currentTime, 0.2
+  );
+}
 
-        <div class="admin-product-info">
+$('musicBtn').onclick = async () => {
+  if (!setupAudio()) return;
+  await audioCtx.resume();
+  musicOn = true;
+  setSoundMode();
+  master.gain.setTargetAtTime(
+    Number($('volume').value) / 100 * 0.18,
+    audioCtx.currentTime, 0.2
+  );
+  $('musicStatus').textContent = 'Focus sound is playing.';
+  $('musicBtn').textContent = '♫ Sound playing';
+  $('visualizer').classList.add('playing');
+};
 
-          <strong>
-            ${escapeHTML(product.name || '')}
-          </strong>
+$('musicStop').onclick = () => {
+  musicOn = false;
+  if (audioCtx && master) {
+    master.gain.setTargetAtTime(0, audioCtx.currentTime, 0.15);
+  }
+  $('musicStatus').textContent = 'Sound is off.';
+  $('musicBtn').textContent = '▶ Play focus sound';
+  $('visualizer').classList.remove('playing');
+};
 
-          <div style="color:#00ff88">
-            ₦${Number(product.price || 0).toLocaleString()}
-          </div>
+$('volume').oninput = () => {
+  $('volumeText').textContent = $('volume').value + '%';
+  if (audioCtx && master && musicOn) {
+    master.gain.setTargetAtTime(
+      Number($('volume').value) / 100 * 0.18,
+      audioCtx.currentTime, 0.1
+    );
+  }
+};
 
-          <small style="color:#888">
-            ${escapeHTML(product.category || '')}
-            · Stock: ${Number(product.stock || 0)}
-          </small>
+$('soundMode').onchange = setSoundMode;
 
-        </div>
+for (let i = 0; i < 13; i++) {
+  const bar = document.createElement('span');
+  bar.className = 'bar';
+  $('visualizer').appendChild(bar);
+}
 
-        <div class="admin-actions">
+const rotations = [
+  ['Mathematics', 'Physics', 'Chemistry',
+   'Monday: Mathematics + Physics, with Chemistry recall.'],
+  ['Chemistry', 'Mathematics', 'Physics',
+   'Tuesday: Chemistry + Mathematics, with Physics recall.'],
+  ['Physics', 'Chemistry', 'Mathematics',
+   'Wednesday: Physics + Chemistry, with Mathematics recall.'],
+  ['Mathematics', 'Physics', 'Chemistry',
+   'Thursday: Mathematics + Physics, with Chemistry recall.'],
+  ['Chemistry', 'Mathematics', 'Physics',
+   'Friday: Chemistry + Mathematics. Focus on your weakest topic.'],
+  ['Timed questions', 'Weakest subject', 'Corrections',
+   'Saturday: timed questions, marking and correcting mistakes.'],
+  ['Light revision', 'Formula recall', 'Plan next week',
+   'Sunday: lighter revision and plan the coming week.']
+];
 
-          <button
-            class="admin-btn"
-            onclick="editProduct('${product.id}')"
-          >
-            Edit
-          </button>
+function updateRotation() {
+  const rotation = rotations[Number($('daySelect').value)];
+  $('mainSubject').textContent = rotation[0];
+  $('secondSubject').textContent = rotation[1];
+  $('thirdSubject').textContent = rotation[2] + ' + wrap-up';
+  $('rotationTip').textContent = rotation[3];
+}
 
-          <button
-            class="admin-btn danger"
-            onclick="removeProduct('${product.id}')"
-          >
-            Delete
-          </button>
+$('daySelect').onchange = updateRotation;
 
-        </div>
+const questionBank = {
+  math: [
+    {
+      q: 'Expand (x + 2)³.',
+      opts: [
+        'x³ + 6x² + 12x + 8',
+        'x³ + 8',
+        'x³ + 2x² + 4x + 8',
+        'x³ + 6x + 8'
+      ],
+      a: 0,
+      why: 'Using (a+b)³ = a³ + 3a²b + 3ab² + b³ gives x³ + 6x² + 12x + 8.'
+    },
+    {
+      q: 'Solve 2x + 5 = 17.',
+      opts: ['x = 5', 'x = 6', 'x = 11', 'x = 12'],
+      a: 1,
+      why: 'Subtract 5 to get 2x = 12, then divide by 2. Therefore x = 6.'
+    },
+    {
+      q: 'If sin θ = 3/5 for an acute angle, what is cos θ?',
+      opts: ['4/5', '3/4', '5/4', '1/5'],
+      a: 0,
+      why: 'A 3-4-5 triangle gives adjacent/hypotenuse = 4/5.'
+    },
+    {
+      q: 'Differentiate y = x² + 3x.',
+      opts: ['2x + 3', 'x + 3', '2x', 'x² + 3'],
+      a: 0,
+      why: 'Using the power rule, the derivative is 2x + 3.'
+    }
+  ],
+  physics: [
+    {
+      q: 'A car travels 120 m in 6 s at constant speed. Find its speed.',
+      opts: ['12 m/s', '20 m/s', '24 m/s', '720 m/s'],
+      a: 1,
+      why: 'Speed = distance/time = 120/6 = 20 m/s.'
+    },
+    {
+      q: 'What is the SI unit of force?',
+      opts: ['Joule', 'Watt', 'Newton', 'Pascal'],
+      a: 2,
+      why: 'Force is measured in newtons (N).'
+    },
+    {
+      q: 'A 2 kg object accelerates at 3 m/s². Find the net force.',
+      opts: ['1.5 N', '5 N', '6 N', '9 N'],
+      a: 2,
+      why: 'Newton’s second law: F = ma = 2 × 3 = 6 N.'
+    },
+    {
+      q: 'Which quantity is a scalar?',
+      opts: ['Velocity', 'Displacement', 'Acceleration', 'Speed'],
+      a: 3,
+      why: 'Speed has magnitude only; the others include direction.'
+    }
+  ],
+  chem: [
+    {
+      q: 'What is the chemical symbol for sodium?',
+      opts: ['S', 'So', 'Na', 'N'],
+      a: 2,
+      why: 'Sodium’s symbol is Na, from the Latin name natrium.'
+    },
+    {
+      q: 'What is the pH of a neutral solution at 25°C?',
+      opts: ['0', '7', '10', '14'],
+      a: 1,
+      why: 'At 25°C, a neutral aqueous solution has pH 7.'
+    },
+    {
+      q: 'Which type of bond involves sharing electron pairs?',
+      opts: ['Ionic', 'Metallic', 'Covalent', 'Hydrogen'],
+      a: 2,
+      why: 'Covalent bonds form when atoms share electron pairs.'
+    },
+    {
+      q: 'How many moles are in 18 g of water? Mᵣ = 18.',
+      opts: ['0.5 mol', '1 mol', '2 mol', '18 mol'],
+      a: 1,
+      why: 'Moles = mass/Mᵣ = 18/18 = 1 mol.'
+    }
+  ]
+};
 
-      </div>
+let currentQuestions = [];
 
-    `).join("");
+function loadQuiz() {
+  const subject = $('quizSubject').value;
+  currentQuestions = (
+    subject === 'all'
+      ? ['math', 'physics', 'chem'].flatMap(key => questionBank[key].slice(0, 2))
+      : questionBank[subject]
+  ).map((question, index) => ({ ...question, id: index }));
 
-  };
+  $('quizQuestions').innerHTML = '';
 
+  currentQuestions.forEach((question, index) => {
+    const box = document.createElement('div');
+    box.className = 'qbox';
 
-  /* =========================
-     ADD / EDIT PRODUCT
-  ========================= */
+    const title = document.createElement('strong');
+    title.textContent = `${index + 1}. ${question.q}`;
+    box.appendChild(title);
 
-  document
-    .getElementById("productForm")
-    .addEventListener("submit", async event => {
+    question.opts.forEach((option, optionIndex) => {
+      const label = document.createElement('label');
+      label.className = 'option';
 
-      event.preventDefault();
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'question' + index;
+      input.value = optionIndex;
 
+      const text = document.createElement('span');
+      text.textContent = option;
 
-      const id =
-        document.getElementById("productId").value;
-
-      const productData = {
-
-        name:
-          document.getElementById("productName").value.trim(),
-
-        price:
-          Number(document.getElementById("productPrice").value),
-
-        category:
-          document.getElementById("productCategory").value,
-
-        stock:
-          Number(document.getElementById("productStock").value),
-
-        image:
-          document.getElementById("productImage").value.trim(),
-
-        description:
-          document.getElementById("productDescription").value.trim(),
-
-        updatedAt: serverTimestamp()
-
-      };
-
-
-      try {
-
-        if (id) {
-
-          await updateDoc(
-            doc(db, "products", id),
-            productData
-          );
-
-          alert("Product updated successfully.");
-
-        } else {
-
-          await addDoc(
-            collection(db, "products"),
-            {
-              ...productData,
-              createdAt: serverTimestamp()
-            }
-          );
-
-          alert("Product added successfully.");
-
-        }
-
-        resetProductForm();
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Could not save the product. Check your Firebase setup."
-        );
-
-      }
-
+      label.append(input, text);
+      box.appendChild(label);
     });
 
+    const explanation = document.createElement('div');
+    explanation.id = 'explain' + index;
+    explanation.className = 'muted tiny hidden';
+    explanation.style.marginTop = '8px';
+    box.appendChild(explanation);
 
-  /* =========================
-     EDIT
-  ========================= */
+    $('quizQuestions').appendChild(box);
+  });
 
-  window.editProduct = function(id) {
+  $('quizFeedback').classList.add('hidden');
+}
 
-    const product =
-      products.find(item => item.id === id);
+$('newQuiz').onclick = loadQuiz;
 
-    if (!product) return;
+$('submitQuiz').onclick = () => {
+  if (!currentQuestions.length) loadQuiz();
 
+  let score = 0;
+  let answered = 0;
 
-    document.getElementById("productId").value =
-      product.id;
+  currentQuestions.forEach((question, index) => {
+    const picked = document.querySelector(
+      `input[name="question${index}"]:checked`
+    );
+    const explanation = $('explain' + index);
+    explanation.classList.remove('hidden');
 
-    document.getElementById("productName").value =
-      product.name || "";
-
-    document.getElementById("productPrice").value =
-      product.price || 0;
-
-    document.getElementById("productCategory").value =
-      product.category || "Accessories";
-
-    document.getElementById("productStock").value =
-      product.stock || 0;
-
-    document.getElementById("productImage").value =
-      product.image || "";
-
-    document.getElementById("productDescription").value =
-      product.description || "";
-
-    document.getElementById("formTitle").textContent =
-      "Edit Product";
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  };
-
-
-  /* =========================
-     DELETE
-  ========================= */
-
-  window.removeProduct = async function(id) {
-
-    const product =
-      products.find(item => item.id === id);
-
-    if (!product) return;
-
-
-    const confirmed =
-      confirm(
-        `Delete "${product.name}"? This cannot be undone.`
-      );
-
-    if (!confirmed) return;
-
-
-    try {
-
-      await deleteDoc(
-        doc(db, "products", id)
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert("Could not delete this product.");
-
+    if (picked) {
+      answered++;
+      if (Number(picked.value) === question.a) score++;
     }
 
+    explanation.textContent =
+      (picked && Number(picked.value) === question.a
+        ? '✓ Correct. '
+        : 'Answer: ' + question.opts[question.a] + '. ') +
+      question.why;
+  });
+
+  const percentage = Math.round(score / currentQuestions.length * 100);
+  data.bestQuiz = Math.max(data.bestQuiz || 0, percentage);
+  save('kv-ijmb-progress', data);
+
+  $('quizFeedback').textContent =
+    `Score: ${score}/${currentQuestions.length} (${percentage}%). ` +
+    `Answered ${answered}/${currentQuestions.length}. Review the explanations and try again.`;
+
+  $('quizFeedback').classList.remove('hidden');
+  renderStats();
+};
+
+function renderStats() {
+  const minutes = data.days[dateKey()] || 0;
+  $('todayMinutes').textContent = minutes;
+  $('progressToday').textContent = minutes;
+  $('allTime').textContent = data.allTime || 0;
+  $('quizStat').textContent = (data.bestQuiz || 0) + '%';
+  $('bestQuiz').textContent = (data.bestQuiz || 0) + '%';
+
+  const goal = Number(data.goal) || 240;
+  $('studyGoal').value = goal;
+  $('goalProgress').style.width = Math.min(100, minutes / goal * 100) + '%';
+  $('goalText').textContent = `${minutes} of ${goal} minutes completed today.`;
+}
+
+$('studyGoal').onchange = () => {
+  data.goal = Math.max(30, Math.min(600, Number($('studyGoal').value) || 240));
+  save('kv-ijmb-progress', data);
+  renderStats();
+};
+
+$('saveNotes').onclick = () => {
+  data.notes = $('notes').value;
+  save('kv-ijmb-progress', data);
+  $('notesStatus').textContent = 'Notes saved on this device when browser storage is available.';
+};
+
+$('exportData').onclick = () => {
+  const output = {
+    progress: data,
+    tasks,
+    exportedAt: new Date().toISOString()
   };
+  const blob = new Blob([JSON.stringify(output, null, 2)], {
+    type: 'application/json'
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'king-vix-study-progress.json';
+  link.click();
+  URL.revokeObjectURL(url);
+  $('notesStatus').textContent = 'Progress export started.';
+};
 
-
-  /* =========================
-     RESET FORM
-  ========================= */
-
-  window.resetProductForm = function() {
-
-    document.getElementById("productForm").reset();
-
-    document.getElementById("productId").value = "";
-
-    document.getElementById("formTitle").textContent =
-      "Add Product";
-
-  };
-
-
-  /* =========================
-     MENU
-  ========================= */
-
-  window.openMenu = function() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.add("open");
-
-  };
-
-
-  window.closeMenu = function() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.remove("open");
-
-  };
-
-
-  /* =========================
-     SECURITY HELPER
-  ========================= */
-
-  function escapeHTML(value) {
-
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-
+$('resetProgress').onclick = () => {
+  if (confirm('Reset all saved study progress, checklist ticks, quiz score and notes?')) {
+    data = { days: {}, allTime: 0, bestQuiz: 0, goal: 240, notes: '' };
+    tasks = {};
+    save('kv-ijmb-progress', data);
+    save('kv-ijmb-tasks', tasks);
+    taskBoxes.forEach(box => box.checked = false);
+    updateTasks();
+    $('notes').value = '';
+    renderStats();
+    $('notesStatus').textContent = 'Progress reset.';
   }
+};
 
+function init() {
+  renderTasks();
+  updateRotation();
+  renderStats();
+  $('notes').value = data.notes || '';
+  loadQuiz();
+  updateTimer();
+}
 
-  /*
-    Hidden admin access.
-
-    To open it, use:
-    https://your-site.com/?admin
-
-    The panel will STILL require your Google account.
-  */
-
-  if (window.location.search === "?admin") {
-
-    const login = document.createElement("button");
-
-    login.textContent = "Admin Login";
-
-    login.className = "admin-btn";
-
-    login.style.position = "fixed";
-    login.style.bottom = "20px";
-    login.style.right = "20px";
-    login.style.zIndex = "6000";
-
-    login.onclick = window.adminLogin;
-
-    document.body.appendChild(login);
-
-  }
-
+init();
 </script>
-
 </body>
 </html>
-
-
