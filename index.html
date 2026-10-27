@@ -1,484 +1,400 @@
 
- page.classList.toggle('hidden', page.id !== button.dataset.tab);
-  };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyVix | Your Study Space</title>
+<style>
+:root{--green:#39ff88;--bg:#080d0b;--panel:#111a15;--text:#effff3;--muted:#9aafa0;--line:#24372b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:22px 18px;background:#0d1711;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.logo{font-size:27px;font-weight:900;color:var(--green)}
+.logo span{color:white}
+header p{color:var(--muted);margin:7px 0 0;font-size:13px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#0b120e;position:sticky;top:86px;z-index:4}
+nav button{white-space:nowrap;background:var(--panel);color:white;border:1px solid var(--line);padding:10px 13px;border-radius:10px}
+nav button.active,button.primary{background:var(--green);color:#061009;border-color:var(--green);font-weight:bold}
+main{max-width:1000px;margin:auto;padding:18px}
+section{display:none}
+section.active{display:block}
+h1{font-size:27px;margin:10px 0}
+h2{font-size:20px}
+p{line-height:1.5}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px;margin-bottom:12px}
+.stat{font-size:27px;color:var(--green);font-weight:bold;margin-top:8px}
+.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.subject{padding:15px;border-radius:13px;background:#13251a;border:1px solid #294b34;cursor:pointer}
+.subject b{display:block;margin-bottom:7px}
+label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:12px;border-radius:10px;background:#0a110d;border:1px solid #304337;color:white;font-size:15px}
+textarea{min-height:110px;resize:vertical}
+button{cursor:pointer;font-size:14px;border-radius:9px;padding:10px 13px;border:1px solid var(--line);background:#1a2a20;color:white;margin:4px 3px 4px 0}
+button:hover{filter:brightness(1.12)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+.small{font-size:12px;color:var(--muted)}
+.item{padding:13px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.option{display:block;width:100%;text-align:left;margin:9px 0;padding:13px;background:#0c150f;border:1px solid #304337}
+.option.selected{border-color:var(--green)}
+#feedback{padding:12px;border-radius:10px;margin:12px 0}
+.good{background:#123d25;color:#a5ffc4}
+.bad{background:#42201d;color:#ffc0b6}
+.progress{height:9px;background:#26332a;border-radius:10px;overflow:hidden}
+.progress div{height:100%;background:var(--green);width:0}
+footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+@media(max-width:500px){header{padding:17px 14px}nav{top:78px}main{padding:13px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Study<span>Vix</span> ✦</div>
+  <p>Your personal study space. Learn smarter, one topic at a time.</p>
+</header>
+
+<nav id="nav">
+  <button class="active" data-page="home">🏠 Home</button>
+  <button data-page="timetable">🗓️ Timetable</button>
+  <button data-page="notes">📚 Notes</button>
+  <button data-page="practice">🧠 Practice</button>
+  <button data-page="progress">📈 Progress</button>
+  <button data-page="settings">🎨 Customize</button>
+</nav>
+
+<main>
+<section id="home" class="active">
+  <p class="muted" id="today"></p>
+  <h1>Welcome to your study space ✨</h1>
+  <p class="muted">Your goals. Your pace. Your progress.</p>
+  <div class="grid">
+    <div class="card">📚 Saved notes<div class="stat" id="noteCount">0</div></div>
+    <div class="card">✅ Correct answers<div class="stat" id="correctCount">0</div></div>
+    <div class="card">🔥 Study sessions<div class="stat" id="sessionCount">0</div></div>
+  </div>
+  <div class="card">
+    <h2>Choose a subject</h2>
+    <div class="subjects">
+      <div class="subject" onclick="startSubject('Mathematics')"><b>📐 Mathematics</b><span class="small">Formulas and problem solving</span></div>
+      <div class="subject" onclick="startSubject('Physics')"><b>⚡ Physics</b><span class="small">Understand how things work</span></div>
+      <div class="subject" onclick="startSubject('Chemistry')"><b>🧪 Chemistry</b><span class="small">Atoms, reactions and more</span></div>
+      <div class="subject" onclick="startSubject('Biology')"><b>🌿 Biology</b><span class="small">Life and living things</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Today's timetable</h2>
+    <div id="todaySchedule" class="muted">No study sessions yet. Add one in Timetable.</div>
+    <button class="primary" onclick="showPage('timetable')">Build my timetable</button>
+  </div>
+  <div class="card">
+    <h2>Quick motivation 🌱</h2>
+    <p id="quote">Small steps every day build big results.</p>
+    <button onclick="newQuote()">Another reminder ✨</button>
+  </div>
+</section>
+
+<section id="timetable">
+  <h1>My timetable 🗓️</h1>
+  <p class="muted">Create and organize your own study schedule.</p>
+  <div class="card">
+    <h2>Add a study session</h2>
+    <form id="scheduleForm">
+      <label>Session title</label><input id="eventTitle" placeholder="e.g. Waves revision" required>
+      <div class="row">
+        <div><label>Subject</label><select id="eventSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Break</option><option>Revision</option></select></div>
+        <div><label>Day</label><select id="eventDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Start time</label><input id="eventStart" type="time" required></div>
+        <div><label>End time</label><input id="eventEnd" type="time" required></div>
+      </div>
+      <button class="primary" type="submit">＋ Add session</button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="row">
+      <div><label>View day</label><select id="filterDay" onchange="renderSchedule()"><option>All days</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
+    </div>
+    <div id="scheduleList"></div>
+  </div>
+</section>
+
+<section id="notes">
+  <h1>My notes 📚</h1>
+  <p class="muted">Write notes, save them on this device, and find them later.</p>
+  <div class="card">
+    <form id="noteForm">
+      <label>Note title</label><input id="noteTitle" placeholder="e.g. Introduction to waves" required>
+      <div class="row">
+        <div><label>Subject</label><select id="noteSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>General</option></select></div>
+        <div><label>Topic</label><input id="noteTopic" placeholder="e.g. Frequency"></div>
+      </div>
+      <label>Your notes</label><textarea id="noteBody" placeholder="Write your explanation, formulas, examples and important points..." required></textarea>
+      <button class="primary" type="submit">💾 Save note</button>
+      <button type="button" onclick="document.getElementById('noteForm').reset()">Clear form</button>
+    </form>
+  </div>
+  <div class="card">
+    <label>Search your notes</label><input id="noteSearch" placeholder="Search title, topic or note..." oninput="renderNotes()">
+    <label>Filter subject</label><select id="noteFilter" onchange="renderNotes()"><option>All subjects</option><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>General</option></select>
+    <div id="notesList"></div>
+    <button onclick="exportNotes()">⬇ Export notes</button>
+  </div>
+</section>
+
+<section id="practice">
+  <h1>Question practice 🧠</h1>
+  <p class="muted">Test your understanding. Choose your subject, topic and difficulty.</p>
+  <div class="card">
+    <div class="row">
+      <div><label>Subject</label><select id="quizSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option></select></div>
+      <div><label>Difficulty</label><select id="quizLevel"><option value="1">1 · Easy</option><option value="2">2 · Medium</option><option value="3">3 · Hard</option><option value="0">Mixed difficulty</option></select></div>
+    </div>
+    <label>Topic</label><select id="quizTopic"><option value="All">All topics</option></select>
+    <button class="primary" onclick="startQuiz()">Start practice</button>
+    <button onclick="resetQuizHistory()">Reset question history</button>
+  </div>
+  <div class="card" id="quizBox">
+    <h2>Ready to learn?</h2>
+    <p>Select your options and tap Start practice.</p>
+  </div>
+</section>
+
+<section id="progress">
+  <h1>My progress 📈</h1>
+  <p class="muted">Every question you practice is a step forward.</p>
+  <div class="grid">
+    <div class="card">Questions answered<div class="stat" id="answeredStat">0</div></div>
+    <div class="card">Correct answers<div class="stat" id="correctStat">0</div></div>
+    <div class="card">Accuracy<div class="stat" id="accuracyStat">0%</div></div>
+  </div>
+  <div class="card">
+    <h2>Overall accuracy</h2>
+    <div class="progress"><div id="accuracyBar"></div></div>
+    <p id="progressMessage" class="muted">Start practicing to see your progress.</p>
+  </div>
+  <div class="card">
+    <h2>By subject</h2>
+    <div id="subjectProgress"></div>
+  </div>
+  <button class="primary" onclick="showPage('practice')">Practice more questions</button>
+</section>
+
+<section id="settings">
+  <h1>Make it yours 🎨</h1>
+  <p class="muted">Personalize your StudyVix study space.</p>
+  <div class="card">
+    <h2>Choose your accent color</h2>
+    <div class="row">
+      <button onclick="setAccent('#39ff88')">💚 Neon green</button>
+      <button onclick="setAccent('#67b7ff')">💙 Blue</button>
+      <button onclick="setAccent('#d68cff')">💜 Purple</button>
+      <button onclick="setAccent('#ffad69')">🧡 Orange</button>
+      <button onclick="setAccent('#ff83b7')">🩷 Pink</button>
+    </div>
+    <h2>Study space decorations</h2>
+    <div class="row">
+      <button onclick="setDecoration('✨')">✨ Stars</button>
+      <button onclick="setDecoration('🌸')">🌸 Flowers</button>
+      <button onclick="setDecoration('🪴')">🪴 Plants</button>
+      <button onclick="setDecoration('🦋')">🦋 Butterflies</button>
+      <button onclick="setDecoration('✦')">✦ Minimal</button>
+    </div>
+    <p>Decoration: <span id="decorationPreview">✨</span></p>
+    <h2>Data and privacy</h2>
+    <p class="small">Your notes and timetable are saved in this browser on this device. They are not automatically synced to another phone.</p>
+    <button onclick="downloadBackup()">⬇ Download backup</button>
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</section>
+</main>
+<footer>StudyVix ✦ Learn at your pace. Grow every day.</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const get=(key,fallback)=>{try{return JSON.parse(localStorage.getItem('sv_'+key))??fallback}catch(e){return fallback}};
+const put=(key,value)=>localStorage.setItem('sv_'+key,JSON.stringify(value));
+let schedules=get('schedules',[]);
+let notes=get('notes',[]);
+let stats=get('stats',{answered:0,correct:0,bySubject:{},sessions:0});
+let history=get('history',[]);
+let accent=get('accent','#39ff88');
+let decoration=get('decoration','✨');
+let currentQuestion=null;
+let quizAnswered=false;
+
+function showPage(id){
+ document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ window.scrollTo(0,0);
+ if(id==='progress')renderProgress();
+ if(id==='notes')renderNotes();
+ if(id==='timetable')renderSchedule();
+ if(id==='home')renderHome();
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function setAccent(color){accent=color;document.documentElement.style.setProperty('--green',color);put('accent',color)}
+function setDecoration(value){decoration=value;$('decorationPreview').textContent=value;put('decoration',value);document.querySelector('.logo').innerHTML='Study<span>Vix</span> '+value}
+function refreshCounts(){
+ $('noteCount').textContent=notes.length;
+ $('correctCount').textContent=stats.correct;
+ $('sessionCount').textContent=stats.sessions;
+}
+function renderHome(){
+ refreshCounts();
+ const day=new Date().toLocaleDateString('en-US',{weekday:'long'});
+ $('today').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+ const todays=schedules.filter(s=>s.day===day).sort((a,b)=>a.start.localeCompare(b.start));
+ $('todaySchedule').innerHTML=todays.length?todays.map(s=>`<div class="item"><b>${esc(s.title)}</b><br><span class="small">${esc(s.start)}–${esc(s.end)} · ${esc(s.subject)}</span></div>`).join(''):'No sessions for today. Add one in Timetable.';
+}
+function newQuote(){
+ const q=['Progress is built one focused session at a time. 🌱','You do not need to know everything today. Learn one thing well.','Practice turns confusion into confidence.','Your future self will thank you for studying today.','Small steps every day build big results.'];
+ $('quote').textContent=q[Math.floor(Math.random()*q.length)];
+}
+$('scheduleForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const start=$('eventStart').value,end=$('eventEnd').value;
+ if(end<=start){alert('Please choose an end time after the start time.');return}
+ schedules.push({id:Date.now(),title:$('eventTitle').value.trim(),subject:$('eventSubject').value,day:$('eventDay').value,start,end});
+ put('schedules',schedules);e.target.reset();renderSchedule();renderHome();
 });
-
-const dateKey = () => new Date().toISOString().slice(0, 10);
-let timerId = null;
-let total = 50 * 60;
-let remaining = total;
-let sessionStarted = false;
-
-function updateTimer() {
-  const minutes = Math.floor(remaining / 60);
-  const seconds = remaining % 60;
-  $('timer').textContent =
-    String(minutes).padStart(2, '0') + ':' +
-    String(seconds).padStart(2, '0');
-  $('timerProgress').style.width =
-    ((total - remaining) / total * 100) + '%';
+function renderSchedule(){
+ const day=$('filterDay').value;
+ const list=schedules.filter(s=>day==='All days'||s.day===day).sort((a,b)=>['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].indexOf(a.day)-['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].indexOf(b.day)||a.start.localeCompare(b.start));
+ $('scheduleList').innerHTML=list.length?list.map(s=>`<div class="item"><b>${esc(s.title)}</b><br><span class="small">${esc(s.day)} · ${esc(s.start)}–${esc(s.end)} · ${esc(s.subject)}</span><br><button onclick="editSchedule(${s.id})">Edit</button><button onclick="deleteSchedule(${s.id})">Delete</button></div>`).join(''):'<p class="muted">Nothing here yet. Add your first study session above.</p>';
 }
-
-function stopTimer() {
-  if (timerId) clearInterval(timerId);
-  timerId = null;
+function deleteSchedule(id){schedules=schedules.filter(s=>s.id!==id);put('schedules',schedules);renderSchedule();renderHome()}
+function editSchedule(id){
+ const s=schedules.find(x=>x.id===id);if(!s)return;
+ const title=prompt('Edit session title:',s.title);if(title===null)return;
+ const start=prompt('Start time (24-hour format HH:MM):',s.start);if(start===null)return;
+ const end=prompt('End time (24-hour format HH:MM):',s.end);if(end===null)return;
+ const day=prompt('Day of week:',s.day);if(day===null)return;
+ if(!title.trim()||!/^([01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(end)||end<=start||!['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].includes(day)){alert('Please enter a valid title, time and day.');return}
+ Object.assign(s,{title:title.trim(),start,end,day});put('schedules',schedules);renderSchedule();renderHome();
 }
-
-function completeSession() {
-  stopTimer();
-  if (Number($('session').value) >= 25) {
-    const minutes = Math.round(total / 60);
-    const day = dateKey();
-    data.days[day] = (data.days[day] || 0) + minutes;
-    data.allTime = (data.allTime || 0) + minutes;
-    save('kv-ijmb-progress', data);
-    renderStats();
-  }
-  $('phase').textContent = 'Session complete! 🎉';
-  $('timerNote').textContent = 'Take a break or start another session.';
-  $('startBtn').textContent = '▶ Start again';
+$('noteForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ notes.unshift({id:Date.now(),title:$('noteTitle').value.trim(),subject:$('noteSubject').value,topic:$('noteTopic').value.trim(),body:$('noteBody').value.trim(),date:new Date().toLocaleDateString()});
+ put('notes',notes);e.target.reset();renderNotes();refreshCounts();alert('Note saved on this device! 💚');
+});
+function renderNotes(){
+ const q=$('noteSearch').value.toLowerCase(),f=$('noteFilter').value;
+ const list=notes.filter(n=>(f==='All subjects'||n.subject===f)&&[n.title,n.topic,n.body,n.subject].join(' ').toLowerCase().includes(q));
+ $('notesList').innerHTML=list.length?list.map(n=>`<div class="item"><b>${esc(n.title)}</b><p class="small">${esc(n.subject)} · ${esc(n.topic||'General topic')} · ${esc(n.date)}</p><p>${esc(n.body).replace(/\n/g,'<br>')}</p><button onclick="editNote(${n.id})">Edit</button><button onclick="deleteNote(${n.id})">Delete</button></div>`).join(''):'<p class="muted">No matching notes. Create a note above.</p>';
 }
-
-$('startBtn').onclick = () => {
-  if (timerId) return;
-  if (!sessionStarted) {
-    total = Number($('session').value) * 60;
-    remaining = total;
-    sessionStarted = true;
-  }
-  $('phase').textContent = 'Stay focused';
-  $('timerNote').textContent = 'One task. No distractions.';
-  $('startBtn').textContent = '▶ Running';
-  timerId = setInterval(() => {
-    remaining--;
-    updateTimer();
-    if (remaining <= 0) completeSession();
-  }, 1000);
-};
-
-$('pauseBtn').onclick = () => {
-  stopTimer();
-  $('phase').textContent = 'Paused';
-  $('startBtn').textContent = '▶ Resume';
-};
-
-$('resetBtn').onclick = () => {
-  stopTimer();
-  sessionStarted = false;
-  total = Number($('session').value) * 60;
-  remaining = total;
-  $('phase').textContent = 'Ready when you are';
-  $('timerNote').textContent = 'Choose one task, then begin.';
-  updateTimer();
-};
-
-$('session').onchange = () => $('resetBtn').click();
-
-const taskBoxes = [...document.querySelectorAll('[data-task]')];
-
-function renderTasks() {
-  taskBoxes.forEach(box => {
-    box.checked = !!tasks[box.dataset.task];
-    box.closest('.task').classList.toggle('done', box.checked);
-  });
-  updateTasks();
+function editNote(id){
+ const n=notes.find(x=>x.id===id);if(!n)return;
+ const title=prompt('Note title:',n.title);if(title===null)return;
+ const body=prompt('Note content:',n.body);if(body===null)return;
+ n.title=title.trim()||n.title;n.body=body;put('notes',notes);renderNotes();
 }
-
-function updateTasks() {
-  const count = taskBoxes.filter(box => box.checked).length;
-  $('taskCount').textContent = `${count} of ${taskBoxes.length} tasks complete`;
-  $('taskProgress').style.width = count / taskBoxes.length * 100 + '%';
-  $('taskStat').textContent = `${count}/${taskBoxes.length}`;
-  tasks = {};
-  taskBoxes.forEach(box => tasks[box.dataset.task] = box.checked);
-  save('kv-ijmb-tasks', tasks);
+function deleteNote(id){if(!confirm('Delete this note?'))return;notes=notes.filter(n=>n.id!==id);put('notes',notes);renderNotes();refreshCounts()}
+function exportNotes(){
+ const text=notes.map(n=>`${n.title}\n${n.subject} | ${n.topic}\n${n.date}\n\n${n.body}\n\n------------------\n`).join('\n');
+ download('StudyVix-Notes.txt',text||'No notes saved yet.');
 }
-
-taskBoxes.forEach(box => box.addEventListener('change', updateTasks));
-
-$('clearTasks').onclick = () => {
-  taskBoxes.forEach(box => box.checked = false);
-  updateTasks();
-};
-
-let audioCtx = null;
-let master = null;
-let musicOn = false;
-let oscillators = [];
-let noiseGain = null;
-
-function setupAudio() {
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) {
-    $('musicStatus').textContent = 'Audio is not supported by this browser.';
-    return false;
-  }
-
-  if (!audioCtx) {
-    audioCtx = new AudioContextClass();
-    master = audioCtx.createGain();
-    master.gain.value = 0;
-    master.connect(audioCtx.destination);
-
-    [110, 164.81, 220, 329.63].forEach((frequency, index) => {
-      const oscillator = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      oscillator.type = index === 1 ? 'triangle' : 'sine';
-      oscillator.frequency.value = frequency;
-      gain.gain.value = [0.2, 0.1, 0.07, 0.035][index];
-      oscillator.connect(gain);
-      gain.connect(master);
-      oscillator.start();
-      oscillators.push(oscillator);
-    });
-
-    const buffer = audioCtx.createBuffer(
-      1, audioCtx.sampleRate * 2, audioCtx.sampleRate
-    );
-    const channel = buffer.getChannelData(0);
-    for (let i = 0; i < channel.length; i++) {
-      channel[i] = Math.random() * 2 - 1;
-    }
-
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    noise.loop = true;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 500;
-
-    noiseGain = audioCtx.createGain();
-    noiseGain.gain.value = 0;
-    noise.connect(filter);
-    filter.connect(noiseGain);
-    noiseGain.connect(master);
-    noise.start();
-  }
-  return true;
+function download(filename,content){
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'}));a.download=filename;a.click();URL.revokeObjectURL(a.href);
 }
+function downloadBackup(){download('StudyVix-Backup.json',JSON.stringify({notes,schedules,stats,history},null,2))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
-function setSoundMode() {
-  if (!audioCtx) return;
-  const rain = $('soundMode').value === 'rain';
-  oscillators.forEach(oscillator => {
-    oscillator.detune.value = rain ? 12 : 0;
-  });
-  noiseGain.gain.setTargetAtTime(
-    rain ? 0.035 : 0, audioCtx.currentTime, 0.2
-  );
-}
-
-$('musicBtn').onclick = async () => {
-  if (!setupAudio()) return;
-  await audioCtx.resume();
-  musicOn = true;
-  setSoundMode();
-  master.gain.setTargetAtTime(
-    Number($('volume').value) / 100 * 0.18,
-    audioCtx.currentTime, 0.2
-  );
-  $('musicStatus').textContent = 'Focus sound is playing.';
-  $('musicBtn').textContent = '♫ Sound playing';
-  $('visualizer').classList.add('playing');
-};
-
-$('musicStop').onclick = () => {
-  musicOn = false;
-  if (audioCtx && master) {
-    master.gain.setTargetAtTime(0, audioCtx.currentTime, 0.15);
-  }
-  $('musicStatus').textContent = 'Sound is off.';
-  $('musicBtn').textContent = '▶ Play focus sound';
-  $('visualizer').classList.remove('playing');
-};
-
-$('volume').oninput = () => {
-  $('volumeText').textContent = $('volume').value + '%';
-  if (audioCtx && master && musicOn) {
-    master.gain.setTargetAtTime(
-      Number($('volume').value) / 100 * 0.18,
-      audioCtx.currentTime, 0.1
-    );
-  }
-};
-
-$('soundMode').onchange = setSoundMode;
-
-for (let i = 0; i < 13; i++) {
-  const bar = document.createElement('span');
-  bar.className = 'bar';
-  $('visualizer').appendChild(bar);
-}
-
-const rotations = [
-  ['Mathematics', 'Physics', 'Chemistry',
-   'Monday: Mathematics + Physics, with Chemistry recall.'],
-  ['Chemistry', 'Mathematics', 'Physics',
-   'Tuesday: Chemistry + Mathematics, with Physics recall.'],
-  ['Physics', 'Chemistry', 'Mathematics',
-   'Wednesday: Physics + Chemistry, with Mathematics recall.'],
-  ['Mathematics', 'Physics', 'Chemistry',
-   'Thursday: Mathematics + Physics, with Chemistry recall.'],
-  ['Chemistry', 'Mathematics', 'Physics',
-   'Friday: Chemistry + Mathematics. Focus on your weakest topic.'],
-  ['Timed questions', 'Weakest subject', 'Corrections',
-   'Saturday: timed questions, marking and correcting mistakes.'],
-  ['Light revision', 'Formula recall', 'Plan next week',
-   'Sunday: lighter revision and plan the coming week.']
+/* Starter questions. Add more questions as you study. */
+const questions=[
+{subject:'Mathematics',topic:'Algebra',level:1,q:'Solve: x + 5 = 12.',options:['5','7','17','6'],a:1,why:'Subtract 5 from both sides: x = 12 − 5 = 7.'},
+{subject:'Mathematics',topic:'Algebra',level:1,q:'Simplify: 3x + 2x.',options:['5','5x','6x','x'],a:1,why:'Combine like terms: 3x + 2x = 5x.'},
+{subject:'Mathematics',topic:'Algebra',level:2,q:'If 2x − 4 = 10, find x.',options:['3','7','6','8'],a:1,why:'Add 4: 2x = 14. Divide by 2: x = 7.'},
+{subject:'Mathematics',topic:'Algebra',level:3,q:'Solve x² − 5x + 6 = 0.',options:['x=1,6','x=−2,−3','x=2,3','x=−1,−6'],a:2,why:'Factor: (x − 2)(x − 3) = 0, so x = 2 or 3.'},
+{subject:'Mathematics',topic:'Geometry',level:1,q:'The angles in a triangle add up to…',options:['90°','180°','270°','360°'],a:1,why:'The interior angles of a triangle sum to 180°.'},
+{subject:'Mathematics',topic:'Geometry',level:2,q:'Find the area of a triangle with base 10 cm and height 6 cm.',options:['60 cm²','30 cm²','16 cm²','20 cm²'],a:1,why:'Area = ½ × base × height = ½ × 10 × 6 = 30 cm².'},
+{subject:'Mathematics',topic:'Trigonometry',level:1,q:'In a right triangle, sin θ equals…',options:['Adjacent/Hypotenuse','Opposite/Adjacent','Opposite/Hypotenuse','Hypotenuse/Opposite'],a:2,why:'SOH: sine = opposite divided by hypotenuse.'},
+{subject:'Mathematics',topic:'Trigonometry',level:3,q:'If sin θ = 3/5 for an acute angle, find cos θ.',options:['4/5','3/4','5/4','2/5'],a:0,why:'Using sin²θ + cos²θ = 1 gives cos θ = √(1 − 9/25) = 4/5.'},
+{subject:'Physics',topic:'Motion',level:1,q:'What is the SI unit of speed?',options:['Metre','Second','Metre per second','Newton'],a:2,why:'Speed is distance divided by time, measured in m/s.'},
+{subject:'Physics',topic:'Motion',level:1,q:'A car travels 100 m in 20 s. Its average speed is…',options:['2 m/s','5 m/s','20 m/s','2000 m/s'],a:1,why:'Speed = distance/time = 100/20 = 5 m/s.'},
+{subject:'Physics',topic:'Motion',level:2,q:'A body changes velocity from 4 m/s to 16 m/s in 3 s. Find acceleration.',options:['4 m/s²','6 m/s²','12 m/s²','20 m/s²'],a:0,why:'Acceleration = (16 − 4)/3 = 4 m/s².'},
+{subject:'Physics',topic:'Motion',level:3,q:'A body starts from rest and accelerates at 2 m/s² for 5 s. How far does it travel?',options:['10 m','20 m','25 m','50 m'],a:2,why:'s = ut + ½at² = 0 + ½ × 2 × 25 = 25 m.'},
+{subject:'Physics',topic:'Waves',level:1,q:'What is the unit of frequency?',options:['Metre','Hertz','Newton','Joule'],a:1,why:'Frequency is measured in hertz (Hz), or cycles per second.'},
+{subject:'Physics',topic:'Waves',level:2,q:'A wave has frequency 5 Hz and wavelength 2 m. Find its speed.',options:['2.5 m/s','7 m/s','10 m/s','20 m/s'],a:2,why:'Wave speed v = fλ = 5 × 2 = 10 m/s.'},
+{subject:'Physics',topic:'Waves',level:3,q:'A wave travels at 340 m/s with frequency 170 Hz. Find its wavelength.',options:['0.5 m','2 m','170 m','510 m'],a:1,why:'Wavelength λ = speed/frequency = 340/170 = 2 m.'},
+{subject:'Physics',topic:'Electricity',level:1,q:'What is the SI unit of electric current?',options:['Volt','Ohm','Ampere','Watt'],a:2,why:'Electric current is measured in amperes (A).'},
+{subject:'Physics',topic:'Electricity',level:2,q:'A 12 V battery is connected across a 4 Ω resistor. Find the current.',options:['3 A','8 A','16 A','48 A'],a:0,why:'Ohm’s law: I = V/R = 12/4 = 3 A.'},
+{subject:'Physics',topic:'Electricity',level:3,q:'Two resistors of 4 Ω and 6 Ω are connected in series. What is the total resistance?',options:['2.4 Ω','10 Ω','24 Ω','1.5 Ω'],a:1,why:'Resistances in series add: 4 + 6 = 10 Ω.'},
+{subject:'Chemistry',topic:'Atoms',level:1,q:'Which particle has a negative charge?',options:['Proton','Neutron','Electron','Nucleus'],a:2,why:'Electrons carry a negative charge.'},
+{subject:'Chemistry',topic:'Atoms',level:2,q:'The atomic number of an element equals its number of…',options:['Neutrons','Protons','Shells','Isotopes'],a:1,why:'Atomic number is the number of protons in the nucleus.'},
+{subject:'Chemistry',topic:'Atoms',level:3,q:'An atom has atomic number 11 and mass number 23. How many neutrons does it have?',options:['11','12','23','34'],a:1,why:'Neutrons = mass number − atomic number = 23 − 11 = 12.'},
+{subject:'Chemistry',topic:'Acids and Bases',level:1,q:'A solution with pH 2 is generally…',options:['Acidic','Neutral','Alkaline','Always pure water'],a:0,why:'A pH below 7 is acidic.'},
+{subject:'Chemistry',topic:'Acids and Bases',level:2,q:'What salt forms when hydrochloric acid reacts with sodium hydroxide?',options:['Sodium sulfate','Sodium chloride','Calcium chloride','Sodium nitrate'],a:1,why:'HCl + NaOH → NaCl + H₂O.'},
+{subject:'Chemistry',topic:'Acids and Bases',level:3,q:'What volume of 0.1 mol/dm³ NaOH contains 0.005 mol?',options:['5 cm³','50 cm³','500 cm³','0.5 cm³'],a:1,why:'V = n/C = 0.005/0.1 = 0.05 dm³ = 50 cm³.'},
+{subject:'Chemistry',topic:'Chemical Bonding',level:1,q:'Which bond involves the transfer of electrons?',options:['Ionic','Covalent','Metallic only','Hydrogen only'],a:0,why:'Ionic bonding forms when electrons are transferred, producing oppositely charged ions.'},
+{subject:'Chemistry',topic:'Chemical Bonding',level:2,q:'What type of bond joins two oxygen atoms in O₂?',options:['Ionic','Covalent','Metallic','No bond'],a:1,why:'The two oxygen atoms share electrons, forming a covalent bond.'},
+{subject:'Biology',topic:'Cells',level:1,q:'Which organelle is commonly called the powerhouse of the cell?',options:['Nucleus','Mitochondrion','Ribosome','Vacuole'],a:1,why:'Mitochondria release usable energy through cellular respiration.'},
+{subject:'Biology',topic:'Cells',level:2,q:'Which structure controls what enters and leaves a cell?',options:['Cell membrane','Cell wall only','Nucleolus','Chromosome'],a:0,why:'The cell membrane regulates movement of substances into and out of the cell.'},
+{subject:'Biology',topic:'Cells',level:3,q:'A cell placed in a very dilute solution may swell because water enters by…',options:['Diffusion of proteins','Osmosis','Active transport only','Transpiration'],a:1,why:'Water moves across a selectively permeable membrane by osmosis.'},
+{subject:'Biology',topic:'Ecology',level:1,q:'Green plants make their own food by…',options:['Respiration','Photosynthesis','Digestion','Fermentation only'],a:1,why:'Photosynthesis uses light energy to make glucose from carbon dioxide and water.'},
+{subject:'Biology',topic:'Ecology',level:2,q:'In a food chain, green plants are usually…',options:['Primary consumers','Producers','Decomposers','Parasites'],a:1,why:'Plants make their own food and form the producer level.'},
+{subject:'Biology',topic:'Ecology',level:3,q:'If producers contain 10,000 J of energy, about how much may reach primary consumers using the 10% rule?',options:['10 J','100 J','1,000 J','9,000 J'],a:2,why:'About 10% transfers to the next trophic level: 1,000 J.'}
 ];
 
-function updateRotation() {
-  const rotation = rotations[Number($('daySelect').value)];
-  $('mainSubject').textContent = rotation[0];
-  $('secondSubject').textContent = rotation[1];
-  $('thirdSubject').textContent = rotation[2] + ' + wrap-up';
-  $('rotationTip').textContent = rotation[3];
+function startSubject(subject){
+ $('quizSubject').value=subject;updateTopics();showPage('practice');startQuiz();
 }
-
-$('daySelect').onchange = updateRotation;
-
-const questionBank = {
-  math: [
-    {
-      q: 'Expand (x + 2)³.',
-      opts: [
-        'x³ + 6x² + 12x + 8',
-        'x³ + 8',
-        'x³ + 2x² + 4x + 8',
-        'x³ + 6x + 8'
-      ],
-      a: 0,
-      why: 'Using (a+b)³ = a³ + 3a²b + 3ab² + b³ gives x³ + 6x² + 12x + 8.'
-    },
-    {
-      q: 'Solve 2x + 5 = 17.',
-      opts: ['x = 5', 'x = 6', 'x = 11', 'x = 12'],
-      a: 1,
-      why: 'Subtract 5 to get 2x = 12, then divide by 2. Therefore x = 6.'
-    },
-    {
-      q: 'If sin θ = 3/5 for an acute angle, what is cos θ?',
-      opts: ['4/5', '3/4', '5/4', '1/5'],
-      a: 0,
-      why: 'A 3-4-5 triangle gives adjacent/hypotenuse = 4/5.'
-    },
-    {
-      q: 'Differentiate y = x² + 3x.',
-      opts: ['2x + 3', 'x + 3', '2x', 'x² + 3'],
-      a: 0,
-      why: 'Using the power rule, the derivative is 2x + 3.'
-    }
-  ],
-  physics: [
-    {
-      q: 'A car travels 120 m in 6 s at constant speed. Find its speed.',
-      opts: ['12 m/s', '20 m/s', '24 m/s', '720 m/s'],
-      a: 1,
-      why: 'Speed = distance/time = 120/6 = 20 m/s.'
-    },
-    {
-      q: 'What is the SI unit of force?',
-      opts: ['Joule', 'Watt', 'Newton', 'Pascal'],
-      a: 2,
-      why: 'Force is measured in newtons (N).'
-    },
-    {
-      q: 'A 2 kg object accelerates at 3 m/s². Find the net force.',
-      opts: ['1.5 N', '5 N', '6 N', '9 N'],
-      a: 2,
-      why: 'Newton’s second law: F = ma = 2 × 3 = 6 N.'
-    },
-    {
-      q: 'Which quantity is a scalar?',
-      opts: ['Velocity', 'Displacement', 'Acceleration', 'Speed'],
-      a: 3,
-      why: 'Speed has magnitude only; the others include direction.'
-    }
-  ],
-  chem: [
-    {
-      q: 'What is the chemical symbol for sodium?',
-      opts: ['S', 'So', 'Na', 'N'],
-      a: 2,
-      why: 'Sodium’s symbol is Na, from the Latin name natrium.'
-    },
-    {
-      q: 'What is the pH of a neutral solution at 25°C?',
-      opts: ['0', '7', '10', '14'],
-      a: 1,
-      why: 'At 25°C, a neutral aqueous solution has pH 7.'
-    },
-    {
-      q: 'Which type of bond involves sharing electron pairs?',
-      opts: ['Ionic', 'Metallic', 'Covalent', 'Hydrogen'],
-      a: 2,
-      why: 'Covalent bonds form when atoms share electron pairs.'
-    },
-    {
-      q: 'How many moles are in 18 g of water? Mᵣ = 18.',
-      opts: ['0.5 mol', '1 mol', '2 mol', '18 mol'],
-      a: 1,
-      why: 'Moles = mass/Mᵣ = 18/18 = 1 mol.'
-    }
-  ]
-};
-
-let currentQuestions = [];
-
-function loadQuiz() {
-  const subject = $('quizSubject').value;
-  currentQuestions = (
-    subject === 'all'
-      ? ['math', 'physics', 'chem'].flatMap(key => questionBank[key].slice(0, 2))
-      : questionBank[subject]
-  ).map((question, index) => ({ ...question, id: index }));
-
-  $('quizQuestions').innerHTML = '';
-
-  currentQuestions.forEach((question, index) => {
-    const box = document.createElement('div');
-    box.className = 'qbox';
-
-    const title = document.createElement('strong');
-    title.textContent = `${index + 1}. ${question.q}`;
-    box.appendChild(title);
-
-    question.opts.forEach((option, optionIndex) => {
-      const label = document.createElement('label');
-      label.className = 'option';
-
-      const input = document.createElement('input');
-      input.type = 'radio';
-      input.name = 'question' + index;
-      input.value = optionIndex;
-
-      const text = document.createElement('span');
-      text.textContent = option;
-
-      label.append(input, text);
-      box.appendChild(label);
-    });
-
-    const explanation = document.createElement('div');
-    explanation.id = 'explain' + index;
-    explanation.className = 'muted tiny hidden';
-    explanation.style.marginTop = '8px';
-    box.appendChild(explanation);
-
-    $('quizQuestions').appendChild(box);
-  });
-
-  $('quizFeedback').classList.add('hidden');
+function updateTopics(){
+ const subject=$('quizSubject').value;
+ const topics=['All',...new Set(questions.filter(q=>q.subject===subject).map(q=>q.topic))];
+ $('quizTopic').innerHTML=topics.map(t=>`<option value="${esc(t)}">${t==='All'?'All topics':esc(t)}</option>`).join('');
 }
-
-$('newQuiz').onclick = loadQuiz;
-
-$('submitQuiz').onclick = () => {
-  if (!currentQuestions.length) loadQuiz();
-
-  let score = 0;
-  let answered = 0;
-
-  currentQuestions.forEach((question, index) => {
-    const picked = document.querySelector(
-      `input[name="question${index}"]:checked`
-    );
-    const explanation = $('explain' + index);
-    explanation.classList.remove('hidden');
-
-    if (picked) {
-      answered++;
-      if (Number(picked.value) === question.a) score++;
-    }
-
-    explanation.textContent =
-      (picked && Number(picked.value) === question.a
-        ? '✓ Correct. '
-        : 'Answer: ' + question.opts[question.a] + '. ') +
-      question.why;
-  });
-
-  const percentage = Math.round(score / currentQuestions.length * 100);
-  data.bestQuiz = Math.max(data.bestQuiz || 0, percentage);
-  save('kv-ijmb-progress', data);
-
-  $('quizFeedback').textContent =
-    `Score: ${score}/${currentQuestions.length} (${percentage}%). ` +
-    `Answered ${answered}/${currentQuestions.length}. Review the explanations and try again.`;
-
-  $('quizFeedback').classList.remove('hidden');
-  renderStats();
-};
-
-function renderStats() {
-  const minutes = data.days[dateKey()] || 0;
-  $('todayMinutes').textContent = minutes;
-  $('progressToday').textContent = minutes;
-  $('allTime').textContent = data.allTime || 0;
-  $('quizStat').textContent = (data.bestQuiz || 0) + '%';
-  $('bestQuiz').textContent = (data.bestQuiz || 0) + '%';
-
-  const goal = Number(data.goal) || 240;
-  $('studyGoal').value = goal;
-  $('goalProgress').style.width = Math.min(100, minutes / goal * 100) + '%';
-  $('goalText').textContent = `${minutes} of ${goal} minutes completed today.`;
+$('quizSubject').addEventListener('change',updateTopics);
+function startQuiz(){
+ updateTopics();
+ quizAnswered=false;
+ const subject=$('quizSubject').value,level=Number($('quizLevel').value),topic=$('quizTopic').value;
+ let pool=questions.filter(q=>q.subject===subject&&(level===0||q.level===level)&&(topic==='All'||q.topic===topic));
+ let fresh=pool.filter(q=>!history.includes(q.q));
+ if(!fresh.length&&pool.length){$('quizBox').innerHTML='<h2>🎉 You finished these questions!</h2><p>You have answered all currently available questions in this selection. Try another topic or difficulty, or reset your question history.</p>';return}
+ pool=fresh;
+ if(!pool.length){$('quizBox').innerHTML='<h2>More questions coming soon!</h2><p>There are no questions for this selection yet. Try another topic or difficulty.</p>';return}
+ currentQuestion=pool[Math.floor(Math.random()*pool.length)];
+ renderQuestion(currentQuestion);
 }
-
-$('studyGoal').onchange = () => {
-  data.goal = Math.max(30, Math.min(600, Number($('studyGoal').value) || 240));
-  save('kv-ijmb-progress', data);
-  renderStats();
-};
-
-$('saveNotes').onclick = () => {
-  data.notes = $('notes').value;
-  save('kv-ijmb-progress', data);
-  $('notesStatus').textContent = 'Notes saved on this device when browser storage is available.';
-};
-
-$('exportData').onclick = () => {
-  const output = {
-    progress: data,
-    tasks,
-    exportedAt: new Date().toISOString()
-  };
-  const blob = new Blob([JSON.stringify(output, null, 2)], {
-    type: 'application/json'
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'king-vix-study-progress.json';
-  link.click();
-  URL.revokeObjectURL(url);
-  $('notesStatus').textContent = 'Progress export started.';
-};
-
-$('resetProgress').onclick = () => {
-  if (confirm('Reset all saved study progress, checklist ticks, quiz score and notes?')) {
-    data = { days: {}, allTime: 0, bestQuiz: 0, goal: 240, notes: '' };
-    tasks = {};
-    save('kv-ijmb-progress', data);
-    save('kv-ijmb-tasks', tasks);
-    taskBoxes.forEach(box => box.checked = false);
-    updateTasks();
-    $('notes').value = '';
-    renderStats();
-    $('notesStatus').textContent = 'Progress reset.';
-  }
-};
-
-function init() {
-  renderTasks();
-  updateRotation();
-  renderStats();
-  $('notes').value = data.notes || '';
-  loadQuiz();
-  updateTimer();
+function renderQuestion(q){
+ quizAnswered=false;
+ $('quizBox').innerHTML=`<p class="small">${esc(q.subject)} · ${esc(q.topic)} · Level ${q.level}</p><h2>${esc(q.q)}</h2><div id="options">${q.options.map((o,i)=>`<button class="option" onclick="answerQuestion(${i})">${String.fromCharCode(65+i)}. ${esc(o)}</button>`).join('')}</div><div id="feedback"></div><button id="nextQuestion" class="primary" style="display:none" onclick="startQuiz()">Next question →</button>`;
 }
-
-init();
+function answerQuestion(choice){
+ if(quizAnswered||!currentQuestion)return;
+ quizAnswered=true;
+ const q=currentQuestion,correct=choice===q.a;
+ stats.answered++;if(correct)stats.correct++;
+ stats.bySubject[q.subject]=stats.bySubject[q.subject]||{answered:0,correct:0};
+ stats.bySubject[q.subject].answered++;if(correct)stats.bySubject[q.subject].correct++;
+ history.push(q.q);put('history',history);put('stats',stats);
+ document.querySelectorAll('#options button').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('selected')});
+ $('feedback').className=correct?'good':'bad';
+ $('feedback').innerHTML=`<b>${correct?'Correct! 🎉':'Not quite. Keep learning! 🌱'}</b><p>${esc(q.why)}</p>`;
+ $('nextQuestion').style.display='inline-block';
+ renderHome();renderProgress();
+}
+function resetQuizHistory(){if(!confirm('Reset the list of questions you have answered?'))return;history=[];put('history',history);alert('Question history reset. Your scores remain saved.');startQuiz()}
+function renderProgress(){
+ $('answeredStat').textContent=stats.answered;
+ $('correctStat').textContent=stats.correct;
+ const accuracy=stats.answered?Math.round(stats.correct/stats.answered*100):0;
+ $('accuracyStat').textContent=accuracy+'%';$('accuracyBar').style.width=accuracy+'%';
+ $('progressMessage').textContent=stats.answered?`You have answered ${stats.answered} questions. Keep practicing to strengthen your understanding.`:'Start practicing to see your progress.';
+ $('subjectProgress').innerHTML=['Mathematics','Physics','Chemistry','Biology'].map(s=>{
+ const v=stats.bySubject[s]||{answered:0,correct:0},p=v.answered?Math.round(v.correct/v.answered*100):0;
+ return `<div class="item"><b>${s}</b><p class="small">${v.correct} correct out of ${v.answered} answered · ${p}% accuracy</p><div class="progress"><div style="width:${p}%"></div></div></div>`;
+ }).join('');
+}
+updateTopics();
+setAccent(accent);
+setDecoration(decoration);
+renderHome();renderSchedule();renderNotes();renderProgress();
 </script>
 </body>
 </html>
