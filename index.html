@@ -3,398 +3,241 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyVix | Your Study Space</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyVix | IJMB & JAMB</title>
 <style>
-:root{--green:#39ff88;--bg:#080d0b;--panel:#111a15;--text:#effff3;--muted:#9aafa0;--line:#24372b}
+:root{--bg:#07110b;--card:#101c14;--green:#39f582;--text:#effff2;--muted:#9bb5a1}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{padding:22px 18px;background:#0d1711;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.logo{font-size:27px;font-weight:900;color:var(--green)}
+header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;background:#09140c;border-bottom:1px solid #263c2d;position:sticky;top:0}
+.logo{font-size:25px;font-weight:900;color:var(--green)}
 .logo span{color:white}
-header p{color:var(--muted);margin:7px 0 0;font-size:13px}
-nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#0b120e;position:sticky;top:86px;z-index:4}
-nav button{white-space:nowrap;background:var(--panel);color:white;border:1px solid var(--line);padding:10px 13px;border-radius:10px}
-nav button.active,button.primary{background:var(--green);color:#061009;border-color:var(--green);font-weight:bold}
-main{max-width:1000px;margin:auto;padding:18px}
-section{display:none}
-section.active{display:block}
-h1{font-size:27px;margin:10px 0}
-h2{font-size:20px}
-p{line-height:1.5}
+main{max-width:1100px;margin:auto;padding:22px 16px}
+h1{font-size:clamp(30px,5vw,48px)}
+h1 span{color:var(--green)}
+p{line-height:1.7}
 .muted{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:18px 0}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px;margin-bottom:12px}
-.stat{font-size:27px;color:var(--green);font-weight:bold;margin-top:8px}
-.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.subject{padding:15px;border-radius:13px;background:#13251a;border:1px solid #294b34;cursor:pointer}
-.subject b{display:block;margin-bottom:7px}
-label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}
-input,select,textarea{width:100%;padding:12px;border-radius:10px;background:#0a110d;border:1px solid #304337;color:white;font-size:15px}
-textarea{min-height:110px;resize:vertical}
-button{cursor:pointer;font-size:14px;border-radius:9px;padding:10px 13px;border:1px solid var(--line);background:#1a2a20;color:white;margin:4px 3px 4px 0}
-button:hover{filter:brightness(1.12)}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.row>*{flex:1;min-width:130px}
-.small{font-size:12px;color:var(--muted)}
-.item{padding:13px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border-bottom:0}
-.option{display:block;width:100%;text-align:left;margin:9px 0;padding:13px;background:#0c150f;border:1px solid #304337}
-.option.selected{border-color:var(--green)}
-#feedback{padding:12px;border-radius:10px;margin:12px 0}
-.good{background:#123d25;color:#a5ffc4}
-.bad{background:#42201d;color:#ffc0b6}
-.progress{height:9px;background:#26332a;border-radius:10px;overflow:hidden}
-.progress div{height:100%;background:var(--green);width:0}
-footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
-hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-@media(max-width:500px){header{padding:17px 14px}nav{top:78px}main{padding:13px}h1{font-size:24px}}
+button{padding:12px 15px;border:0;border-radius:10px;background:var(--green);color:#06130a;font-weight:bold;cursor:pointer}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 12px;background:#08130b;border:1px solid #263c2d;border-radius:9px;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid #263c2d;border-radius:15px;padding:18px;margin-bottom:14px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.nav button{background:#15251a;color:white}
+.page{display:none}.page.active{display:block}
+.subject{cursor:pointer}.subject:hover{border-color:var(--green)}
+.small{font-size:13px;color:var(--muted)}
+.answer{display:block;width:100%;text-align:left;margin:8px 0;background:#15251a;color:white;border:1px solid #263c2d}
+.green{color:var(--green)}
+.hidden{display:none}
+footer{text-align:center;padding:25px;color:var(--muted)}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">Study<span>Vix</span> ✦</div>
-  <p>Your personal study space. Learn smarter, one topic at a time.</p>
+<div class="logo">Study<span>Vix</span> ✦</div>
+<button onclick="showPage('settings')">Settings ⚙</button>
 </header>
 
-<nav id="nav">
-  <button class="active" data-page="home">🏠 Home</button>
-  <button data-page="timetable">🗓️ Timetable</button>
-  <button data-page="notes">📚 Notes</button>
-  <button data-page="practice">🧠 Practice</button>
-  <button data-page="progress">📈 Progress</button>
-  <button data-page="settings">🎨 Customize</button>
-</nav>
-
 <main>
-<section id="home" class="active">
-  <p class="muted" id="today"></p>
-  <h1>Welcome to your study space ✨</h1>
-  <p class="muted">Your goals. Your pace. Your progress.</p>
-  <div class="grid">
-    <div class="card">📚 Saved notes<div class="stat" id="noteCount">0</div></div>
-    <div class="card">✅ Correct answers<div class="stat" id="correctCount">0</div></div>
-    <div class="card">🔥 Study sessions<div class="stat" id="sessionCount">0</div></div>
-  </div>
-  <div class="card">
-    <h2>Choose a subject</h2>
-    <div class="subjects">
-      <div class="subject" onclick="startSubject('Mathematics')"><b>📐 Mathematics</b><span class="small">Formulas and problem solving</span></div>
-      <div class="subject" onclick="startSubject('Physics')"><b>⚡ Physics</b><span class="small">Understand how things work</span></div>
-      <div class="subject" onclick="startSubject('Chemistry')"><b>🧪 Chemistry</b><span class="small">Atoms, reactions and more</span></div>
-      <div class="subject" onclick="startSubject('Biology')"><b>🌿 Biology</b><span class="small">Life and living things</span></div>
-    </div>
-  </div>
-  <div class="card">
-    <h2>Today's timetable</h2>
-    <div id="todaySchedule" class="muted">No study sessions yet. Add one in Timetable.</div>
-    <button class="primary" onclick="showPage('timetable')">Build my timetable</button>
-  </div>
-  <div class="card">
-    <h2>Quick motivation 🌱</h2>
-    <p id="quote">Small steps every day build big results.</p>
-    <button onclick="newQuote()">Another reminder ✨</button>
-  </div>
+<section id="welcome">
+<p class="green">YOUR PERSONAL LEARNING SPACE</p>
+<h1>Learn smarter.<br>Become <span>unstoppable.</span></h1>
+<p class="muted">Your IJMB and JAMB study companion. Understand topics, take quizzes, organize your classes, and track your progress.</p>
+<button onclick="showPage('subjects')">Start studying →</button>
 </section>
 
-<section id="timetable">
-  <h1>My timetable 🗓️</h1>
-  <p class="muted">Create and organize your own study schedule.</p>
-  <div class="card">
-    <h2>Add a study session</h2>
-    <form id="scheduleForm">
-      <label>Session title</label><input id="eventTitle" placeholder="e.g. Waves revision" required>
-      <div class="row">
-        <div><label>Subject</label><select id="eventSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>Break</option><option>Revision</option></select></div>
-        <div><label>Day</label><select id="eventDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
-      </div>
-      <div class="row">
-        <div><label>Start time</label><input id="eventStart" type="time" required></div>
-        <div><label>End time</label><input id="eventEnd" type="time" required></div>
-      </div>
-      <button class="primary" type="submit">＋ Add session</button>
-    </form>
-  </div>
-  <div class="card">
-    <div class="row">
-      <div><label>View day</label><select id="filterDay" onchange="renderSchedule()"><option>All days</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
-    </div>
-    <div id="scheduleList"></div>
-  </div>
+<div class="nav">
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('subjects')">Subjects</button>
+<button onclick="showPage('notes')">My Notes</button>
+<button onclick="showPage('practice')">Practice</button>
+<button onclick="showPage('timetable')">Timetable</button>
+<button onclick="showPage('tutor')">AI Tutor</button>
+</div>
+
+<section id="dashboard" class="page active">
+<h2>Your Dashboard</h2>
+<div class="grid">
+<div class="card"><p class="muted">Questions answered</p><h1 class="green" id="answered">0</h1></div>
+<div class="card"><p class="muted">Correct answers</p><h1 class="green" id="accuracy">0%</h1></div>
+<div class="card"><p class="muted">Topics studied</p><h1 class="green" id="studied">0</h1></div>
+</div>
+<h2>Continue learning</h2>
+<div id="quickSubjects" class="grid"></div>
+<div class="card"><h3>Today's reminder ✨</h3><p>Consistency beats cramming. Study one topic, solve a few questions, and revise what you learned.</p></div>
 </section>
 
-<section id="notes">
-  <h1>My notes 📚</h1>
-  <p class="muted">Write notes, save them on this device, and find them later.</p>
-  <div class="card">
-    <form id="noteForm">
-      <label>Note title</label><input id="noteTitle" placeholder="e.g. Introduction to waves" required>
-      <div class="row">
-        <div><label>Subject</label><select id="noteSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>General</option></select></div>
-        <div><label>Topic</label><input id="noteTopic" placeholder="e.g. Frequency"></div>
-      </div>
-      <label>Your notes</label><textarea id="noteBody" placeholder="Write your explanation, formulas, examples and important points..." required></textarea>
-      <button class="primary" type="submit">💾 Save note</button>
-      <button type="button" onclick="document.getElementById('noteForm').reset()">Clear form</button>
-    </form>
-  </div>
-  <div class="card">
-    <label>Search your notes</label><input id="noteSearch" placeholder="Search title, topic or note..." oninput="renderNotes()">
-    <label>Filter subject</label><select id="noteFilter" onchange="renderNotes()"><option>All subjects</option><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>General</option></select>
-    <div id="notesList"></div>
-    <button onclick="exportNotes()">⬇ Export notes</button>
-  </div>
+<section id="subjects" class="page">
+<h2>Subject Library</h2>
+<input id="search" placeholder="Search subjects..." oninput="renderSubjects()">
+<select id="filter" onchange="renderSubjects()">
+<option value="All">All subjects</option><option>IJMB</option><option>JAMB</option>
+</select>
+<div id="subjectGrid" class="grid"></div>
 </section>
 
-<section id="practice">
-  <h1>Question practice 🧠</h1>
-  <p class="muted">Test your understanding. Choose your subject, topic and difficulty.</p>
-  <div class="card">
-    <div class="row">
-      <div><label>Subject</label><select id="quizSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option></select></div>
-      <div><label>Difficulty</label><select id="quizLevel"><option value="1">1 · Easy</option><option value="2">2 · Medium</option><option value="3">3 · Hard</option><option value="0">Mixed difficulty</option></select></div>
-    </div>
-    <label>Topic</label><select id="quizTopic"><option value="All">All topics</option></select>
-    <button class="primary" onclick="startQuiz()">Start practice</button>
-    <button onclick="resetQuizHistory()">Reset question history</button>
-  </div>
-  <div class="card" id="quizBox">
-    <h2>Ready to learn?</h2>
-    <p>Select your options and tap Start practice.</p>
-  </div>
+<section id="lesson" class="page">
+<button onclick="showPage('subjects')">← Back</button>
+<div class="card"><p class="green" id="lessonSubject"></p><h2 id="lessonTitle"></h2><article id="lessonBody"></article>
+<button onclick="markStudied()">Mark as studied ✓</button>
+<button onclick="saveLessonNote()">Save to notes</button>
+<button onclick="showPage('practice')">Practice questions</button></div>
 </section>
 
-<section id="progress">
-  <h1>My progress 📈</h1>
-  <p class="muted">Every question you practice is a step forward.</p>
-  <div class="grid">
-    <div class="card">Questions answered<div class="stat" id="answeredStat">0</div></div>
-    <div class="card">Correct answers<div class="stat" id="correctStat">0</div></div>
-    <div class="card">Accuracy<div class="stat" id="accuracyStat">0%</div></div>
-  </div>
-  <div class="card">
-    <h2>Overall accuracy</h2>
-    <div class="progress"><div id="accuracyBar"></div></div>
-    <p id="progressMessage" class="muted">Start practicing to see your progress.</p>
-  </div>
-  <div class="card">
-    <h2>By subject</h2>
-    <div id="subjectProgress"></div>
-  </div>
-  <button class="primary" onclick="showPage('practice')">Practice more questions</button>
+<section id="notes" class="page">
+<h2>My Notes 📝</h2>
+<div class="card">
+<label>Title</label><input id="noteTitle" placeholder="e.g. Motion revision">
+<label>Subject</label><select id="noteSubject"></select>
+<label>Notes</label><textarea id="noteBody" rows="7" placeholder="Write your notes here..."></textarea>
+<button onclick="saveNote()">Save note</button>
+<button onclick="exportNotes()">Export notes</button>
+</div>
+<div id="noteList"></div>
 </section>
 
-<section id="settings">
-  <h1>Make it yours 🎨</h1>
-  <p class="muted">Personalize your StudyVix study space.</p>
-  <div class="card">
-    <h2>Choose your accent color</h2>
-    <div class="row">
-      <button onclick="setAccent('#39ff88')">💚 Neon green</button>
-      <button onclick="setAccent('#67b7ff')">💙 Blue</button>
-      <button onclick="setAccent('#d68cff')">💜 Purple</button>
-      <button onclick="setAccent('#ffad69')">🧡 Orange</button>
-      <button onclick="setAccent('#ff83b7')">🩷 Pink</button>
-    </div>
-    <h2>Study space decorations</h2>
-    <div class="row">
-      <button onclick="setDecoration('✨')">✨ Stars</button>
-      <button onclick="setDecoration('🌸')">🌸 Flowers</button>
-      <button onclick="setDecoration('🪴')">🪴 Plants</button>
-      <button onclick="setDecoration('🦋')">🦋 Butterflies</button>
-      <button onclick="setDecoration('✦')">✦ Minimal</button>
-    </div>
-    <p>Decoration: <span id="decorationPreview">✨</span></p>
-    <h2>Data and privacy</h2>
-    <p class="small">Your notes and timetable are saved in this browser on this device. They are not automatically synced to another phone.</p>
-    <button onclick="downloadBackup()">⬇ Download backup</button>
-    <button onclick="window.print()">Print / Save as PDF</button>
-  </div>
+<section id="practice" class="page">
+<h2>Practice Arena 🎯</h2>
+<div class="card">
+<label>Subject</label><select id="quizSubject"></select>
+<label>Difficulty</label><select id="difficulty"><option value="all">Mixed</option><option value="easy">Beginner</option><option value="hard">Advanced</option></select>
+<button onclick="startQuiz()">Start practice</button>
+</div>
+<div class="card hidden" id="quizBox">
+<p class="small" id="quizCount"></p><h3 id="question"></h3><div id="options"></div>
+<p id="feedback"></p><button id="next" class="hidden" onclick="nextQuestion()">Next question →</button>
+</div>
+<div class="card hidden" id="result"></div>
+</section>
+
+<section id="timetable" class="page">
+<h2>My Study Timetable 🗓️</h2>
+<div class="card">
+<label>Session name</label><input id="sessionName" placeholder="Physics revision">
+<label>Subject</label><select id="timeSubject"></select>
+<label>Day</label><select id="day"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+<div class="grid"><div><label>Start</label><input id="startTime" type="time" value="20:00"></div><div><label>End</label><input id="endTime" type="time" value="21:00"></div></div>
+<button onclick="addSession()">Add session</button>
+</div>
+<div id="sessionList"></div>
+</section>
+
+<section id="tutor" class="page">
+<h2>StudyVix Tutor ✦</h2>
+<div class="card">
+<p class="muted">Prepare a question for an AI tutor. This opens ChatGPT separately. Integrated AI requires a secure backend connection.</p>
+<label>Subject</label><select id="tutorSubject"></select>
+<label>What do you want to learn?</label><textarea id="tutorQuestion" rows="4" placeholder="Explain waves in simple terms and give examples from easy to difficult."></textarea>
+<label>Learning style</label><select id="tutorStyle"><option>Explain step by step</option><option>Give worked examples</option><option>Quiz me one question at a time</option><option>Summarize important points and formulas</option><option>Prepare me for IJMB</option><option>Prepare me for JAMB</option></select>
+<button onclick="askTutor()">Ask AI Tutor ↗</button>
+</div>
+</section>
+
+<section id="settings" class="page">
+<h2>Settings ⚙</h2>
+<div class="card">
+<label>Your name</label><input id="username" placeholder="Enter your name">
+<button onclick="saveName()">Save name</button>
+<p class="small">Your study progress is saved in this browser. Cloud login and multi-device syncing require Supabase configuration.</p>
+<button onclick="downloadData()">Export my data</button>
+<button onclick="resetData()">Reset all study data</button>
+</div>
 </section>
 </main>
-<footer>StudyVix ✦ Learn at your pace. Grow every day.</footer>
+<footer>StudyVix ✦ Learn at your pace. Build your future.</footer>
 
 <script>
-const $=id=>document.getElementById(id);
-const get=(key,fallback)=>{try{return JSON.parse(localStorage.getItem('sv_'+key))??fallback}catch(e){return fallback}};
-const put=(key,value)=>localStorage.setItem('sv_'+key,JSON.stringify(value));
-let schedules=get('schedules',[]);
-let notes=get('notes',[]);
-let stats=get('stats',{answered:0,correct:0,bySubject:{},sessions:0});
-let history=get('history',[]);
-let accent=get('accent','#39ff88');
-let decoration=get('decoration','✨');
-let currentQuestion=null;
-let quizAnswered=false;
-
-function showPage(id){
- document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===id));
- document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
- window.scrollTo(0,0);
- if(id==='progress')renderProgress();
- if(id==='notes')renderNotes();
- if(id==='timetable')renderSchedule();
- if(id==='home')renderHome();
-}
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-function setAccent(color){accent=color;document.documentElement.style.setProperty('--green',color);put('accent',color)}
-function setDecoration(value){decoration=value;$('decorationPreview').textContent=value;put('decoration',value);document.querySelector('.logo').innerHTML='Study<span>Vix</span> '+value}
-function refreshCounts(){
- $('noteCount').textContent=notes.length;
- $('correctCount').textContent=stats.correct;
- $('sessionCount').textContent=stats.sessions;
-}
-function renderHome(){
- refreshCounts();
- const day=new Date().toLocaleDateString('en-US',{weekday:'long'});
- $('today').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
- const todays=schedules.filter(s=>s.day===day).sort((a,b)=>a.start.localeCompare(b.start));
- $('todaySchedule').innerHTML=todays.length?todays.map(s=>`<div class="item"><b>${esc(s.title)}</b><br><span class="small">${esc(s.start)}–${esc(s.end)} · ${esc(s.subject)}</span></div>`).join(''):'No sessions for today. Add one in Timetable.';
-}
-function newQuote(){
- const q=['Progress is built one focused session at a time. 🌱','You do not need to know everything today. Learn one thing well.','Practice turns confusion into confidence.','Your future self will thank you for studying today.','Small steps every day build big results.'];
- $('quote').textContent=q[Math.floor(Math.random()*q.length)];
-}
-$('scheduleForm').addEventListener('submit',e=>{
- e.preventDefault();
- const start=$('eventStart').value,end=$('eventEnd').value;
- if(end<=start){alert('Please choose an end time after the start time.');return}
- schedules.push({id:Date.now(),title:$('eventTitle').value.trim(),subject:$('eventSubject').value,day:$('eventDay').value,start,end});
- put('schedules',schedules);e.target.reset();renderSchedule();renderHome();
-});
-function renderSchedule(){
- const day=$('filterDay').value;
- const list=schedules.filter(s=>day==='All days'||s.day===day).sort((a,b)=>['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].indexOf(a.day)-['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].indexOf(b.day)||a.start.localeCompare(b.start));
- $('scheduleList').innerHTML=list.length?list.map(s=>`<div class="item"><b>${esc(s.title)}</b><br><span class="small">${esc(s.day)} · ${esc(s.start)}–${esc(s.end)} · ${esc(s.subject)}</span><br><button onclick="editSchedule(${s.id})">Edit</button><button onclick="deleteSchedule(${s.id})">Delete</button></div>`).join(''):'<p class="muted">Nothing here yet. Add your first study session above.</p>';
-}
-function deleteSchedule(id){schedules=schedules.filter(s=>s.id!==id);put('schedules',schedules);renderSchedule();renderHome()}
-function editSchedule(id){
- const s=schedules.find(x=>x.id===id);if(!s)return;
- const title=prompt('Edit session title:',s.title);if(title===null)return;
- const start=prompt('Start time (24-hour format HH:MM):',s.start);if(start===null)return;
- const end=prompt('End time (24-hour format HH:MM):',s.end);if(end===null)return;
- const day=prompt('Day of week:',s.day);if(day===null)return;
- if(!title.trim()||!/^([01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(end)||end<=start||!['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].includes(day)){alert('Please enter a valid title, time and day.');return}
- Object.assign(s,{title:title.trim(),start,end,day});put('schedules',schedules);renderSchedule();renderHome();
-}
-$('noteForm').addEventListener('submit',e=>{
- e.preventDefault();
- notes.unshift({id:Date.now(),title:$('noteTitle').value.trim(),subject:$('noteSubject').value,topic:$('noteTopic').value.trim(),body:$('noteBody').value.trim(),date:new Date().toLocaleDateString()});
- put('notes',notes);e.target.reset();renderNotes();refreshCounts();alert('Note saved on this device! 💚');
-});
-function renderNotes(){
- const q=$('noteSearch').value.toLowerCase(),f=$('noteFilter').value;
- const list=notes.filter(n=>(f==='All subjects'||n.subject===f)&&[n.title,n.topic,n.body,n.subject].join(' ').toLowerCase().includes(q));
- $('notesList').innerHTML=list.length?list.map(n=>`<div class="item"><b>${esc(n.title)}</b><p class="small">${esc(n.subject)} · ${esc(n.topic||'General topic')} · ${esc(n.date)}</p><p>${esc(n.body).replace(/\n/g,'<br>')}</p><button onclick="editNote(${n.id})">Edit</button><button onclick="deleteNote(${n.id})">Delete</button></div>`).join(''):'<p class="muted">No matching notes. Create a note above.</p>';
-}
-function editNote(id){
- const n=notes.find(x=>x.id===id);if(!n)return;
- const title=prompt('Note title:',n.title);if(title===null)return;
- const body=prompt('Note content:',n.body);if(body===null)return;
- n.title=title.trim()||n.title;n.body=body;put('notes',notes);renderNotes();
-}
-function deleteNote(id){if(!confirm('Delete this note?'))return;notes=notes.filter(n=>n.id!==id);put('notes',notes);renderNotes();refreshCounts()}
-function exportNotes(){
- const text=notes.map(n=>`${n.title}\n${n.subject} | ${n.topic}\n${n.date}\n\n${n.body}\n\n------------------\n`).join('\n');
- download('StudyVix-Notes.txt',text||'No notes saved yet.');
-}
-function download(filename,content){
- const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'}));a.download=filename;a.click();URL.revokeObjectURL(a.href);
-}
-function downloadBackup(){download('StudyVix-Backup.json',JSON.stringify({notes,schedules,stats,history},null,2))}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
-/* Starter questions. Add more questions as you study. */
-const questions=[
-{subject:'Mathematics',topic:'Algebra',level:1,q:'Solve: x + 5 = 12.',options:['5','7','17','6'],a:1,why:'Subtract 5 from both sides: x = 12 − 5 = 7.'},
-{subject:'Mathematics',topic:'Algebra',level:1,q:'Simplify: 3x + 2x.',options:['5','5x','6x','x'],a:1,why:'Combine like terms: 3x + 2x = 5x.'},
-{subject:'Mathematics',topic:'Algebra',level:2,q:'If 2x − 4 = 10, find x.',options:['3','7','6','8'],a:1,why:'Add 4: 2x = 14. Divide by 2: x = 7.'},
-{subject:'Mathematics',topic:'Algebra',level:3,q:'Solve x² − 5x + 6 = 0.',options:['x=1,6','x=−2,−3','x=2,3','x=−1,−6'],a:2,why:'Factor: (x − 2)(x − 3) = 0, so x = 2 or 3.'},
-{subject:'Mathematics',topic:'Geometry',level:1,q:'The angles in a triangle add up to…',options:['90°','180°','270°','360°'],a:1,why:'The interior angles of a triangle sum to 180°.'},
-{subject:'Mathematics',topic:'Geometry',level:2,q:'Find the area of a triangle with base 10 cm and height 6 cm.',options:['60 cm²','30 cm²','16 cm²','20 cm²'],a:1,why:'Area = ½ × base × height = ½ × 10 × 6 = 30 cm².'},
-{subject:'Mathematics',topic:'Trigonometry',level:1,q:'In a right triangle, sin θ equals…',options:['Adjacent/Hypotenuse','Opposite/Adjacent','Opposite/Hypotenuse','Hypotenuse/Opposite'],a:2,why:'SOH: sine = opposite divided by hypotenuse.'},
-{subject:'Mathematics',topic:'Trigonometry',level:3,q:'If sin θ = 3/5 for an acute angle, find cos θ.',options:['4/5','3/4','5/4','2/5'],a:0,why:'Using sin²θ + cos²θ = 1 gives cos θ = √(1 − 9/25) = 4/5.'},
-{subject:'Physics',topic:'Motion',level:1,q:'What is the SI unit of speed?',options:['Metre','Second','Metre per second','Newton'],a:2,why:'Speed is distance divided by time, measured in m/s.'},
-{subject:'Physics',topic:'Motion',level:1,q:'A car travels 100 m in 20 s. Its average speed is…',options:['2 m/s','5 m/s','20 m/s','2000 m/s'],a:1,why:'Speed = distance/time = 100/20 = 5 m/s.'},
-{subject:'Physics',topic:'Motion',level:2,q:'A body changes velocity from 4 m/s to 16 m/s in 3 s. Find acceleration.',options:['4 m/s²','6 m/s²','12 m/s²','20 m/s²'],a:0,why:'Acceleration = (16 − 4)/3 = 4 m/s².'},
-{subject:'Physics',topic:'Motion',level:3,q:'A body starts from rest and accelerates at 2 m/s² for 5 s. How far does it travel?',options:['10 m','20 m','25 m','50 m'],a:2,why:'s = ut + ½at² = 0 + ½ × 2 × 25 = 25 m.'},
-{subject:'Physics',topic:'Waves',level:1,q:'What is the unit of frequency?',options:['Metre','Hertz','Newton','Joule'],a:1,why:'Frequency is measured in hertz (Hz), or cycles per second.'},
-{subject:'Physics',topic:'Waves',level:2,q:'A wave has frequency 5 Hz and wavelength 2 m. Find its speed.',options:['2.5 m/s','7 m/s','10 m/s','20 m/s'],a:2,why:'Wave speed v = fλ = 5 × 2 = 10 m/s.'},
-{subject:'Physics',topic:'Waves',level:3,q:'A wave travels at 340 m/s with frequency 170 Hz. Find its wavelength.',options:['0.5 m','2 m','170 m','510 m'],a:1,why:'Wavelength λ = speed/frequency = 340/170 = 2 m.'},
-{subject:'Physics',topic:'Electricity',level:1,q:'What is the SI unit of electric current?',options:['Volt','Ohm','Ampere','Watt'],a:2,why:'Electric current is measured in amperes (A).'},
-{subject:'Physics',topic:'Electricity',level:2,q:'A 12 V battery is connected across a 4 Ω resistor. Find the current.',options:['3 A','8 A','16 A','48 A'],a:0,why:'Ohm’s law: I = V/R = 12/4 = 3 A.'},
-{subject:'Physics',topic:'Electricity',level:3,q:'Two resistors of 4 Ω and 6 Ω are connected in series. What is the total resistance?',options:['2.4 Ω','10 Ω','24 Ω','1.5 Ω'],a:1,why:'Resistances in series add: 4 + 6 = 10 Ω.'},
-{subject:'Chemistry',topic:'Atoms',level:1,q:'Which particle has a negative charge?',options:['Proton','Neutron','Electron','Nucleus'],a:2,why:'Electrons carry a negative charge.'},
-{subject:'Chemistry',topic:'Atoms',level:2,q:'The atomic number of an element equals its number of…',options:['Neutrons','Protons','Shells','Isotopes'],a:1,why:'Atomic number is the number of protons in the nucleus.'},
-{subject:'Chemistry',topic:'Atoms',level:3,q:'An atom has atomic number 11 and mass number 23. How many neutrons does it have?',options:['11','12','23','34'],a:1,why:'Neutrons = mass number − atomic number = 23 − 11 = 12.'},
-{subject:'Chemistry',topic:'Acids and Bases',level:1,q:'A solution with pH 2 is generally…',options:['Acidic','Neutral','Alkaline','Always pure water'],a:0,why:'A pH below 7 is acidic.'},
-{subject:'Chemistry',topic:'Acids and Bases',level:2,q:'What salt forms when hydrochloric acid reacts with sodium hydroxide?',options:['Sodium sulfate','Sodium chloride','Calcium chloride','Sodium nitrate'],a:1,why:'HCl + NaOH → NaCl + H₂O.'},
-{subject:'Chemistry',topic:'Acids and Bases',level:3,q:'What volume of 0.1 mol/dm³ NaOH contains 0.005 mol?',options:['5 cm³','50 cm³','500 cm³','0.5 cm³'],a:1,why:'V = n/C = 0.005/0.1 = 0.05 dm³ = 50 cm³.'},
-{subject:'Chemistry',topic:'Chemical Bonding',level:1,q:'Which bond involves the transfer of electrons?',options:['Ionic','Covalent','Metallic only','Hydrogen only'],a:0,why:'Ionic bonding forms when electrons are transferred, producing oppositely charged ions.'},
-{subject:'Chemistry',topic:'Chemical Bonding',level:2,q:'What type of bond joins two oxygen atoms in O₂?',options:['Ionic','Covalent','Metallic','No bond'],a:1,why:'The two oxygen atoms share electrons, forming a covalent bond.'},
-{subject:'Biology',topic:'Cells',level:1,q:'Which organelle is commonly called the powerhouse of the cell?',options:['Nucleus','Mitochondrion','Ribosome','Vacuole'],a:1,why:'Mitochondria release usable energy through cellular respiration.'},
-{subject:'Biology',topic:'Cells',level:2,q:'Which structure controls what enters and leaves a cell?',options:['Cell membrane','Cell wall only','Nucleolus','Chromosome'],a:0,why:'The cell membrane regulates movement of substances into and out of the cell.'},
-{subject:'Biology',topic:'Cells',level:3,q:'A cell placed in a very dilute solution may swell because water enters by…',options:['Diffusion of proteins','Osmosis','Active transport only','Transpiration'],a:1,why:'Water moves across a selectively permeable membrane by osmosis.'},
-{subject:'Biology',topic:'Ecology',level:1,q:'Green plants make their own food by…',options:['Respiration','Photosynthesis','Digestion','Fermentation only'],a:1,why:'Photosynthesis uses light energy to make glucose from carbon dioxide and water.'},
-{subject:'Biology',topic:'Ecology',level:2,q:'In a food chain, green plants are usually…',options:['Primary consumers','Producers','Decomposers','Parasites'],a:1,why:'Plants make their own food and form the producer level.'},
-{subject:'Biology',topic:'Ecology',level:3,q:'If producers contain 10,000 J of energy, about how much may reach primary consumers using the 10% rule?',options:['10 J','100 J','1,000 J','9,000 J'],a:2,why:'About 10% transfers to the next trophic level: 1,000 J.'}
+const subjects=[
+{id:"Mathematics",exam:"IJMB",icon:"📐",topics:["Functions","Differentiation","Integration"]},
+{id:"Physics",exam:"IJMB",icon:"⚡",topics:["Motion","Newton's Laws","Waves","Electricity"]},
+{id:"Chemistry",exam:"IJMB",icon:"🧪",topics:["Atomic Structure","Chemical Bonding","Mole Calculations"]},
+{id:"Biology",exam:"JAMB",icon:"🌱",topics:["Cell Biology","Genetics","Ecology"]},
+{id:"English Language",exam:"JAMB",icon:"📖",topics:["Grammar","Comprehension","Vocabulary"]},
+{id:"Economics",exam:"JAMB",icon:"📊",topics:["Demand and Supply","Markets","Inflation"]},
+{id:"Geography",exam:"JAMB",icon:"🌍",topics:["Weather","Climate","Map Reading"]}
 ];
 
-function startSubject(subject){
- $('quizSubject').value=subject;updateTopics();showPage('practice');startQuiz();
-}
-function updateTopics(){
- const subject=$('quizSubject').value;
- const topics=['All',...new Set(questions.filter(q=>q.subject===subject).map(q=>q.topic))];
- $('quizTopic').innerHTML=topics.map(t=>`<option value="${esc(t)}">${t==='All'?'All topics':esc(t)}</option>`).join('');
-}
-$('quizSubject').addEventListener('change',updateTopics);
-function startQuiz(){
- updateTopics();
- quizAnswered=false;
- const subject=$('quizSubject').value,level=Number($('quizLevel').value),topic=$('quizTopic').value;
- let pool=questions.filter(q=>q.subject===subject&&(level===0||q.level===level)&&(topic==='All'||q.topic===topic));
- let fresh=pool.filter(q=>!history.includes(q.q));
- if(!fresh.length&&pool.length){$('quizBox').innerHTML='<h2>🎉 You finished these questions!</h2><p>You have answered all currently available questions in this selection. Try another topic or difficulty, or reset your question history.</p>';return}
- pool=fresh;
- if(!pool.length){$('quizBox').innerHTML='<h2>More questions coming soon!</h2><p>There are no questions for this selection yet. Try another topic or difficulty.</p>';return}
- currentQuestion=pool[Math.floor(Math.random()*pool.length)];
- renderQuestion(currentQuestion);
-}
-function renderQuestion(q){
- quizAnswered=false;
- $('quizBox').innerHTML=`<p class="small">${esc(q.subject)} · ${esc(q.topic)} · Level ${q.level}</p><h2>${esc(q.q)}</h2><div id="options">${q.options.map((o,i)=>`<button class="option" onclick="answerQuestion(${i})">${String.fromCharCode(65+i)}. ${esc(o)}</button>`).join('')}</div><div id="feedback"></div><button id="nextQuestion" class="primary" style="display:none" onclick="startQuiz()">Next question →</button>`;
-}
-function answerQuestion(choice){
- if(quizAnswered||!currentQuestion)return;
- quizAnswered=true;
- const q=currentQuestion,correct=choice===q.a;
- stats.answered++;if(correct)stats.correct++;
- stats.bySubject[q.subject]=stats.bySubject[q.subject]||{answered:0,correct:0};
- stats.bySubject[q.subject].answered++;if(correct)stats.bySubject[q.subject].correct++;
- history.push(q.q);put('history',history);put('stats',stats);
- document.querySelectorAll('#options button').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('selected')});
- $('feedback').className=correct?'good':'bad';
- $('feedback').innerHTML=`<b>${correct?'Correct! 🎉':'Not quite. Keep learning! 🌱'}</b><p>${esc(q.why)}</p>`;
- $('nextQuestion').style.display='inline-block';
- renderHome();renderProgress();
-}
-function resetQuizHistory(){if(!confirm('Reset the list of questions you have answered?'))return;history=[];put('history',history);alert('Question history reset. Your scores remain saved.');startQuiz()}
-function renderProgress(){
- $('answeredStat').textContent=stats.answered;
- $('correctStat').textContent=stats.correct;
- const accuracy=stats.answered?Math.round(stats.correct/stats.answered*100):0;
- $('accuracyStat').textContent=accuracy+'%';$('accuracyBar').style.width=accuracy+'%';
- $('progressMessage').textContent=stats.answered?`You have answered ${stats.answered} questions. Keep practicing to strengthen your understanding.`:'Start practicing to see your progress.';
- $('subjectProgress').innerHTML=['Mathematics','Physics','Chemistry','Biology'].map(s=>{
- const v=stats.bySubject[s]||{answered:0,correct:0},p=v.answered?Math.round(v.correct/v.answered*100):0;
- return `<div class="item"><b>${s}</b><p class="small">${v.correct} correct out of ${v.answered} answered · ${p}% accuracy</p><div class="progress"><div style="width:${p}%"></div></div></div>`;
- }).join('');
-}
-updateTopics();
-setAccent(accent);
-setDecoration(decoration);
-renderHome();renderSchedule();renderNotes();renderProgress();
+const lessons={
+"Motion":`<h3>What is motion?</h3><p>Motion is a change in an object's position over time.</p><h3>Speed</h3><p>Average speed = total distance ÷ total time.</p><h3>Velocity</h3><p>Average velocity = displacement ÷ time. Velocity includes direction.</p><h3>Acceleration</h3><p>Acceleration is the rate of change of velocity.</p><p class="green">a = (v − u) / t</p><p>u is initial velocity, v is final velocity, and t is time.</p><h3>Equations of motion</h3><p>v = u + at</p><p>s = ut + ½at²</p><p>v² = u² + 2as</p><h3>Example</h3><p>A car starts from rest and accelerates at 2 m/s² for 5 seconds.</p><p>v = u + at = 0 + (2 × 5) = <b>10 m/s</b>.</p>`,
+"Newton's Laws":`<h3>First law</h3><p>An object remains at rest or moves at constant velocity unless a resultant external force acts on it. This is the law of inertia.</p><h3>Second law</h3><p>The resultant force for constant mass is force = mass × acceleration.</p><p class="green">F = ma</p><h3>Third law</h3><p>Every action has an equal and opposite reaction. The forces act on different objects.</p><h3>Example</h3><p>A 4 kg object accelerates at 3 m/s². F = 4 × 3 = <b>12 N</b>.</p>`,
+"Waves":`<h3>Wave basics</h3><p>A wave transfers energy from one place to another. Mechanical waves need a medium; electromagnetic waves can travel through a vacuum.</p><h3>Types</h3><p>Transverse waves vibrate perpendicular to the direction of travel. Longitudinal waves vibrate parallel to it.</p><h3>Wave equation</h3><p class="green">v = fλ</p><p>Wave speed = frequency × wavelength. Frequency is measured in hertz and wavelength in metres.</p>`,
+"Electricity":`<h3>Electric current</h3><p>Current is the rate of flow of electric charge.</p><p class="green">I = Q/t</p><h3>Ohm's law</h3><p>For a conductor at constant temperature, voltage is proportional to current.</p><p class="green">V = IR</p><p>Voltage is in volts, current in amperes, and resistance in ohms.</p>`,
+"Functions":`<h3>What is a function?</h3><p>A function assigns each allowed input exactly one output.</p><p>If f(x) = 2x + 3, then f(4) = 2(4) + 3 = 11.</p><h3>Domain and range</h3><p>The domain is the set of allowed inputs. The range is the set of resulting outputs.</p>`,
+"Differentiation":`<h3>Meaning</h3><p>Differentiation finds the rate of change of a function. Geometrically, it gives the gradient of a curve at a point.</p><h3>Power rule</h3><p class="green">d/dx (xⁿ) = nxⁿ⁻¹</p><p>Example: if y = x³, dy/dx = 3x².</p>`,
+"Integration":`<h3>Meaning</h3><p>Integration can find accumulated quantities and areas. It reverses differentiation, up to a constant.</p><p class="green">∫xⁿ dx = xⁿ⁺¹/(n+1) + C</p><p>For n ≠ −1. Example: ∫x² dx = x³/3 + C.</p>`,
+"Atomic Structure":`<h3>Atoms</h3><p>An atom contains protons and neutrons in the nucleus, with electrons around the nucleus.</p><ul><li>Proton: positive charge</li><li>Neutron: no electric charge</li><li>Electron: negative charge</li></ul><p>Atomic number = number of protons. Mass number = protons + neutrons.</p>`,
+"Chemical Bonding":`<h3>Ionic bonding</h3><p>Ionic bonds form through electron transfer and electrostatic attraction between oppositely charged ions.</p><h3>Covalent bonding</h3><p>Covalent bonds form when atoms share pairs of electrons.</p><h3>Metallic bonding</h3><p>Positive metal ions are attracted to delocalized electrons.</p>`,
+"Mole Calculations":`<h3>The mole</h3><p>A mole contains approximately 6.022 × 10²³ specified particles.</p><p class="green">Number of moles = mass / molar mass</p><p>Always use consistent units and check the chemical formula.</p>`,
+"Cell Biology":`<h3>Cells</h3><p>The cell is the basic structural and functional unit of life.</p><p>Plant and animal cells have a cell membrane, cytoplasm, and nucleus. Plant cells also typically have a cellulose cell wall, chloroplasts in photosynthetic tissues, and a large central vacuole.</p>`,
+"Genetics":`<h3>Basic genetics</h3><p>Genes are DNA sequences that influence inherited characteristics. Different versions of a gene are called alleles.</p><p>Genotype describes genetic makeup; phenotype describes observable characteristics influenced by genes and environment.</p>`,
+"Ecology":`<h3>Ecology</h3><p>Ecology studies relationships between organisms and their environment.</p><p>A food chain shows energy transfer between organisms. Producers make organic food, while consumers obtain energy by feeding on other organisms.</p>`,
+"Grammar":`<h3>Parts of speech</h3><p>Nouns name people, places, things, or ideas. Verbs express actions or states. Adjectives describe nouns, while adverbs modify verbs, adjectives, or other adverbs.</p><h3>Subject-verb agreement</h3><p>A singular subject generally takes a singular verb in the present tense: “She reads.” A plural subject takes a plural verb: “They read.”</p>`,
+"Comprehension":`<h3>Reading comprehension</h3><p>Read the passage carefully, identify its main idea, and distinguish facts from opinions.</p><p>Use evidence from the passage to answer questions. For vocabulary questions, use the surrounding context rather than guessing from memory alone.</p>`,
+"Vocabulary":`<h3>Vocabulary building</h3><p>Learn a word's meaning, pronunciation, spelling, and use in a sentence. Study synonyms, antonyms, and context clues.</p>`,
+"Demand and Supply":`<h3>Demand</h3><p>Demand is the quantity consumers are willing and able to buy at different prices over a period.</p><h3>Supply</h3><p>Supply is the quantity producers are willing and able to offer at different prices.</p><p>Other things equal, a higher price usually reduces quantity demanded and increases quantity supplied.</p>`,
+"Markets":`<h3>Markets</h3><p>A market is an arrangement through which buyers and sellers exchange goods or services. Market structures include perfect competition, monopoly, monopolistic competition, and oligopoly.</p>`,
+"Inflation":`<h3>Inflation</h3><p>Inflation is a sustained rise in the general price level. It reduces the purchasing power of money.</p><p>Possible causes include rising production costs and increased aggregate demand.</p>`,
+"Weather":`<h3>Weather</h3><p>Weather describes short-term atmospheric conditions, including temperature, rainfall, wind, humidity, and cloud cover.</p>`,
+"Climate":`<h3>Climate</h3><p>Climate describes long-term patterns of weather in a region, usually assessed over decades.</p>`,
+"Map Reading":`<h3>Map skills</h3><p>A map scale relates distances on a map to actual ground distances. A map key explains symbols. Contour lines join places of equal elevation.</p>`
+};
+
+const questions=[
+{subject:"Physics",topic:"Motion",level:"easy",q:"A car travels 100 m in 20 seconds. What is its average speed?",o:["2 m/s","5 m/s","20 m/s","2000 m/s"],a:1,e:"Speed = distance ÷ time = 100 ÷ 20 = 5 m/s."},
+{subject:"Physics",topic:"Motion",level:"easy",q:"What is the SI unit of acceleration?",o:["m/s","m/s²","kg","N"],a:1,e:"Acceleration is measured in metres per second squared (m/s²)."},
+{subject:"Physics",topic:"Newton's Laws",level:"easy",q:"Which equation expresses Newton's second law for constant mass?",o:["F = ma","V = IR","P = IV","v = fλ"],a:0,e:"The resultant force equals mass multiplied by acceleration."},
+{subject:"Physics",topic:"Waves",level:"easy",q:"Which equation relates wave speed, frequency, and wavelength?",o:["F = ma","v = fλ","I = Q/t","W = mg"],a:1,e:"Wave speed equals frequency multiplied by wavelength."},
+{subject:"Physics",topic:"Electricity",level:"easy",q:"A 2 Ω resistor has a current of 3 A. What is the voltage?",o:["1.5 V","5 V","6 V","9 V"],a:2,e:"V = IR = 3 × 2 = 6 V."},
+{subject:"Mathematics",topic:"Functions",level:"easy",q:"If f(x) = 2x + 3, find f(4).",o:["8","10","11","14"],a:2,e:"Substitute x = 4: 2(4) + 3 = 11."},
+{subject:"Mathematics",topic:"Differentiation",level:"easy",q:"Differentiate y = x³ with respect to x.",o:["x²","2x","3x²","3x"],a:2,e:"Using the power rule, d(x³)/dx = 3x²."},
+{subject:"Mathematics",topic:"Integration",level:"easy",q:"Find ∫2x dx.",o:["2 + C","x² + C","2x² + C","x + C"],a:1,e:"Increase the power by one and divide by the new power: x² + C."},
+{subject:"Chemistry",topic:"Atomic Structure",level:"easy",q:"Which subatomic particle has a negative charge?",o:["Proton","Neutron","Electron","Nucleus"],a:2,e:"Electrons carry negative electric charge."},
+{subject:"Chemistry",topic:"Mole Calculations",level:"easy",q:"How many moles are in 18 g of water? Molar mass = 18 g/mol.",o:["0.5 mol","1 mol","2 mol","18 mol"],a:1,e:"Moles = mass ÷ molar mass = 18 ÷ 18 = 1 mol."},
+{subject:"Biology",topic:"Cell Biology",level:"easy",q:"What is the basic structural unit of life?",o:["Organ","Tissue","Cell","Organ system"],a:2,e:"The cell is the basic structural and functional unit of life."},
+{subject:"Economics",topic:"Demand and Supply",level:"easy",q:"Other things being equal, what usually happens to quantity demanded when price rises?",o:["It rises","It falls","It never changes","Supply disappears"],a:1,e:"The law of demand states that quantity demanded usually falls as price rises, all else equal."},
+{subject:"Geography",topic:"Climate",level:"easy",q:"Climate describes weather patterns over what kind of period?",o:["A few seconds","A single minute","A long period","Only one afternoon"],a:2,e:"Climate describes long-term patterns of weather, usually measured over decades."},
+{subject:"English Language",topic:"Grammar",level:"easy",q:"Choose the grammatically correct sentence.",o:["She go to school.","She goes to school.","She going school.","She gone to school every day."],a:1,e:"In the simple present, a third-person singular subject takes 'goes'."},
+{subject:"Physics",topic:"Motion",level:"hard",q:"A body starts from rest and accelerates at 3 m/s² for 4 s. How far does it travel?",o:["12 m","16 m","24 m","48 m"],a:2,e:"s = ut + ½at² = 0 + 0.5 × 3 × 16 = 24 m."},
+{subject:"Physics",topic:"Newton's Laws",level:"hard",q:"A net force of 20 N acts on a 5 kg body. Find its acceleration.",o:["2 m/s²","4 m/s²","15 m/s²","100 m/s²"],a:1,e:"a = F/m = 20/5 = 4 m/s²."},
+{subject:"Mathematics",topic:"Differentiation",level:"hard",q:"If y = 3x² + 2x, what is dy/dx?",o:["3x + 2","6x + 2","6x² + 2","6x"],a:1,e:"Differentiate each term: 3x² becomes 6x and 2x becomes 2."},
+{subject:"Chemistry",topic:"Mole Calculations",level:"hard",q:"How many moles are in 44 g of CO₂? Molar mass = 44 g/mol.",o:["0.5 mol","1 mol","2 mol","44 mol"],a:1,e:"Moles = 44/44 = 1 mol."}
+];
+
+let data=loadData(),activeTopic=null,quizList=[],qi=0,score=0,answered=false;
+
+function loadData(){try{return JSON.parse(localStorage.getItem("studyvix_data"))||{notes:[],sessions:[],done:[],answered:0,correct:0,name:"",streak:0}}catch(e){return {notes:[],sessions:[],done:[],answered:0,correct:0,name:"",streak:0}}}
+function persist(){localStorage.setItem("studyvix_data",JSON.stringify(data));updateStats()}
+function toast(t){let e=document.getElementById("toast");if(!e){e=document.createElement("div");e.id="toast";document.body.appendChild(e)}e.textContent=t;e.style.cssText="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#173722;color:white;padding:12px 18px;border:1px solid #39f582;border-radius:12px;z-index:20";setTimeout(()=>e.style.display="none",2600)}
+function showPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));let page=document.getElementById(id);if(page)page.classList.add("active");if(id==="subjects")renderSubjects();if(id==="notes")renderNotes();if(id==="timetable")renderSessions();if(id==="dashboard")renderDashboard();if(id==="practice")document.getElementById("quizBox").classList.add("hidden");document.getElementById("welcome").style.display=id==="dashboard"?"block":"none";window.scrollTo(0,0)}
+function renderSubjects(){let q=(document.getElementById("search")?.value||"").toLowerCase(),f=document.getElementById("filter")?.value||"All";let list=subjects.filter(s=>(f==="All"||s.exam===f)&&(s.id+" "+s.topics.join(" ")).toLowerCase().includes(q));document.getElementById("subjectGrid").innerHTML=list.map(s=>`<div class="card subject" onclick="openSubject('${s.id}')"><div style="font-size:30px">${s.icon}</div><span class="small">${s.exam}</span><h3>${s.id}</h3><p class="muted">${s.topics.length} starter topics</p><button>Explore topics →</button></div>`).join("")||"<p>No subjects found.</p>"}
+function openSubject(id){let s=subjects.find(x=>x.id===id);if(!s)return;showPage("subjects");let old=document.getElementById("subjectGrid");old.innerHTML=`<div class="card"><button onclick="renderSubjects()">← All subjects</button><h2>${s.icon} ${s.id}</h2><p>${s.exam} • Starter topic library</p>${s.topics.map(t=>`<button class="answer" onclick="openLesson('${s.id}','${t.replace(/'/g,"\\'")}')">${t} →</button>`).join("")}</div>`}
+function openLesson(subject,topic){activeTopic={subject,topic};document.getElementById("lessonSubject").textContent=subject;document.getElementById("lessonTitle").textContent=topic;document.getElementById("lessonBody").innerHTML=lessons[topic]||`<h3>Topic overview</h3><p>This topic is listed in your StudyVix starter library. Build your revision notes by adding the key definitions, formulas, worked examples, and exam points from your lecture materials.</p><p>Use the AI Tutor to request a complete explanation and practice set for this topic.</p>`;showPage("lesson")}
+function markStudied(){let k=activeTopic.subject+":"+activeTopic.topic;if(!data.done.includes(k))data.done.push(k);persist();toast("Topic marked as studied!")}
+function saveLessonNote(){document.getElementById("noteTitle").value=activeTopic.topic;document.getElementById("noteSubject").value=activeTopic.subject;document.getElementById("noteBody").value=(lessons[activeTopic.topic]||"").replace(/<[^>]+>/g," ").trim();showPage("notes")}
+function renderDashboard(){document.getElementById("quickSubjects").innerHTML=subjects.slice(0,3).map(s=>`<div class="card subject" onclick="openSubject('${s.id}')"><span style="font-size:28px">${s.icon}</span><h3>${s.id}</h3><p class="muted">${s.exam}</p></div>`).join("");document.getElementById("welcome").querySelector("p.muted").textContent=(data.name?"Welcome back, "+data.name+"! ":"Welcome to StudyVix. ")+"Pick a subject, understand the topic, and test what you've learned.";document.getElementById("username").value=data.name||"";updateStats()}
+function updateStats(){let e=document.getElementById("answered");if(!e)return;e.textContent=data.answered;document.getElementById("accuracy").textContent=data.answered?Math.round(data.correct/data.answered*100)+"%":"0%";document.getElementById("studied").textContent=data.done.length}
+function saveNote(){let title=document.getElementById("noteTitle").value.trim(),body=document.getElementById("noteBody").value.trim();if(!title||!body)return toast("Enter a title and some notes first.");data.notes.unshift({id:Date.now(),title,subject:document.getElementById("noteSubject").value,body});persist();renderNotes();toast("Note saved!")}
+function renderNotes(){document.getElementById("noteList").innerHTML=data.notes.map(n=>`<div class="card"><span class="small">${n.subject}</span><h3>${escapeHTML(n.title)}</h3><p style="white-space:pre-wrap">${escapeHTML(n.body)}</p><button onclick="deleteNote(${n.id})">Delete note</button></div>`).join("")||'<p class="muted">No notes yet. Create your first note above.</p>'}
+function deleteNote(id){data.notes=data.notes.filter(n=>n.id!==id);persist();renderNotes()}
+function exportNotes(){download("studyvix-notes.txt",data.notes.map(n=>n.title+" ("+n.subject+")\n"+n.body).join("\n\n---\n\n"))}
+function addSession(){let title=document.getElementById("sessionName").value.trim();if(!title)return toast("Give your session a name.");let start=document.getElementById("startTime").value,end=document.getElementById("endTime").value;if(start>=end)return toast("End time must be later than start time.");data.sessions.push({id:Date.now(),title,subject:document.getElementById("timeSubject").value,day:document.getElementById("day").value,start,end});persist();renderSessions();toast("Study session added!")}
+function renderSessions(){let days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];document.getElementById("sessionList").innerHTML=days.map(day=>{let list=data.sessions.filter(s=>s.day===day).sort((a,b)=>a.start.localeCompare(b.start));return list.length?`<div class="card"><h3>${day}</h3>${list.map(s=>`<p><b>${s.start}–${s.end}</b> · ${escapeHTML(s.title)} <span class="muted">(${s.subject})</span> <button onclick="deleteSession(${s.id})">×</button></p>`).join("")}</div>`:""}).join("")||'<p class="muted">Your weekly plan is empty. Add a session above.</p>'}
+function deleteSession(id){data.sessions=data.sessions.filter(s=>s.id!==id);persist();renderSessions()}
+function startQuiz(){let sub=document.getElementById("quizSubject").value,level=document.getElementById("difficulty").value;quizList=questions.filter(q=>(sub==="All"||q.subject===sub)&&(level==="all"||q.level===level));if(!quizList.length){toast("No questions for this selection yet. Try Mixed difficulty.");return}quizList.sort(()=>Math.random()-.5);qi=0;score=0;document.getElementById("result").classList.add("hidden");document.getElementById("quizBox").classList.remove("hidden");showQuestion()}
+function showQuestion(){answered=false;let q=quizList[qi];document.getElementById("quizCount").textContent=`Question ${qi+1} of ${quizList.length} · ${q.subject}`;document.getElementById("question").textContent=q.q;document.getElementById("feedback").textContent="";document.getElementById("next").classList.add("hidden");document.getElementById("options").innerHTML=q.o.map((o,i)=>`<button class="answer" onclick="chooseAnswer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join("")}
+function chooseAnswer(i){if(answered)return;answered=true;let q=quizList[qi];data.answered++;if(i===q.a){score++;data.correct++;document.getElementById("feedback").innerHTML=`<span class="green">Correct! ✓</span> ${q.e}`}else document.getElementById("feedback").innerHTML=`<span style="color:#ff8888">Not quite.</span> Correct answer: ${q.o[q.a]}. ${q.e}`;document.querySelectorAll("#options button").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.style.borderColor="#39f582";if(j===i&&i!==q.a)b.style.borderColor="#ff6868"});persist();document.getElementById("next").classList.remove("hidden");document.getElementById("next").textContent=qi===quizList.length-1?"See results →":"Next question →"}
+function nextQuestion(){if(!answered)return;if(qi<quizList.length-1){qi++;showQuestion()}else{document.getElementById("quizBox").classList.add("hidden");let r=document.getElementById("result");r.classList.remove("hidden");r.innerHTML=`<h2>Practice complete! 🎉</h2><h1 class="green">${score}/${quizList.length}</h1><p>You scored ${Math.round(score/quizList.length*100)}%.</p><button onclick="startQuiz()">Try again</button>`}}
+function askTutor(){let q=document.getElementById("tutorQuestion").value.trim();if(!q)return toast("Enter a topic or question first.");let prompt=`Act as my patient ${document.getElementById("tutorSubject").value} tutor for Nigerian IJMB/JAMB preparation. ${document.getElementById("tutorStyle").value}. Explain clearly, show worked examples, and check my understanding. My question: ${q}`;window.open("https://chatgpt.com/?q="+encodeURIComponent(prompt),"_blank")}
+function saveName(){data.name=document.getElementById("username").value.trim();persist();renderDashboard();toast("Profile saved!")}
+function exportAllData(){download("studyvix-backup.json",JSON.stringify(data,null,2))}
+function download(name,content){let a=document.createElement("a"),u=URL.createObjectURL(new Blob([content],{type:"text/plain;charset=utf-8"}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+function downloadData(){exportAllData()}
+function resetData(){if(confirm("Delete all saved StudyVix notes, sessions, and progress from this browser?")){localStorage.removeItem("studyvix_data");data=loadData();persist();renderDashboard();renderNotes();renderSessions();toast("Local study data reset.")}}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function fillSelects(){let opts=subjects.map(s=>`<option value="${s.id}">${s.id}</option>`).join("");document.getElementById("noteSubject").innerHTML=opts;document.getElementById("timeSubject").innerHTML=opts;document.getElementById("tutorSubject").innerHTML=opts;document.getElementById("quizSubject").innerHTML='<option value="All">All subjects</option>'+opts}
+function init(){fillSelects();renderSubjects();renderDashboard();renderNotes();renderSessions();document.getElementById("todayLabel").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});document.getElementById("cloudStatus").textContent="Offline storage";document.getElementById("settings").querySelector(".small").textContent="Your study progress is saved in this browser. Cloud login and multi-device syncing require Supabase configuration."}
+init();
 </script>
 </body>
 </html>
