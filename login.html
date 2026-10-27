@@ -3,257 +3,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StudyVix | Login</title>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root {
-      --bg: #07110b;
-      --card: #101c14;
-      --green: #39f582;
-      --text: #effff2;
-      --muted: #9bb5a1;
-      --border: #263c2d;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background: var(--bg);
-      color: var(--text);
+      margin: 0; min-height: 100vh; display: grid;
+      place-items: center; padding: 20px;
+      background: #07110c; color: #effff3;
       font-family: Arial, sans-serif;
     }
-
-    .login-box {
-      width: 100%;
-      max-width: 430px;
-      padding: 30px 24px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 15px 50px rgba(57, 245, 130, 0.08);
+    .card {
+      width: 100%; max-width: 420px; padding: 28px;
+      border: 1px solid #245638; border-radius: 20px;
+      background: #101d15;
+      box-shadow: 0 0 30px #00ff6620;
     }
-
-    .logo {
-      margin-bottom: 25px;
-      color: var(--green);
-      font-size: 30px;
-      font-weight: 900;
-      text-align: center;
-    }
-
-    .logo span {
-      color: white;
-    }
-
-    h1 {
-      margin-bottom: 8px;
-      font-size: 27px;
-      text-align: center;
-    }
-
-    .subtitle {
-      margin-bottom: 25px;
-      color: var(--muted);
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .tabs button {
-      width: 50%;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: transparent;
-      color: var(--muted);
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .tabs button.active {
-      background: var(--green);
-      color: #06130a;
-      border-color: var(--green);
-    }
-
-    label {
-      display: block;
-      margin: 13px 0 7px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    h1 { text-align: center; color: #4dff91; }
+    .sub { text-align: center; color: #b5c8bb; }
+    label { display: block; margin: 16px 0 7px; }
     input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: #08130b;
-      color: white;
-      font-size: 16px;
-      outline: none;
+      width: 100%; padding: 13px; border-radius: 9px;
+      border: 1px solid #345743; background: #07110c;
+      color: white; font-size: 16px;
     }
-
-    input:focus {
-      border-color: var(--green);
+    button {
+      width: 100%; padding: 13px; margin-top: 18px;
+      border: 0; border-radius: 9px; cursor: pointer;
+      background: #43f58b; color: #06120a;
+      font-weight: bold; font-size: 16px;
     }
-
-    .submit-btn {
-      width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      border: 0;
-      border-radius: 10px;
-      background: var(--green);
-      color: #06130a;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
+    .switch {
+      background: transparent; color: #65ffa0;
+      border: 1px solid #345743;
     }
-
-    .submit-btn:hover {
-      background: #69ffa0;
-    }
-
-    #message {
-      margin-top: 15px;
-      font-size: 14px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .back {
-      display: block;
-      margin-top: 24px;
-      color: var(--green);
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .back:hover {
-      color: white;
-    }
-
-    .hidden {
-      display: none;
-    }
+    #message { line-height: 1.5; overflow-wrap: anywhere; }
+    a { color: #65ffa0; }
   </style>
 </head>
-
 <body>
-  <main class="login-box">
-    <div class="logo">Study<span>Vix</span> ✦</div>
-
-    <h1 id="heading">Welcome back!</h1>
-
-    <p class="subtitle" id="subtitle">
-      Sign in to continue your learning journey.
-    </p>
-
-    <div class="tabs">
-      <button type="button" id="loginTab"
-        class="active" onclick="switchMode('login')">
-        Login
-      </button>
-
-      <button type="button" id="signupTab"
-        onclick="switchMode('signup')">
-        Create account
-      </button>
-    </div>
+  <main class="card">
+    <h1>StudyVix</h1>
+    <p class="sub">Your learning journey starts here.</p>
 
     <form id="authForm">
-      <div id="nameField" class="hidden">
-        <label for="fullName">Your name</label>
-        <input id="fullName" type="text"
-          placeholder="Enter your name" autocomplete="name">
+      <div id="nameField" hidden>
+        <label for="name">Your name</label>
+        <input id="name" autocomplete="name">
       </div>
 
       <label for="email">Email address</label>
-      <input id="email" type="email"
-        placeholder="you@example.com"
-        autocomplete="email" required>
+      <input id="email" type="email" required
+             autocomplete="email" placeholder="you@example.com">
 
       <label for="password">Password</label>
-      <input id="password" type="password"
-        placeholder="Enter your password"
-        autocomplete="current-password"
-        minlength="6" required>
+      <input id="password" type="password" required
+             minlength="6" autocomplete="current-password"
+             placeholder="At least 6 characters">
 
-      <button class="submit-btn" type="submit" id="submitBtn">
-        Login to StudyVix
-      </button>
+      <div id="confirmField" hidden>
+        <label for="confirmPassword">Confirm password</label>
+        <input id="confirmPassword" type="password"
+               minlength="6" autocomplete="new-password">
+      </div>
 
-      <p id="message" role="status"></p>
+      <button id="submitBtn" type="submit">Sign In</button>
     </form>
 
-    <a class="back" href="./index.html">
-      ← Back to StudyVix
-    </a>
+    <button class="switch" id="switchBtn" type="button">
+      Create a new account
+    </button>
+
+    <p id="message" role="status"></p>
+    <p class="sub"><a href="./index.html">Back to StudyVix</a></p>
   </main>
 
   <script>
+    const SUPABASE_URL =
+      "https://snzhfhjjihotoiuxpysf.supabase.co";
+
+    // Replace this placeholder with your sb_publishable_ key.
+    const SUPABASE_PUBLISHABLE_KEY =
+      "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE";
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
     let mode = "login";
 
-    function switchMode(newMode) {
-      mode = newMode;
+    const form = document.getElementById("authForm");
+    const message = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const switchBtn = document.getElementById("switchBtn");
+    const nameField = document.getElementById("nameField");
+    const confirmField = document.getElementById("confirmField");
+    const nameInput = document.getElementById("name");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
 
-      const isSignup = mode === "signup";
-
-      document.getElementById("heading").textContent =
-        isSignup ? "Create your account" : "Welcome back!";
-
-      document.getElementById("subtitle").textContent =
-        isSignup
-          ? "Join StudyVix and start learning smarter."
-          : "Sign in to continue your learning journey.";
-
-      document.getElementById("nameField").classList.toggle(
-        "hidden", !isSignup
-      );
-
-      document.getElementById("fullName").required = isSignup;
-
-      document.getElementById("loginTab").classList.toggle(
-        "active", !isSignup
-      );
-
-      document.getElementById("signupTab").classList.toggle(
-        "active", isSignup
-      );
-
-      document.getElementById("submitBtn").textContent =
-        isSignup ? "Create my account" : "Login to StudyVix";
-
-      document.getElementById("password").autocomplete =
-        isSignup ? "new-password" : "current-password";
-
-      document.getElementById("message").textContent = "";
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signup = mode === "signup";
+      nameField.hidden = !signup;
+      confirmField.hidden = !signup;
+      nameInput.required = signup;
+      confirmInput.required = signup;
+      passwordInput.autocomplete =
+        signup ? "new-password" : "current-password";
+      submitBtn.textContent = signup ? "Create Account" : "Sign In";
+      switchBtn.textContent = signup
+        ? "Already have an account? Sign in"
+        : "Create a new account";
+      message.textContent = "";
     }
 
-    document.getElementById("authForm").addEventListener(
-      "submit", function(event) {
-        event.preventDefault();
+    switchBtn.addEventListener("click", () => {
+      setMode(mode === "login" ? "signup" : "login");
+    });
 
-        document.getElementById("message").textContent =
-          "The login design is ready! Real account access will work after we connect Supabase.";
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      message.textContent = "";
+
+      if (SUPABASE_PUBLISHABLE_KEY ===
+     sb_publishable_PngA_LKWY1awueSXOORs_w_uZLxpnMl) {
+        message.textContent =
+          "Setup needed: add your Supabase publishable key in the code.";
+        return;
       }
-    );
+
+      const email = document.getElementById("email").value.trim();
+      const password = passwordInput.value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Please wait...";
+
+      try {
+        let result;
+
+        if (mode === "signup") {
+          if (password !== confirmInput.value) {
+            throw new Error("Your passwords do not match.");
+          }
+
+          result = await client.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { full_name: nameInput.value.trim() }
+            }
+          });
+        } else {
+          result = await client.auth.signInWithPassword({
+            email,
+            password
+          });
+        }
+
+        if (result.error) throw result.error;
+
+        if (mode === "signup" && !result.data.session) {
+          message.textContent =
+            "Account created! Check your email to confirm your account, then sign in.";
+        } else {
+          message.textContent =
+            "Signed in successfully! Your StudyVix account is connected.";
+          window.location.href = "./index.html";
+        }
+      } catch (error) {
+        if (error.message === "Invalid login credentials") {
+          message.textContent =
+            "Incorrect email or password. Check your details and try again.";
+        } else {
+          message.textContent = error.message ||
+            "Something went wrong. Please try again.";
+        }
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent =
+          mode === "signup" ? "Create Account" : "Sign In";
+      }
+    });
   </script>
 </body>
 </html>
-
