@@ -2,191 +2,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudyVix | Login</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; min-height: 100vh; display: grid;
-      place-items: center; padding: 20px;
-      background: #07110c; color: #effff3;
-      font-family: Arial, sans-serif;
-    }
-    .card {
-      width: 100%; max-width: 420px; padding: 28px;
-      border: 1px solid #245638; border-radius: 20px;
-      background: #101d15;
-      box-shadow: 0 0 30px #00ff6620;
-    }
-    h1 { text-align: center; color: #4dff91; }
-    .sub { text-align: center; color: #b5c8bb; }
-    label { display: block; margin: 16px 0 7px; }
-    input {
-      width: 100%; padding: 13px; border-radius: 9px;
-      border: 1px solid #345743; background: #07110c;
-      color: white; font-size: 16px;
-    }
-    button {
-      width: 100%; padding: 13px; margin-top: 18px;
-      border: 0; border-radius: 9px; cursor: pointer;
-      background: #43f58b; color: #06120a;
-      font-weight: bold; font-size: 16px;
-    }
-    .switch {
-      background: transparent; color: #65ffa0;
-      border: 1px solid #345743;
-    }
-    #message { line-height: 1.5; overflow-wrap: anywhere; }
-    a { color: #65ffa0; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyVix | Account</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:#07110c;color:#f1fff5;font-family:Arial,sans-serif}
+.card{width:100%;max-width:420px;background:#101d15;border:1px solid #285c3c;border-radius:20px;padding:28px;box-shadow:0 0 28px #00ff6620}
+h1{text-align:center;color:#4dff91;margin-bottom:8px}
+.sub{text-align:center;color:#b8cdbd}
+label{display:block;margin:16px 0 7px}
+input{width:100%;padding:13px;border-radius:9px;border:1px solid #345743;background:#07110c;color:white;font-size:16px}
+button{width:100%;padding:13px;margin-top:17px;border:0;border-radius:9px;background:#43f58b;color:#06120a;font-size:16px;font-weight:bold}
+button:disabled{opacity:.6}
+.secondary{background:transparent;color:#65ffa0;border:1px solid #345743}
+#message{line-height:1.5;overflow-wrap:anywhere}
+a{color:#65ffa0}
+[hidden]{display:none!important}
+</style>
 </head>
 <body>
-  <main class="card">
-    <h1>StudyVix</h1>
-    <p class="sub">Your learning journey starts here.</p>
+<main class="card">
+<h1>StudyVix</h1>
+<p class="sub">Your learning journey starts here.</p>
 
-    <form id="authForm">
-      <div id="nameField" hidden>
-        <label for="name">Your name</label>
-        <input id="name" autocomplete="name">
-      </div>
+<form id="authForm">
+<div id="nameGroup" hidden>
+<label for="fullName">Your name</label>
+<input id="fullName" autocomplete="name">
+</div>
 
-      <label for="email">Email address</label>
-      <input id="email" type="email" required
-             autocomplete="email" placeholder="you@example.com">
+<label for="email">Email address</label>
+<input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
 
-      <label for="password">Password</label>
-      <input id="password" type="password" required
-             minlength="6" autocomplete="current-password"
-             placeholder="At least 6 characters">
+<label for="password">Password</label>
+<input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
 
-      <div id="confirmField" hidden>
-        <label for="confirmPassword">Confirm password</label>
-        <input id="confirmPassword" type="password"
-               minlength="6" autocomplete="new-password">
-      </div>
+<div id="confirmGroup" hidden>
+<label for="confirmPassword">Confirm password</label>
+<input id="confirmPassword" type="password" minlength="6" autocomplete="new-password">
+</div>
 
-      <button id="submitBtn" type="submit">Sign In</button>
-    </form>
+<button id="submitBtn" type="submit">Sign In</button>
+</form>
 
-    <button class="switch" id="switchBtn" type="button">
-      Create a new account
-    </button>
+<button id="switchBtn" class="secondary" type="button">Create a new account</button>
+<button id="resetBtn" class="secondary" type="button">Forgot password?</button>
 
-    <p id="message" role="status"></p>
-    <p class="sub"><a href="./index.html">Back to StudyVix</a></p>
-  </main>
+<p id="message" role="status" aria-live="polite"></p>
+<p class="sub"><a href="./index.html">Back to StudyVix</a></p>
+</main>
 
-  <script>
-    const SUPABASE_URL =
-      "https://snzhfhjjihotoiuxpysf.supabase.co";
+<script>
+(function(){
+const URL="https://snzhfhjjihotoiuxpysf.supabase.co";
+const KEY="sb_publishable_PngA_LKWY1awueSXOORs_w_uZLxpnMl";
+const form=document.getElementById("authForm");
+const email=document.getElementById("email");
+const password=document.getElementById("password");
+const fullName=document.getElementById("fullName");
+const confirmPassword=document.getElementById("confirmPassword");
+const nameGroup=document.getElementById("nameGroup");
+const confirmGroup=document.getElementById("confirmGroup");
+const submitBtn=document.getElementById("submitBtn");
+const switchBtn=document.getElementById("switchBtn");
+const resetBtn=document.getElementById("resetBtn");
+const message=document.getElementById("message");
+let mode="login";
 
-    // Replace this placeholder with your sb_publishable_ key.
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_PngA_LKWY1awueSXOORs_w_uZLxpnMl";
+function say(text){message.textContent=text;}
+function setMode(next){
+mode=next;
+const signup=mode==="signup";
+nameGroup.hidden=!signup;
+confirmGroup.hidden=!signup;
+fullName.required=signup;
+confirmPassword.required=signup;
+password.autocomplete=signup?"new-password":"current-password";
+submitBtn.textContent=signup?"Create Account":"Sign In";
+switchBtn.textContent=signup?"Already have an account? Sign in":"Create a new account";
+resetBtn.hidden=signup;
+say("");
+}
 
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+switchBtn.addEventListener("click",()=>setMode(mode==="login"?"signup":"login"));
 
-    let mode = "login";
+form.addEventListener("submit",async function(event){
+event.preventDefault();
+say("");
+if(!window.supabase){
+say("Could not load the login service. Check your internet and reload this page.");
+return;
+}
+const emailValue=email.value.trim();
+const passwordValue=password.value;
+if(mode==="signup"&&passwordValue!==confirmPassword.value){
+say("Your passwords do not match.");
+return;
+}
+submitBtn.disabled=true;
+switchBtn.disabled=true;
+say(mode==="signup"?"Creating your account...":"Checking your login...");
+try{
+const client=window.supabase.createClient(URL,KEY);
+let result;
+if(mode==="signup"){
+result=await client.auth.signUp({
+email:emailValue,
+password:passwordValue,
+options:{
+data:{full_name:fullName.value.trim()},
+emailRedirectTo:location.origin+location.pathname
+}
+});
+}else{
+result=await client.auth.signInWithPassword({
+email:emailValue,
+password:passwordValue
+});
+}
+if(result.error) throw result.error;
+if(mode==="signup"){
+if(result.data.session){
+say("Account created successfully! Opening StudyVix...");
+location.href="./index.html";
+}else{
+say("Sign-up started! Check your email for a confirmation link before signing in. Check Spam too.");
+}
+}else{
+say("Login successful! Opening StudyVix...");
+location.href="./index.html";
+}
+}catch(error){
+const msg=(error&&error.message)?error.message:"Unknown error";
+if(/invalid login credentials/i.test(msg)){
+say("Incorrect email or password. Please check them and try again.");
+}else if(/already registered|already exists/i.test(msg)){
+say("This email may already have an account. Switch to Sign In and try your password.");
+}else if(/password should be at least|weak password/i.test(msg)){
+say("Please choose a stronger password that meets the requirements.");
+}else if(/failed to fetch|network/i.test(msg)){
+say("Connection problem. Check your internet and try again.");
+}else{
+say("Supabase says: "+msg);
+}
+}finally{
+submitBtn.disabled=false;
+switchBtn.disabled=false;
+submitBtn.textContent=mode==="signup"?"Create Account":"Sign In";
+}
+});
 
-    const form = document.getElementById("authForm");
-    const message = document.getElementById("message");
-    const submitBtn = document.getElementById("submitBtn");
-    const switchBtn = document.getElementById("switchBtn");
-    const nameField = document.getElementById("nameField");
-    const confirmField = document.getElementById("confirmField");
-    const nameInput = document.getElementById("name");
-    const passwordInput = document.getElementById("password");
-    const confirmInput = document.getElementById("confirmPassword");
-
-    function setMode(nextMode) {
-      mode = nextMode;
-      const signup = mode === "signup";
-      nameField.hidden = !signup;
-      confirmField.hidden = !signup;
-      nameInput.required = signup;
-      confirmInput.required = signup;
-      passwordInput.autocomplete =
-        signup ? "new-password" : "current-password";
-      submitBtn.textContent = signup ? "Create Account" : "Sign In";
-      switchBtn.textContent = signup
-        ? "Already have an account? Sign in"
-        : "Create a new account";
-      message.textContent = "";
-    }
-
-    switchBtn.addEventListener("click", () => {
-      setMode(mode === "login" ? "signup" : "login");
-    });
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      message.textContent = "";
-
-      if (SUPABASE_PUBLISHABLE_KEY ===
-          "sb_publishable_PngA_LKWY1awueSXOORs_w_uZLxpnMl") {
-        message.textContent =
-          "Setup needed: add your Supabase publishable key in the code.";
-        return;
-      }
-
-      const email = document.getElementById("email").value.trim();
-      const password = passwordInput.value;
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Please wait...";
-
-      try {
-        let result;
-
-        if (mode === "signup") {
-          if (password !== confirmInput.value) {
-            throw new Error("Your passwords do not match.");
-          }
-
-          result = await client.auth.signUp({
-            email,
-            password,
-            options: {
-              data: { full_name: nameInput.value.trim() }
-            }
-          });
-        } else {
-          result = await client.auth.signInWithPassword({
-            email,
-            password
-          });
-        }
-
-        if (result.error) throw result.error;
-
-        if (mode === "signup" && !result.data.session) {
-          message.textContent =
-            "Account created! Check your email to confirm your account, then sign in.";
-        } else {
-          message.textContent =
-            "Signed in successfully! Your StudyVix account is connected.";
-          window.location.href = "./index.html";
-        }
-      } catch (error) {
-        if (error.message === "Invalid login credentials") {
-          message.textContent =
-            "Incorrect email or password. Check your details and try again.";
-        } else {
-          message.textContent = error.message ||
-            "Something went wrong. Please try again.";
-        }
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent =
-          mode === "signup" ? "Create Account" : "Sign In";
-      }
-    });
-  </script>
+resetBtn.addEventListener("click",async function(){
+say("");
+if(!email.value.trim()){
+say("Enter your email address above first, then tap Forgot password again.");
+email.focus();
+return;
+}
+resetBtn.disabled=true;
+try{
+const client=window.supabase.createClient(URL,KEY);
+const {error}=await client.auth.resetPasswordForEmail(email.value.trim(),{
+redirectTo:location.origin+location.pathname
+});
+if(error) throw error;
+say("If the email is registered, a password reset link will be sent. Check your inbox and Spam.");
+}catch(error){
+say("Could not request a reset link: "+(error.message||"Please try again."));
+}finally{
+resetBtn.disabled=false;
+}
+});
+})();
+</script>
 </body>
 </html>
